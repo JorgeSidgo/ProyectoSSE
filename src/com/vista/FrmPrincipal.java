@@ -44,7 +44,7 @@ public class FrmPrincipal extends javax.swing.JFrame
         menBarSS.setVisible(false);
         this.setLocationRelativeTo(null);
         this.setExtendedState(MAXIMIZED_BOTH);
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo256.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));
         InternalFrmEstudiante internal = new InternalFrmEstudiante();
         this.abrirVentana(internal);
     }
