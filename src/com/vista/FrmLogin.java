@@ -5,6 +5,12 @@
  */
 package com.vista;
 
+import static com.vista.FrmPrincipal.ii;
+import java.awt.Color;
+import com.utilidades.UITools;
+import static java.awt.Frame.NORMAL;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author jsidg
@@ -12,13 +18,18 @@ package com.vista;
 public class FrmLogin extends javax.swing.JFrame
 {
 
-    /**
-     * Creates new form frmLogin
-     */
+    UITools uiTool = new UITools();
+
     public FrmLogin()
     {
         initComponents();
+        uiTool.flatButton(jBtnLogin);
     }
+
+    
+    
+    private int xx;
+    private int xy;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -30,21 +41,225 @@ public class FrmLogin extends javax.swing.JFrame
     private void initComponents()
     {
 
+        jPanelTitulo = new javax.swing.JPanel();
+        jBtnSalir = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jTxtNombre = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jTxtPass = new javax.swing.JPasswordField();
+        jLabel3 = new javax.swing.JLabel();
+        jBtnLogin = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(250, 250, 250));
+        setUndecorated(true);
+
+        jPanelTitulo.setBackground(new java.awt.Color(23, 32, 42));
+        jPanelTitulo.setPreferredSize(new java.awt.Dimension(400, 30));
+        jPanelTitulo.addMouseMotionListener(new java.awt.event.MouseMotionAdapter()
+        {
+            public void mouseDragged(java.awt.event.MouseEvent evt)
+            {
+                jPanelTituloMouseDragged(evt);
+            }
+        });
+        jPanelTitulo.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mousePressed(java.awt.event.MouseEvent evt)
+            {
+                jPanelTituloMousePressed(evt);
+            }
+        });
+
+        jBtnSalir.setBackground(new java.awt.Color(23, 32, 42));
+        jBtnSalir.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jBtnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8-delete-16.png"))); // NOI18N
+        jBtnSalir.setOpaque(true);
+        jBtnSalir.setPreferredSize(new java.awt.Dimension(42, 30));
+        jBtnSalir.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                jBtnSalirMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt)
+            {
+                jBtnSalirMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt)
+            {
+                jBtnSalirMouseExited(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt)
+            {
+                jBtnSalirMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt)
+            {
+                jBtnSalirMouseReleased(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Product Sans", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Control SSE");
+
+        javax.swing.GroupLayout jPanelTituloLayout = new javax.swing.GroupLayout(jPanelTitulo);
+        jPanelTitulo.setLayout(jPanelTituloLayout);
+        jPanelTituloLayout.setHorizontalGroup(
+            jPanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTituloLayout.createSequentialGroup()
+                .addGap(0, 155, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(111, 111, 111)
+                .addComponent(jBtnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        jPanelTituloLayout.setVerticalGroup(
+            jPanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTituloLayout.createSequentialGroup()
+                .addComponent(jBtnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTituloLayout.createSequentialGroup()
+                .addContainerGap(15, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(16, 16, 16))
+        );
+
+        jLabel2.setFont(new java.awt.Font("Nunito", 0, 11)); // NOI18N
+        jLabel2.setText("Nombre de Usuario:");
+
+        jLabel3.setFont(new java.awt.Font("Nunito", 0, 11)); // NOI18N
+        jLabel3.setText("Contraseña:");
+
+        jBtnLogin.setBackground(new java.awt.Color(23, 165, 137));
+        jBtnLogin.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
+        jBtnLogin.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnLogin.setText("Ingresar");
+        jBtnLogin.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mousePressed(java.awt.event.MouseEvent evt)
+            {
+                jBtnLoginMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt)
+            {
+                jBtnLoginMouseReleased(evt);
+            }
+        });
+        jBtnLogin.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jBtnLoginActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jBtnLogin)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel2)
+                        .addComponent(jTxtNombre)
+                        .addComponent(jTxtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanelTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTxtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jBtnLogin)
+                .addGap(26, 26, 26))
         );
+
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jBtnLogin, jTxtNombre, jTxtPass});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jBtnSalirMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jBtnSalirMouseClicked
+    {//GEN-HEADEREND:event_jBtnSalirMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_jBtnSalirMouseClicked
+
+    private void jBtnSalirMouseEntered(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jBtnSalirMouseEntered
+    {//GEN-HEADEREND:event_jBtnSalirMouseEntered
+        jBtnSalir.setBackground(new Color(229, 57, 53));
+    }//GEN-LAST:event_jBtnSalirMouseEntered
+
+    private void jBtnSalirMouseExited(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jBtnSalirMouseExited
+    {//GEN-HEADEREND:event_jBtnSalirMouseExited
+        jBtnSalir.setBackground(new Color(23, 32, 42));
+    }//GEN-LAST:event_jBtnSalirMouseExited
+
+    private void jBtnSalirMousePressed(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jBtnSalirMousePressed
+    {//GEN-HEADEREND:event_jBtnSalirMousePressed
+        jBtnSalir.setBackground(new Color(211, 47, 47));
+    }//GEN-LAST:event_jBtnSalirMousePressed
+
+    private void jBtnSalirMouseReleased(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jBtnSalirMouseReleased
+    {//GEN-HEADEREND:event_jBtnSalirMouseReleased
+        jBtnSalir.setBackground(new Color(23, 32, 42));
+    }//GEN-LAST:event_jBtnSalirMouseReleased
+
+    private void jPanelTituloMousePressed(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jPanelTituloMousePressed
+    {//GEN-HEADEREND:event_jPanelTituloMousePressed
+        xx = evt.getX();
+        xy = evt.getY();
+    }//GEN-LAST:event_jPanelTituloMousePressed
+
+    private void jPanelTituloMouseDragged(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jPanelTituloMouseDragged
+    {//GEN-HEADEREND:event_jPanelTituloMouseDragged
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - xx, y - xy);
+    }//GEN-LAST:event_jPanelTituloMouseDragged
+
+    private void jBtnLoginMousePressed(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jBtnLoginMousePressed
+    {//GEN-HEADEREND:event_jBtnLoginMousePressed
+        jBtnLogin.setBackground(new Color(17, 120, 100));
+    }//GEN-LAST:event_jBtnLoginMousePressed
+
+    private void jBtnLoginMouseReleased(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jBtnLoginMouseReleased
+    {//GEN-HEADEREND:event_jBtnLoginMouseReleased
+        jBtnLogin.setBackground(new Color(23, 165, 137));
+    }//GEN-LAST:event_jBtnLoginMouseReleased
+
+    private void jBtnLoginActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBtnLoginActionPerformed
+    {//GEN-HEADEREND:event_jBtnLoginActionPerformed
+        /*       try
+        {
+        String pass = new String(jTxtPass.getPassword());
+        
+        user.setNomUsuario(this.jTxtNombre.getText());
+        user.setPass(pass);
+        
+        Boolean bool = dao.login(user);
+        
+        if(bool)
+        {
+        this.dispose();
+        }
+        } catch (Exception e)
+        {
+        }*/
+    }//GEN-LAST:event_jBtnLoginActionPerformed
 
     /**
      * @param args the command line arguments
@@ -87,11 +302,21 @@ public class FrmLogin extends javax.swing.JFrame
         {
             public void run()
             {
-                new FrmLogin().setVisible(true);
+                FrmLogin frm = new FrmLogin();
+                frm.setLocationRelativeTo(null);
+                frm.setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jBtnLogin;
+    private javax.swing.JLabel jBtnSalir;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPanel jPanelTitulo;
+    private javax.swing.JTextField jTxtNombre;
+    private javax.swing.JPasswordField jTxtPass;
     // End of variables declaration//GEN-END:variables
 }
