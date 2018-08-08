@@ -35,7 +35,7 @@ public class FrmPrincipal extends javax.swing.JFrame
     
     public FrmPrincipal()
     {
-        // XD papu
+        
         initComponents();
         maximizar();
         jMenu.setVisible(false);
@@ -96,7 +96,7 @@ public class FrmPrincipal extends javax.swing.JFrame
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
 
-        desktopPane.setBackground(new java.awt.Color(153, 153, 153));
+        desktopPane.setBackground(new java.awt.Color(250, 250, 250));
 
         javax.swing.GroupLayout desktopPaneLayout = new javax.swing.GroupLayout(desktopPane);
         desktopPane.setLayout(desktopPaneLayout);
