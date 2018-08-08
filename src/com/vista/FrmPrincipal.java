@@ -49,6 +49,7 @@ public class FrmPrincipal extends javax.swing.JFrame
         this.setLocationRelativeTo(null);
         this.setExtendedState(MAXIMIZED_BOTH);
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("logo.png")));
+        
     }
 
      public void abrirVentana(JInternalFrame internal)
@@ -80,6 +81,7 @@ public class FrmPrincipal extends javax.swing.JFrame
     {
 
         desktopPane = new javax.swing.JDesktopPane();
+        jLabel1 = new javax.swing.JLabel();
         jTitulo = new javax.swing.JPanel();
         jBtnSalir = new javax.swing.JLabel();
         jBtnMax = new javax.swing.JLabel();
@@ -102,15 +104,20 @@ public class FrmPrincipal extends javax.swing.JFrame
 
         desktopPane.setBackground(new java.awt.Color(250, 250, 250));
 
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/vista/logo.png"))); // NOI18N
+
+        desktopPane.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout desktopPaneLayout = new javax.swing.GroupLayout(desktopPane);
         desktopPane.setLayout(desktopPaneLayout);
         desktopPaneLayout.setHorizontalGroup(
             desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         desktopPaneLayout.setVerticalGroup(
             desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 530, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 533, Short.MAX_VALUE)
         );
 
         jTitulo.setBackground(new java.awt.Color(23, 32, 42));
@@ -204,7 +211,7 @@ public class FrmPrincipal extends javax.swing.JFrame
 
         jBtnMenu.setBackground(new java.awt.Color(23, 32, 42));
         jBtnMenu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jBtnMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8-menu-16.png"))); // NOI18N
+        jBtnMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/men.png"))); // NOI18N
         jBtnMenu.setOpaque(true);
         jBtnMenu.setPreferredSize(new java.awt.Dimension(42, 30));
         jBtnMenu.addMouseListener(new java.awt.event.MouseAdapter()
@@ -475,7 +482,7 @@ public class FrmPrincipal extends javax.swing.JFrame
             .addComponent(jTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 895, Short.MAX_VALUE)
             .addComponent(layerPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 895, Short.MAX_VALUE)
-            .addComponent(desktopPane)
+            .addComponent(desktopPane, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -581,7 +588,7 @@ public class FrmPrincipal extends javax.swing.JFrame
     {//GEN-HEADEREND:event_jBtnMenuMouseClicked
         if (!menu)
         {
-            jMenu.setVisible(true);
+            jMenu.setVisible(true); 
             this.menu = true;
         } else
         {
@@ -752,6 +759,7 @@ public class FrmPrincipal extends javax.swing.JFrame
     private javax.swing.JLabel jBtnMenu;
     private javax.swing.JLabel jBtnMin;
     private javax.swing.JLabel jBtnSalir;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jMenu;
     private javax.swing.JPanel jTitulo;
