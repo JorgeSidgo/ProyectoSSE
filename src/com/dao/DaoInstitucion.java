@@ -1,7 +1,6 @@
 package com.dao;
 
 import com.conexion.Conexion;
-import java.sql.*;
 
 /**
  * Favor iterar la versión si se requiere realizar un cambio en la estructura de la clase
@@ -17,7 +16,7 @@ import java.sql.*;
  *      Javier Montoya
  */
 
-public class DaoEstudiante extends Conexion
+public class DaoInstitucion extends Conexion
 {
     
 }
