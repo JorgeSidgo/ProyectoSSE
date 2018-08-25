@@ -65,11 +65,11 @@ public class UITools
         
     }
     
-    public void menusitos(JLabel label, int p)
+    public void menusitos(JLabel label, int p, int pad)
     {
         Border compuesto;
         Border outline = BorderFactory.createMatteBorder(0, 0, 0, 0, Color.decode("#3D3E3F"));
-        Border padding = BorderFactory.createEmptyBorder(0, 10, 0, 0);
+        Border padding = BorderFactory.createEmptyBorder(0, pad, 0, 0);
         
         switch(p){
             case 1:

@@ -15,8 +15,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -36,7 +39,6 @@ public class FrmPrincipal extends javax.swing.JFrame
         initComponents();
         initUi();
         maximizar();
-        panelMenu.setVisible(false);
         if(DaoUsuario.nomUsuario!=null)
         {
             lblUsuario.setText(DaoUsuario.nomUsuario);
@@ -44,6 +46,8 @@ public class FrmPrincipal extends javax.swing.JFrame
         
     }
     UITools ui = new UITools();
+    private static boolean menArchivo = false;
+    private static boolean menSS = false;
     private static boolean maximizado = false;
     private static boolean menu = false;
     private static boolean barraNombre = false;
@@ -84,6 +88,11 @@ public class FrmPrincipal extends javax.swing.JFrame
         menuArchivo = new javax.swing.JLabel();
         menuSS = new javax.swing.JLabel();
         menuLogout = new javax.swing.JLabel();
+        panelArchivo = new javax.swing.JPanel();
+        menItInstituciones = new javax.swing.JLabel();
+        menItInstituciones1 = new javax.swing.JLabel();
+        panelSS = new javax.swing.JPanel();
+        menuUsuarios = new javax.swing.JLabel();
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
@@ -250,7 +259,7 @@ public class FrmPrincipal extends javax.swing.JFrame
             .addGroup(jTitleBarLayout.createSequentialGroup()
                 .addComponent(lblMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblUsuario)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -303,6 +312,13 @@ public class FrmPrincipal extends javax.swing.JFrame
         menuArchivo.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0)));
         menuArchivo.setIconTextGap(10);
         menuArchivo.setOpaque(true);
+        menuArchivo.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                menuArchivoMouseClicked(evt);
+            }
+        });
 
         menuSS.setBackground(new java.awt.Color(36, 37, 38));
         menuSS.setDisplayedMnemonic('n');
@@ -313,6 +329,13 @@ public class FrmPrincipal extends javax.swing.JFrame
         menuSS.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0)));
         menuSS.setIconTextGap(10);
         menuSS.setOpaque(true);
+        menuSS.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                menuSSMouseClicked(evt);
+            }
+        });
 
         menuLogout.setBackground(new java.awt.Color(36, 37, 38));
         menuLogout.setDisplayedMnemonic('n');
@@ -331,6 +354,88 @@ public class FrmPrincipal extends javax.swing.JFrame
             }
         });
 
+        panelArchivo.setBackground(new java.awt.Color(54, 56, 57));
+
+        menItInstituciones.setBackground(new java.awt.Color(54, 56, 57));
+        menItInstituciones.setDisplayedMnemonic('n');
+        menItInstituciones.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        menItInstituciones.setForeground(new java.awt.Color(255, 255, 255));
+        menItInstituciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8-building-16.png"))); // NOI18N
+        menItInstituciones.setText("Instituciones");
+        menItInstituciones.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 20, 0, 0)));
+        menItInstituciones.setIconTextGap(10);
+        menItInstituciones.setOpaque(true);
+        menItInstituciones.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                menItInstitucionesMouseClicked(evt);
+            }
+        });
+
+        menItInstituciones1.setBackground(new java.awt.Color(54, 56, 57));
+        menItInstituciones1.setDisplayedMnemonic('n');
+        menItInstituciones1.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        menItInstituciones1.setForeground(new java.awt.Color(255, 255, 255));
+        menItInstituciones1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8-building-16.png"))); // NOI18N
+        menItInstituciones1.setText("Estudiantes");
+        menItInstituciones1.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 20, 0, 0)));
+        menItInstituciones1.setIconTextGap(10);
+        menItInstituciones1.setOpaque(true);
+        menItInstituciones1.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                menItInstituciones1MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelArchivoLayout = new javax.swing.GroupLayout(panelArchivo);
+        panelArchivo.setLayout(panelArchivoLayout);
+        panelArchivoLayout.setHorizontalGroup(
+            panelArchivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(menItInstituciones, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+            .addComponent(menItInstituciones1, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+        );
+        panelArchivoLayout.setVerticalGroup(
+            panelArchivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelArchivoLayout.createSequentialGroup()
+                .addComponent(menItInstituciones, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(menItInstituciones1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 16, Short.MAX_VALUE))
+        );
+
+        panelSS.setBackground(new java.awt.Color(54, 56, 57));
+
+        javax.swing.GroupLayout panelSSLayout = new javax.swing.GroupLayout(panelSS);
+        panelSS.setLayout(panelSSLayout);
+        panelSSLayout.setHorizontalGroup(
+            panelSSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        panelSSLayout.setVerticalGroup(
+            panelSSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        menuUsuarios.setBackground(new java.awt.Color(36, 37, 38));
+        menuUsuarios.setDisplayedMnemonic('n');
+        menuUsuarios.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        menuUsuarios.setForeground(new java.awt.Color(255, 255, 255));
+        menuUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8-user-groups-16.png"))); // NOI18N
+        menuUsuarios.setText("Gestión de Usuarios");
+        menuUsuarios.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0)));
+        menuUsuarios.setIconTextGap(10);
+        menuUsuarios.setOpaque(true);
+        menuUsuarios.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                menuUsuariosMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelMenuLayout = new javax.swing.GroupLayout(panelMenu);
         panelMenu.setLayout(panelMenuLayout);
         panelMenuLayout.setHorizontalGroup(
@@ -338,6 +443,9 @@ public class FrmPrincipal extends javax.swing.JFrame
             .addComponent(menuArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
             .addComponent(menuSS, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
             .addComponent(menuLogout, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+            .addComponent(panelArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelSS, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(menuUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
         );
         panelMenuLayout.setVerticalGroup(
             panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -345,7 +453,13 @@ public class FrmPrincipal extends javax.swing.JFrame
                 .addGap(30, 30, 30)
                 .addComponent(menuArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
+                .addComponent(panelArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
                 .addComponent(menuSS, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(panelSS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(menuUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(menuLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -410,26 +524,26 @@ public class FrmPrincipal extends javax.swing.JFrame
 
         menu();
 
-        timer = new Timer(1, new ActionListener()
+        /*timer = new Timer(1, new ActionListener()
         {
-            @Override
-            public void actionPerformed(ActionEvent ae)
-            {
-                if (!barraNombre)
-                {
-                    lbl();
-                    barraNombre = true;
-                } else
-                {
-                    timer.stop();
-                    barraNombre = false;
-                }
-            }
+        @Override
+        public void actionPerformed(ActionEvent ae)
+        {
+        if (!barraNombre)
+        {
+        lbl();
+        barraNombre = true;
+        } else
+        {
+        timer.stop();
+        barraNombre = false;
+        }
+        }
         });
         if (!barraNombre)
         {
-            timer.start();
-        }
+        timer.start();
+        }*/
 
     }//GEN-LAST:event_lblMenuMouseClicked
 
@@ -447,13 +561,14 @@ public class FrmPrincipal extends javax.swing.JFrame
     {//GEN-HEADEREND:event_menuLogoutMouseClicked
         try
         {
-            int opcion = JOptionPane.showConfirmDialog(this, "Desea cerrar su sesión, los cambios qu no han sido guardados se perderán", "Confirmar", JOptionPane.YES_NO_OPTION);
+            int opcion = JOptionPane.showConfirmDialog(this, "¿Desea cerrar sesión?, los cambios que no han sido guardados se perderán", "Confirmar", JOptionPane.YES_NO_OPTION);
             
             if(opcion == 0)
             {
                 FrmLogin frm = new FrmLogin();
                 frm.setLocationRelativeTo(null);
                 frm.setVisible(true);
+                this.maximizado = false;
                 this.dispose();
             }
             
@@ -462,6 +577,49 @@ public class FrmPrincipal extends javax.swing.JFrame
         }
     }//GEN-LAST:event_menuLogoutMouseClicked
 
+    private void menuArchivoMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuArchivoMouseClicked
+    {//GEN-HEADEREND:event_menuArchivoMouseClicked
+        if(!menArchivo)
+        {
+            panelArchivo.setVisible(true);
+            menArchivo = true;
+        }
+        else
+        {
+            panelArchivo.setVisible(false);
+            menArchivo = false;
+        }
+    }//GEN-LAST:event_menuArchivoMouseClicked
+
+    private void menuSSMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuSSMouseClicked
+    {//GEN-HEADEREND:event_menuSSMouseClicked
+        if(!menSS)
+        {
+            panelSS.setVisible(true);
+            menSS = true;
+        }
+        else
+        {
+            panelSS.setVisible(false);
+            menSS = false;
+        }
+    }//GEN-LAST:event_menuSSMouseClicked
+
+    private void menItInstitucionesMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menItInstitucionesMouseClicked
+    {//GEN-HEADEREND:event_menItInstitucionesMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menItInstitucionesMouseClicked
+
+    private void menItInstituciones1MouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menItInstituciones1MouseClicked
+    {//GEN-HEADEREND:event_menItInstituciones1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menItInstituciones1MouseClicked
+
+    private void menuUsuariosMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuUsuariosMouseClicked
+    {//GEN-HEADEREND:event_menuUsuariosMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuUsuariosMouseClicked
+
     private void borders(int a, int b, int c)
     {
         desktopPane.setBorder(new MatteBorder(0, c, b, b, Color.decode("#E74C3C")));
@@ -469,16 +627,20 @@ public class FrmPrincipal extends javax.swing.JFrame
         panelMenu.setBorder(new MatteBorder(0, a, a, 0, Color.decode("#E74C3C")));
     }
 
-    public void lbl()
+    /*    public void lbl()
     {
-        if (menu)
-        {
-            lblNombre.setSize(new Dimension(205, 30));
-        } else
-        {
-            lblNombre.setSize(new Dimension(90, 30));
-        }
+    if (menu)
+    {
+    
+    lblNombre.setSize(new Dimension(205, 30));
+    lblNombre.setPreferredSize(new Dimension(205, 30));
+    } else
+    {
+    
+    lblNombre.setSize(new Dimension(90, 30));
+    lblNombre.setPreferredSize(new Dimension(90, 30));
     }
+    }*/
 
     public void menu()
     {
@@ -501,7 +663,7 @@ public class FrmPrincipal extends javax.swing.JFrame
         }
     }
 
-    private void maximizar()
+    public void maximizar()
     {
         if (!maximizado)
         {
@@ -524,17 +686,34 @@ public class FrmPrincipal extends javax.swing.JFrame
 
     public void initUi()
     {
+        panelSS.setVisible(false);
+        panelMenu.setVisible(false);
+        panelArchivo.setVisible(false);
         ui.flatLabel(lblMin, "#CCCCCC", "#B7B7B7", "#A3A3A3");
         ui.flatLabel(lblMax, "#CCCCCC", "#B7B7B7", "#A3A3A3");
         ui.flatLabel(lblX, "#CCCCCC", "#E81123", "#DC5C66");
         ui.flatLabel(lblMenu, "#D74738", "#B03A2E", "#EC7063");
         ui.lblIcon(lblX, "../vista/x.png", "../vista/xW.png");
         ui.flatLabel(menuArchivo, "#242526", "#2D2E2F", "#111111");
-        ui.menusitos(menuArchivo, 1);
+        ui.menusitos(menuArchivo, 1, 10);
+        menuArchivo.setLayout(new BoxLayout(menuArchivo, BoxLayout.X_AXIS));
+        JLabel dropArchivo = new JLabel();
+        dropArchivo.setIcon(new ImageIcon(getClass().getResource("../iconos/icons8-chevron-down-16.png")));
+        menuArchivo.add(Box.createRigidArea(new Dimension(200,0)));
+        menuArchivo.add(dropArchivo);
         ui.flatLabel(menuSS, "#242526", "#2D2E2F", "#111111");
-        ui.menusitos(menuSS, 2);
+        ui.menusitos(menuSS, 2, 10);
+        menuSS.setLayout(new BoxLayout(menuSS, BoxLayout.X_AXIS));
+        JLabel dropSS = new JLabel();
+        dropSS.setIcon(new ImageIcon(getClass().getResource("../iconos/icons8-chevron-down-16.png")));
+        menuSS.add(Box.createRigidArea(new Dimension(200,0)));
+        menuSS.add(dropSS);
         ui.flatLabel(menuLogout, "#242526", "#D74738", "#E74C3C");
-        ui.menusitos(menuLogout, 1);
+        ui.menusitos(menuLogout, 1, 10);
+        ui.flatLabel(menuUsuarios, "#242526", "#2D2E2F", "#111111");
+        ui.menusitos(menuUsuarios, 2, 10);
+        
+
     }
 
     public static void main(String args[])
@@ -601,12 +780,18 @@ public class FrmPrincipal extends javax.swing.JFrame
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblUsuario;
     private javax.swing.JLabel lblX;
+    private javax.swing.JLabel menItInstituciones;
+    private javax.swing.JLabel menItInstituciones1;
     private javax.swing.JLabel menuArchivo;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JLabel menuLogout;
     private javax.swing.JLabel menuSS;
+    private javax.swing.JLabel menuUsuarios;
     private javax.swing.JMenuItem openMenuItem;
+    private javax.swing.JPanel panelArchivo;
     private javax.swing.JPanel panelMenu;
+    private javax.swing.JPanel panelSS;
+    private javax.swing.JPanel panelSS1;
     private javax.swing.JMenuItem pasteMenuItem;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
