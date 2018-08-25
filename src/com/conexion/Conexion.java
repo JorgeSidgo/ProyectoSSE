@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 public class Conexion
 {
     private Connection con;
-    private final String DB_URL = "jdbc:mysql://localhost:3306/sse?zeroDateTimeBehavior=convertToNull";
+    private final String DB_URL = "jdbc:mysql://127.0.0.1:3306/sse?zeroDateTimeBehavior=convertToNull";
     private final String DB_USER = "root";
     private final String DB_PASS = "";
 

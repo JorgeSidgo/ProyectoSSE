@@ -5,6 +5,7 @@
  */
 package com.vista;
 
+import com.dao.DaoUsuario;
 import com.utilidades.UITools;
 import static com.vista.FrmPrincipalx.ii;
 import java.awt.Color;
@@ -16,6 +17,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
@@ -35,6 +37,11 @@ public class FrmPrincipal extends javax.swing.JFrame
         initUi();
         maximizar();
         panelMenu.setVisible(false);
+        if(DaoUsuario.nomUsuario!=null)
+        {
+            lblUsuario.setText(DaoUsuario.nomUsuario);
+        }
+        
     }
     UITools ui = new UITools();
     private static boolean maximizado = false;
@@ -175,7 +182,7 @@ public class FrmPrincipal extends javax.swing.JFrame
         });
 
         lblNombre.setBackground(new java.awt.Color(215, 71, 56));
-        lblNombre.setFont(new java.awt.Font("Nunito", 0, 14)); // NOI18N
+        lblNombre.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         lblNombre.setForeground(new java.awt.Color(255, 255, 255));
         lblNombre.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lblNombre.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/relleno.png"))); // NOI18N
@@ -316,6 +323,13 @@ public class FrmPrincipal extends javax.swing.JFrame
         menuLogout.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0)));
         menuLogout.setIconTextGap(10);
         menuLogout.setOpaque(true);
+        menuLogout.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                menuLogoutMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelMenuLayout = new javax.swing.GroupLayout(panelMenu);
         panelMenu.setLayout(panelMenuLayout);
@@ -428,6 +442,25 @@ public class FrmPrincipal extends javax.swing.JFrame
     {//GEN-HEADEREND:event_lblUsuarioMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_lblUsuarioMouseClicked
+
+    private void menuLogoutMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuLogoutMouseClicked
+    {//GEN-HEADEREND:event_menuLogoutMouseClicked
+        try
+        {
+            int opcion = JOptionPane.showConfirmDialog(this, "Desea cerrar su sesión, los cambios qu no han sido guardados se perderán", "Confirmar", JOptionPane.YES_NO_OPTION);
+            
+            if(opcion == 0)
+            {
+                FrmLogin frm = new FrmLogin();
+                frm.setLocationRelativeTo(null);
+                frm.setVisible(true);
+                this.dispose();
+            }
+            
+        } catch (Exception e)
+        {
+        }
+    }//GEN-LAST:event_menuLogoutMouseClicked
 
     private void borders(int a, int b, int c)
     {

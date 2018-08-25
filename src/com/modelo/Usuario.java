@@ -19,6 +19,7 @@ public class Usuario {
     private int idUsuario;
     private String nomUsuario;
     private String pass;
+    private int estado;
 
     public Usuario() {
     }
