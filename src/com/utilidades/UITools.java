@@ -8,12 +8,14 @@ import java.beans.PropertyVetoException;
 import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 /**
  * Nombre de la Clase: UITools
@@ -62,7 +64,27 @@ public class UITools
         }
         
     }
+    
+    public void menusitos(JLabel label, int p)
+    {
+        Border compuesto;
+        Border outline = BorderFactory.createMatteBorder(0, 0, 0, 0, Color.decode("#3D3E3F"));
+        Border padding = BorderFactory.createEmptyBorder(0, 10, 0, 0);
         
+        switch(p){
+            case 1:
+                outline = BorderFactory.createMatteBorder(1, 0, 1, 0, Color.decode("#3D3E3F"));
+                break;
+            case 2:
+                outline = BorderFactory.createMatteBorder(0, 0, 1, 0, Color.decode("#3D3E3F"));
+                break;
+        }
+        
+        
+        compuesto = BorderFactory.createCompoundBorder(outline, padding);
+        label.setBorder(compuesto);
+    }
+    
     public void lblIcon(JLabel label, String icon1, String icon2)
     {
         ImageIcon i = new ImageIcon(getClass().getResource(icon1));

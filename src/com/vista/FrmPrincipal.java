@@ -75,6 +75,8 @@ public class FrmPrincipal extends javax.swing.JFrame
         lblIcon = new javax.swing.JLabel();
         panelMenu = new javax.swing.JPanel();
         menuArchivo = new javax.swing.JLabel();
+        menuSS = new javax.swing.JLabel();
+        menuLogout = new javax.swing.JLabel();
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
@@ -282,31 +284,56 @@ public class FrmPrincipal extends javax.swing.JFrame
             .addComponent(lblIcon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)
         );
 
-        panelMenu.setBackground(new java.awt.Color(98, 101, 104));
+        panelMenu.setBackground(new java.awt.Color(36, 37, 38));
         panelMenu.setPreferredSize(new java.awt.Dimension(225, 0));
 
-        menuArchivo.setBackground(new java.awt.Color(98, 101, 104));
+        menuArchivo.setBackground(new java.awt.Color(36, 37, 38));
         menuArchivo.setDisplayedMnemonic('n');
-        menuArchivo.setFont(new java.awt.Font("Nunito", 0, 13)); // NOI18N
+        menuArchivo.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         menuArchivo.setForeground(new java.awt.Color(255, 255, 255));
-        menuArchivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8-filing-cabinet-16.png"))); // NOI18N
+        menuArchivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8-filing-cabinet-16 (1).png"))); // NOI18N
         menuArchivo.setText("Archivo");
         menuArchivo.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0)));
         menuArchivo.setIconTextGap(10);
         menuArchivo.setOpaque(true);
+
+        menuSS.setBackground(new java.awt.Color(36, 37, 38));
+        menuSS.setDisplayedMnemonic('n');
+        menuSS.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        menuSS.setForeground(new java.awt.Color(255, 255, 255));
+        menuSS.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8-helping-hand-16 (1).png"))); // NOI18N
+        menuSS.setText("Servicio Social");
+        menuSS.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0)));
+        menuSS.setIconTextGap(10);
+        menuSS.setOpaque(true);
+
+        menuLogout.setBackground(new java.awt.Color(36, 37, 38));
+        menuLogout.setDisplayedMnemonic('n');
+        menuLogout.setFont(new java.awt.Font("Montserrat", 0, 11)); // NOI18N
+        menuLogout.setForeground(new java.awt.Color(255, 255, 255));
+        menuLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8-shutdown-16 (1).png"))); // NOI18N
+        menuLogout.setText("Cerrar Sesión");
+        menuLogout.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0)));
+        menuLogout.setIconTextGap(10);
+        menuLogout.setOpaque(true);
 
         javax.swing.GroupLayout panelMenuLayout = new javax.swing.GroupLayout(panelMenu);
         panelMenu.setLayout(panelMenuLayout);
         panelMenuLayout.setHorizontalGroup(
             panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(menuArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+            .addComponent(menuSS, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+            .addComponent(menuLogout, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
         );
         panelMenuLayout.setVerticalGroup(
             panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelMenuLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(menuArchivo, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addComponent(menuSS, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(menuLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -327,9 +354,7 @@ public class FrmPrincipal extends javax.swing.JFrame
                     .addGroup(layout.createSequentialGroup()
                         .addGap(1, 1, 1)
                         .addComponent(desktopPane))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(panelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE))))
+                    .addComponent(panelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)))
         );
 
         pack();
@@ -471,7 +496,12 @@ public class FrmPrincipal extends javax.swing.JFrame
         ui.flatLabel(lblX, "#CCCCCC", "#E81123", "#DC5C66");
         ui.flatLabel(lblMenu, "#D74738", "#B03A2E", "#EC7063");
         ui.lblIcon(lblX, "../vista/x.png", "../vista/xW.png");
-        ui.flatLabel(menuArchivo, "#626568", "#2d3436", "#1e272e");
+        ui.flatLabel(menuArchivo, "#242526", "#2D2E2F", "#111111");
+        ui.menusitos(menuArchivo, 1);
+        ui.flatLabel(menuSS, "#242526", "#2D2E2F", "#111111");
+        ui.menusitos(menuSS, 2);
+        ui.flatLabel(menuLogout, "#242526", "#D74738", "#E74C3C");
+        ui.menusitos(menuLogout, 1);
     }
 
     public static void main(String args[])
@@ -540,6 +570,8 @@ public class FrmPrincipal extends javax.swing.JFrame
     private javax.swing.JLabel lblX;
     private javax.swing.JLabel menuArchivo;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JLabel menuLogout;
+    private javax.swing.JLabel menuSS;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JPanel panelMenu;
     private javax.swing.JMenuItem pasteMenuItem;
