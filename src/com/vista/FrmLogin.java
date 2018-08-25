@@ -5,7 +5,7 @@
  */
 package com.vista;
 
-import static com.vista.FrmPrincipal.ii;
+import static com.vista.FrmPrincipalx.ii;
 import java.awt.Color;
 import com.utilidades.UITools;
 import static java.awt.Frame.NORMAL;
@@ -23,7 +23,7 @@ public class FrmLogin extends javax.swing.JFrame
     public FrmLogin()
     {
         initComponents();
-        uiTool.flatButton(jBtnLogin);
+        //uiTool.flatButton(jBtnLogin);
     }
 
     

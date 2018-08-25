@@ -14,10 +14,10 @@ public class InternalFrmInstitucion extends javax.swing.JInternalFrame
     public InternalFrmInstitucion()
     {
         initComponents();
-        ui.flatButton(jBtnRegistrar);
+        /*       ui.flatButton(jBtnRegistrar);
         ui.flatButton(jBtnEditar);
         ui.flatButton(jBtnEliminar);
-        ui.flatButton(jBtnLimpiar);
+        ui.flatButton(jBtnLimpiar);*/
     }
 
     /**
@@ -145,7 +145,7 @@ public class InternalFrmInstitucion extends javax.swing.JInternalFrame
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addGap(29, 29, 29)
                 .addComponent(jBtnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jBtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
