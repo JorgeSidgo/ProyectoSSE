@@ -215,7 +215,7 @@ alter table correo add constraint fk_correo_estudiante foreign key (idEstudiante
 
 -- Registrar
 delimiter $$
-create procedure p_registrarUsuario(
+create procedure registrarUsuario(
 	in nom varchar(50),
     in contra varchar(50),
     in rol int
@@ -227,7 +227,7 @@ $$
 
 -- Login
 delimiter $$
-create procedure p_login(
+create procedure login(
 	in nom varchar(50),
     in contra varchar(50)
 )
@@ -236,37 +236,140 @@ begin
 end
 $$
 
+  -- editar --
+delimiter $
+create procedure editarUsuario(
+	in nom varchar(50),
+    in contra varchar(50),
+    in idR varchar(50)
+)
+begin
+	update usuario set nomUsuario = nom, pass = pass, idRol = idR;
+end $
+
+	-- eliminar --
+delimiter $
+create procedure eliminarUsuario(
+	in idU varchar(50)
+)
+begin
+	delete from usuario where id = idU;
+end $
+
+	-- borrado logico --
+delimiter $
+create procedure borradoLogicoUsuario(
+	in idU varchar(50)
+)
+begin
+	update usuario set estado = 0 where id = idU;
+end $
+
 
 ### Institucion
-	-- Insert --
+	-- insertar --
 delimiter $
-create procedure insInstitu(in id int, in nombreInstitucion varchar(50), in direccion text, in correo varchar(50), in telefono varchar(10), in idTipoInstitucion int)
+create procedure insertarInstitucion(
+	in id int, in nombreInstitucion varchar(50),
+    in direccion text, in correo varchar(50),
+    in telefono varchar(10),
+    in idTipoInstitucion int
+)
 begin
 	insert into institucion values (id,nombreInstitucion,direccion,correo,telefono,idTipoInstitucion);
 end $
 
-	-- Update --
+	-- editar --
 delimiter $
-create procedure updInstitu(in id int, in nombreInstitucion varchar(50), in direc text, in correro varchar(50), in tel varchar(10), in idTipoInst int)
+create procedure editarInstitucion(in id int,
+	in nombreInstitucion varchar(50),
+    in direc text, in correro varchar(50),
+    in tel varchar(10),
+    in idTipoInst int
+)
 begin
 	update institucion set nombreInstitucion = nombreInstitucion, direccion = direc, correo = correo, telefono = tel, idTipoinstitucion = idTipoInst
 	where id = id;
 end $
 
-	-- delete --
+	-- eliminar --
 delimiter $
-create procedure dltInstitu(in id int)
+create procedure eliminarInstitucion(
+	in idI int
+)
 begin 
-	delete from Institucion where id = id;
+	delete from institucion where id = idI;
 end $
 
-	-- show --
+	-- borrado logico --
 delimiter $
-create procedure showInstitu()
-begin 
-	select * from Institucion;
+create procedure borradoLogicoInstitucion(
+	in idI int
+)
+begin
+	update institucion set estado = 0 where id = id;
 end $
 
+	-- mostrar --
+delimiter $
+create procedure mostrarInstitucion()
+begin 
+	select * from institucion;
+end $
+
+	-- buscarId --
+delimiter $
+create procedure buscarIdInstitucion(
+	in idI int
+)
+begin
+	select * from institucion where id = idI and estado = 1;
+end$
+
+
+
+	-- buscarNombre --
+delimiter $
+create procedure buscarNombreInstitucion(
+	in nombre varchar(50)
+)
+begin
+	select * from institucion where nombreInstitucion like concat('%',nombre,'%') and estado = 1;
+end $
+
+	-- papelera --
+delimiter $
+create procedure papeleraInstitucion()
+begin
+	select * from institucion where estado = 0;
+end $
+
+	-- buscarPapeleraID --
+delimiter $
+create procedure buscarPapeleraIDInstitucion(
+	in idI int
+)
+begin
+	select * from institucion where estado = 0 and id = idInstitucion;
+end $
+
+	-- buscarPapeleraNombre --
+delimiter $
+create procedure buscarPapeleraNombreInstitucion(
+	in nombre varchar(50)
+)
+begin
+	select * from institucion where estado = 0 and nombreInstitucion like concat('%',nombre,'%');
+end $
+
+	-- restaurar --
+delimiter $
+create procedure restaurarInstitucion(
+	in idI int
+)
+begin
+	update Institucion set estado = 1 where id = idI and estado = 0;
+end $
 
 /* Para llamar un procedimiento
 	call nombreProcedimiento(parametros)
@@ -294,6 +397,8 @@ create procedure showHojaServicio()
 begin 
 	select * from hojaserviciosocial;
 end $
+
+	-- 
 
 -- ------------------------------------------------------------------------------------------------------------------------------------------
 ### Solicitud 
