@@ -22,6 +22,55 @@ public class DaoUsuario extends Conexion
     public static int codRol;
     public static String nomUsuario;
     
+    Usuario u = new Usuario();
+    
+    public Usuario mostrarIdUsuario(int id)
+    {   
+        try
+        {
+            this.conectar();
+            String sql = "{call mostrarIdUsuario(?)}";
+            PreparedStatement pre = this.getCon().prepareStatement(sql);
+            pre.setInt(1, id);
+            
+            ResultSet res = pre.executeQuery();
+            
+            while(res.next())
+            {
+                u.setIdUsuario(res.getInt("id"));
+                u.setNomUsuario(res.getString("nomUsuario"));
+            }
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Error DaoUsuario: " + e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
+        
+        return u;
+    }
+    
+    public void insertarUsuario()
+    {
+        try
+        {
+            this.conectar();
+            String sql = "{call insertarUsuario(?)}";
+            PreparedStatement pre = this.getCon().prepareStatement(sql);
+            pre.setInt(1, 1);
+            
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Error DaoUsuario: " + e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
+    }
+    
     public boolean login(Usuario u)
     {
         boolean respuesta = false;
@@ -54,7 +103,7 @@ public class DaoUsuario extends Conexion
             
         } catch (Exception e)
         {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error DaoUsuario: " + e.getMessage());
         }
         finally
         {
