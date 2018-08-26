@@ -1,7 +1,9 @@
 package com.utilidades;
 
+import com.vista.FrmPrincipal;
 import com.vista.FrmPrincipalx;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
@@ -9,6 +11,8 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -25,6 +29,7 @@ import javax.swing.border.Border;
  */
 public class UITools
 {
+    private static boolean bandera = false;
 
     public void flatButton(JButton boton, String color1, String color2, String color3)
     {
@@ -65,11 +70,21 @@ public class UITools
         
     }
     
-    public void menusitos(JLabel label, int p, int pad)
+    public void menusitos(JLabel label, int p, int pad, boolean menuIt)
     {
         Border compuesto;
         Border outline = BorderFactory.createMatteBorder(0, 0, 0, 0, Color.decode("#3D3E3F"));
         Border padding = BorderFactory.createEmptyBorder(0, pad, 0, 0);
+        
+        /*if(menuIt)
+        {
+        label.addMouseListener(new MouseAdapter(){
+        public void mouseClicked(MouseEvent e)
+        {
+        //principal.cerrarMenu();
+        }
+        });
+        }*/
         
         switch(p){
             case 1:
@@ -83,6 +98,16 @@ public class UITools
         
         compuesto = BorderFactory.createCompoundBorder(outline, padding);
         label.setBorder(compuesto);
+    }
+    
+    public void menuClass(JLabel label, JLabel internal, int p)
+    {
+        menusitos(label, p, 10, false);
+        
+        label.setLayout(new BoxLayout(label, BoxLayout.X_AXIS));
+        internal.setIcon(new ImageIcon(getClass().getResource("../iconos/icons8-chevron-down-16.png")));
+        label.add(Box.createRigidArea(new Dimension(200,0)));
+        label.add(internal);
     }
     
     public void lblIcon(JLabel label, String icon1, String icon2)

@@ -14,10 +14,7 @@ public class InternalFrmInstitucion extends javax.swing.JInternalFrame
     public InternalFrmInstitucion()
     {
         initComponents();
-        /*       ui.flatButton(jBtnRegistrar);
-        ui.flatButton(jBtnEditar);
-        ui.flatButton(jBtnEliminar);
-        ui.flatButton(jBtnLimpiar);*/
+        initUi();
     }
 
     /**
@@ -52,7 +49,7 @@ public class InternalFrmInstitucion extends javax.swing.JInternalFrame
         setFocusCycleRoot(false);
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8-museum-20.png"))); // NOI18N
 
-        jPanel1.setBackground(new java.awt.Color(33, 47, 61));
+        jPanel1.setBackground(new java.awt.Color(36, 37, 38));
 
         jLabel1.setFont(new java.awt.Font("Product Sans", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -122,22 +119,27 @@ public class InternalFrmInstitucion extends javax.swing.JInternalFrame
 
         jBtnRegistrar.setBackground(new java.awt.Color(46, 204, 113));
         jBtnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/NewFile_6276.png"))); // NOI18N
         jBtnRegistrar.setText("Registrar");
         jBtnRegistrar.setPreferredSize(new java.awt.Dimension(73, 20));
 
         jBtnEditar.setBackground(new java.awt.Color(52, 152, 219));
         jBtnEditar.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/PencilAngled_16xLG_color.png"))); // NOI18N
         jBtnEditar.setText("Editar");
         jBtnEditar.setPreferredSize(new java.awt.Dimension(73, 20));
 
         jBtnEliminar.setBackground(new java.awt.Color(231, 76, 60));
         jBtnEliminar.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/StatusAnnotations_Blocked_16xMD_color.png"))); // NOI18N
         jBtnEliminar.setText("Eliminar");
         jBtnEliminar.setPreferredSize(new java.awt.Dimension(73, 20));
 
         jBtnLimpiar.setBackground(new java.awt.Color(127, 140, 141));
         jBtnLimpiar.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/EraseTool_203.png"))); // NOI18N
         jBtnLimpiar.setText("Limpiar");
+        jBtnLimpiar.setIconTextGap(5);
         jBtnLimpiar.setPreferredSize(new java.awt.Dimension(73, 20));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -146,13 +148,13 @@ public class InternalFrmInstitucion extends javax.swing.JInternalFrame
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addComponent(jBtnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jBtnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jBtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jBtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jBtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jBtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -226,6 +228,14 @@ public class InternalFrmInstitucion extends javax.swing.JInternalFrame
     }// </editor-fold>//GEN-END:initComponents
 
 
+    private void initUi()
+    {
+        ui.flatButton(jBtnRegistrar, "#2ECC71", "#2ECC71", "#2ECC71");
+        ui.flatButton(jBtnEditar, "#3498DB", "#3498DB", "#3498DB");
+        ui.flatButton(jBtnEliminar, "#E74C3C", "#E74C3C", "#E74C3C");
+        ui.flatButton(jBtnLimpiar, "#7F8C8D", "#7F8C8D", "#7F8C8D");
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jBtnEditar;
     private javax.swing.JButton jBtnEliminar;

@@ -15,10 +15,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyVetoException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -55,6 +59,8 @@ public class FrmPrincipal extends javax.swing.JFrame
     private int xx;
     private int xy;
     static ImageIcon ii;
+    JLabel dropSS = new JLabel();
+    JLabel dropArchivo = new JLabel();
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -89,8 +95,7 @@ public class FrmPrincipal extends javax.swing.JFrame
         menuSS = new javax.swing.JLabel();
         menuLogout = new javax.swing.JLabel();
         panelArchivo = new javax.swing.JPanel();
-        menItInstituciones = new javax.swing.JLabel();
-        menItInstituciones1 = new javax.swing.JLabel();
+        menuItInstituciones = new javax.swing.JLabel();
         panelSS = new javax.swing.JPanel();
         menuUsuarios = new javax.swing.JLabel();
 
@@ -286,6 +291,13 @@ public class FrmPrincipal extends javax.swing.JFrame
 
         lblIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/vista/logo.png"))); // NOI18N
+        lblIcon.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                lblIconMouseClicked(evt);
+            }
+        });
 
         desktopPane.setLayer(lblIcon, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
@@ -297,7 +309,7 @@ public class FrmPrincipal extends javax.swing.JFrame
         );
         desktopPaneLayout.setVerticalGroup(
             desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblIcon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)
+            .addComponent(lblIcon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
         );
 
         panelMenu.setBackground(new java.awt.Color(36, 37, 38));
@@ -356,37 +368,20 @@ public class FrmPrincipal extends javax.swing.JFrame
 
         panelArchivo.setBackground(new java.awt.Color(54, 56, 57));
 
-        menItInstituciones.setBackground(new java.awt.Color(54, 56, 57));
-        menItInstituciones.setDisplayedMnemonic('n');
-        menItInstituciones.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
-        menItInstituciones.setForeground(new java.awt.Color(255, 255, 255));
-        menItInstituciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8-building-16.png"))); // NOI18N
-        menItInstituciones.setText("Instituciones");
-        menItInstituciones.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 20, 0, 0)));
-        menItInstituciones.setIconTextGap(10);
-        menItInstituciones.setOpaque(true);
-        menItInstituciones.addMouseListener(new java.awt.event.MouseAdapter()
+        menuItInstituciones.setBackground(new java.awt.Color(54, 56, 57));
+        menuItInstituciones.setDisplayedMnemonic('n');
+        menuItInstituciones.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        menuItInstituciones.setForeground(new java.awt.Color(255, 255, 255));
+        menuItInstituciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8-building-16.png"))); // NOI18N
+        menuItInstituciones.setText("Instituciones");
+        menuItInstituciones.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 20, 0, 0)));
+        menuItInstituciones.setIconTextGap(10);
+        menuItInstituciones.setOpaque(true);
+        menuItInstituciones.addMouseListener(new java.awt.event.MouseAdapter()
         {
             public void mouseClicked(java.awt.event.MouseEvent evt)
             {
-                menItInstitucionesMouseClicked(evt);
-            }
-        });
-
-        menItInstituciones1.setBackground(new java.awt.Color(54, 56, 57));
-        menItInstituciones1.setDisplayedMnemonic('n');
-        menItInstituciones1.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
-        menItInstituciones1.setForeground(new java.awt.Color(255, 255, 255));
-        menItInstituciones1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8-building-16.png"))); // NOI18N
-        menItInstituciones1.setText("Estudiantes");
-        menItInstituciones1.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 20, 0, 0)));
-        menItInstituciones1.setIconTextGap(10);
-        menItInstituciones1.setOpaque(true);
-        menItInstituciones1.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
-                menItInstituciones1MouseClicked(evt);
+                menuItInstitucionesMouseClicked(evt);
             }
         });
 
@@ -394,16 +389,13 @@ public class FrmPrincipal extends javax.swing.JFrame
         panelArchivo.setLayout(panelArchivoLayout);
         panelArchivoLayout.setHorizontalGroup(
             panelArchivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(menItInstituciones, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
-            .addComponent(menItInstituciones1, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+            .addComponent(menuItInstituciones, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
         );
         panelArchivoLayout.setVerticalGroup(
             panelArchivoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelArchivoLayout.createSequentialGroup()
-                .addComponent(menItInstituciones, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(menItInstituciones1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 16, Short.MAX_VALUE))
+                .addComponent(menuItInstituciones, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         panelSS.setBackground(new java.awt.Color(54, 56, 57));
@@ -460,7 +452,7 @@ public class FrmPrincipal extends javax.swing.JFrame
                 .addComponent(panelSS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(menuUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 277, Short.MAX_VALUE)
                 .addComponent(menuLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -480,7 +472,7 @@ public class FrmPrincipal extends javax.swing.JFrame
                 .addComponent(jTitleBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(1, 1, 1)
+                        .addGap(0, 0, 0)
                         .addComponent(desktopPane))
                     .addComponent(panelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)))
         );
@@ -582,11 +574,13 @@ public class FrmPrincipal extends javax.swing.JFrame
         if(!menArchivo)
         {
             panelArchivo.setVisible(true);
+            dropArchivo.setIcon(new ImageIcon(getClass().getResource("../iconos/icons8-chevron-up-16.png")));
             menArchivo = true;
         }
         else
         {
             panelArchivo.setVisible(false);
+            dropArchivo.setIcon(new ImageIcon(getClass().getResource("../iconos/icons8-chevron-down-16.png")));
             menArchivo = false;
         }
     }//GEN-LAST:event_menuArchivoMouseClicked
@@ -596,29 +590,37 @@ public class FrmPrincipal extends javax.swing.JFrame
         if(!menSS)
         {
             panelSS.setVisible(true);
+            dropSS.setIcon(new ImageIcon(getClass().getResource("../iconos/icons8-chevron-up-16.png")));
             menSS = true;
         }
         else
         {
             panelSS.setVisible(false);
+            dropSS.setIcon(new ImageIcon(getClass().getResource("../iconos/icons8-chevron-down-16.png")));
             menSS = false;
         }
     }//GEN-LAST:event_menuSSMouseClicked
 
-    private void menItInstitucionesMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menItInstitucionesMouseClicked
-    {//GEN-HEADEREND:event_menItInstitucionesMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_menItInstitucionesMouseClicked
-
-    private void menItInstituciones1MouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menItInstituciones1MouseClicked
-    {//GEN-HEADEREND:event_menItInstituciones1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_menItInstituciones1MouseClicked
+    public void cerrarMenu()
+    {
+        panelMenu.setVisible(false);
+    }
+    
+    private void menuItInstitucionesMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuItInstitucionesMouseClicked
+    {//GEN-HEADEREND:event_menuItInstitucionesMouseClicked
+        InternalFrmInstitucion frm = new InternalFrmInstitucion();
+        abrirVentana(frm);
+    }//GEN-LAST:event_menuItInstitucionesMouseClicked
 
     private void menuUsuariosMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuUsuariosMouseClicked
     {//GEN-HEADEREND:event_menuUsuariosMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_menuUsuariosMouseClicked
+
+    private void lblIconMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_lblIconMouseClicked
+    {//GEN-HEADEREND:event_lblIconMouseClicked
+        menu();
+    }//GEN-LAST:event_lblIconMouseClicked
 
     private void borders(int a, int b, int c)
     {
@@ -695,27 +697,50 @@ public class FrmPrincipal extends javax.swing.JFrame
         ui.flatLabel(lblMenu, "#D74738", "#B03A2E", "#EC7063");
         ui.lblIcon(lblX, "../vista/x.png", "../vista/xW.png");
         ui.flatLabel(menuArchivo, "#242526", "#2D2E2F", "#111111");
-        ui.menusitos(menuArchivo, 1, 10);
-        menuArchivo.setLayout(new BoxLayout(menuArchivo, BoxLayout.X_AXIS));
-        JLabel dropArchivo = new JLabel();
-        dropArchivo.setIcon(new ImageIcon(getClass().getResource("../iconos/icons8-chevron-down-16.png")));
-        menuArchivo.add(Box.createRigidArea(new Dimension(200,0)));
-        menuArchivo.add(dropArchivo);
+        ui.menuClass(menuArchivo, dropArchivo, 1);
         ui.flatLabel(menuSS, "#242526", "#2D2E2F", "#111111");
-        ui.menusitos(menuSS, 2, 10);
-        menuSS.setLayout(new BoxLayout(menuSS, BoxLayout.X_AXIS));
-        JLabel dropSS = new JLabel();
-        dropSS.setIcon(new ImageIcon(getClass().getResource("../iconos/icons8-chevron-down-16.png")));
-        menuSS.add(Box.createRigidArea(new Dimension(200,0)));
-        menuSS.add(dropSS);
+        ui.menuClass(menuSS, dropSS, 10);
         ui.flatLabel(menuLogout, "#242526", "#D74738", "#E74C3C");
-        ui.menusitos(menuLogout, 1, 10);
+        ui.menusitos(menuLogout, 1, 10, false);
         ui.flatLabel(menuUsuarios, "#242526", "#2D2E2F", "#111111");
-        ui.menusitos(menuUsuarios, 2, 10);
-        
+        ui.menusitos(menuUsuarios, 1, 10, false);
+        ui.flatLabel(menuItInstituciones, "#363839", "#111111", "#2c3e50");
+        ui.menusitos(menuItInstituciones, 2, 20, true);
 
     }
 
+    private void abrirVentana(JInternalFrame form)
+    {
+        JInternalFrame[] frms = this.desktopPane.getAllFrames();
+        int n = frms.length;
+        if(n == 0)
+        {
+            this.desktopPane.add(form);
+            try
+            {
+                form.setMaximum(true);
+            } catch (PropertyVetoException ex)
+            {
+                Logger.getLogger(FrmPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            form.setVisible(true);
+        }
+        else
+        {
+            int opcion = JOptionPane.showConfirmDialog(this, "¿Desea cerrar este formulario para abrir " + form.getTitle() + "?\n" , "Abrir ventana", JOptionPane.YES_NO_OPTION);
+            if(opcion == 0)
+            {
+                JInternalFrame actual = this.desktopPane.getSelectedFrame();
+                actual.dispose();
+                abrirVentana(form);
+            }
+            else
+            {
+                form.dispose();
+            }
+        }
+    }
+    
     public static void main(String args[])
     {
         /* Set the Nimbus look and feel */
@@ -780,10 +805,9 @@ public class FrmPrincipal extends javax.swing.JFrame
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblUsuario;
     private javax.swing.JLabel lblX;
-    private javax.swing.JLabel menItInstituciones;
-    private javax.swing.JLabel menItInstituciones1;
     private javax.swing.JLabel menuArchivo;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JLabel menuItInstituciones;
     private javax.swing.JLabel menuLogout;
     private javax.swing.JLabel menuSS;
     private javax.swing.JLabel menuUsuarios;
@@ -791,7 +815,6 @@ public class FrmPrincipal extends javax.swing.JFrame
     private javax.swing.JPanel panelArchivo;
     private javax.swing.JPanel panelMenu;
     private javax.swing.JPanel panelSS;
-    private javax.swing.JPanel panelSS1;
     private javax.swing.JMenuItem pasteMenuItem;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
