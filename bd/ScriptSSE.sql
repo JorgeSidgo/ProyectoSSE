@@ -26,18 +26,21 @@ use sse;
 
 create table escuela(
 	id int auto_increment primary key unique,
-    nombreEscuela varchar(50)
+    nombreEscuela varchar(50),
+    estado int
 );
 
 create table carrera(
 	id int auto_increment primary key unique,
     nombreCarrera varchar(50),
+    estado int,
     idEscuela int not null
 );
 
 create table grupo(
 	id int auto_increment primary key unique,
     nombreGrupo varchar(50),
+    estado int,
     idCarrera int not null
 );
 
@@ -57,6 +60,7 @@ create table rol(
 create table materia(
 	id int auto_increment primary key unique,
     nombreMateria varchar(50),
+    estado int,
     codMateria varchar(10)
 );
 
@@ -107,6 +111,7 @@ create table institucion(
     direccion text,
     correo varchar(50),
     telefono varchar(10),
+    estado int,
     idTipoInstitucion int
 );
 
@@ -137,6 +142,7 @@ create table estudiante(
     apellidos varchar(50),
     correo varchar(50),
     idGrupo int not null,
+    estado int,
     idUsuario int not null
 );
 
@@ -145,6 +151,7 @@ create table coordinador(
     nombres varchar(50),
     apellidos varchar(50),
     correo varchar(125),
+    estado int,
     idUsuario int not null
 );
 
@@ -166,6 +173,7 @@ create table correo(
     fecha date,
     titulo varchar(25),
     idCoordinador int,
+    estado int,
     idEstudiante int
 );
 
