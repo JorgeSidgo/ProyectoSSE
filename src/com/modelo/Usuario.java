@@ -19,17 +19,42 @@ public class Usuario {
     private int idUsuario;
     private String nomUsuario;
     private String pass;
+    private int idRol;
     private int estado;
 
     public Usuario() {
     }
 
-    public Usuario(int idUsuario, String nomUsuario, String pass) {
+    public Usuario(int idUsuario, String nomUsuario, String pass, int idRol, int estado)
+    {
         this.idUsuario = idUsuario;
         this.nomUsuario = nomUsuario;
         this.pass = pass;
+        this.idRol = idRol;
+        this.estado = estado;
     }
 
+    public int getIdRol()
+    {
+        return idRol;
+    }
+
+    public void setIdRol(int idRol)
+    {
+        this.idRol = idRol;
+    }
+
+    public int getEstado()
+    {
+        return estado;
+    }
+
+    public void setEstado(int estado)
+    {
+        this.estado = estado;
+    }
+
+    
     public int getIdUsuario() {
         return idUsuario;
     }

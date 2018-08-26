@@ -471,9 +471,7 @@ public class FrmPrincipal extends javax.swing.JFrame
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jTitleBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(desktopPane))
+                    .addComponent(desktopPane)
                     .addComponent(panelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)))
         );
 

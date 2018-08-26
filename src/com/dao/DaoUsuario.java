@@ -39,6 +39,7 @@ public class DaoUsuario extends Conexion
             {
                 u.setIdUsuario(res.getInt("id"));
                 u.setNomUsuario(res.getString("nomUsuario"));
+                u.setIdRol(res.getInt("idRol"));
             }
         } catch (Exception e)
         {
@@ -52,15 +53,116 @@ public class DaoUsuario extends Conexion
         return u;
     }
     
-    public void insertarUsuario()
+    public Usuario mostrarNombreUsuario(String nombre)
+    {   
+        try
+        {
+            this.conectar();
+            String sql = "{call mostrarNombreUsuario(?)}";
+            PreparedStatement pre = this.getCon().prepareStatement(sql);
+            pre.setString(1, nombre);
+            
+            ResultSet res = pre.executeQuery();
+            
+            while(res.next())
+            {
+                u.setIdUsuario(res.getInt("id"));
+                u.setNomUsuario(res.getString("nomUsuario"));
+                u.setIdRol(res.getInt("idRol"));
+            }
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Error DaoUsuario: " + e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
+        
+        return u;
+    }
+    
+    public void insertarUsuario(Usuario u)
     {
         try
         {
             this.conectar();
-            String sql = "{call insertarUsuario(?)}";
+            String sql = "{call registrarUsuario(?, ?, ?)}";
             PreparedStatement pre = this.getCon().prepareStatement(sql);
-            pre.setInt(1, 1);
+            pre.setString(1, u.getNomUsuario());
+            pre.setString(2, u.getPass());
+            pre.setInt(3, u.getIdRol());
             
+            pre.executeUpdate();
+            pre.close();
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Error DaoUsuario: " + e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
+    }
+    
+    public void editarUsuario(Usuario u)
+    {
+        try
+        {
+            this.conectar();
+            String sql = "{call editarUsuario(?, ?, ?, ?)}";
+            PreparedStatement pre = this.getCon().prepareStatement(sql);
+            pre.setString(1, u.getNomUsuario());
+            pre.setString(2, u.getPass());
+            pre.setInt(3, u.getIdRol());
+            pre.setInt(4, u.getIdUsuario());
+            
+            pre.executeUpdate();
+            pre.close();
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Error DaoUsuario: " + e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
+    }
+    
+    public void eliminarUsuario(int id)
+    {
+        try
+        {
+            this.conectar();
+            String sql = "{call eliminarUsuario(?)}";
+            PreparedStatement pre = this.getCon().prepareStatement(sql);
+
+            pre.setInt(1, id);
+            
+            pre.executeUpdate();
+            pre.close();
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Error DaoUsuario: " + e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
+    }
+    
+    public void borradoLogicoUsuario(int id)
+    {
+        try
+        {
+            this.conectar();
+            String sql = "{call borradoLogicoUsuario(?)}";
+            PreparedStatement pre = this.getCon().prepareStatement(sql);
+
+            pre.setInt(1, id);
+            
+            pre.executeUpdate();
+            pre.close();
         } catch (Exception e)
         {
             JOptionPane.showMessageDialog(null, "Error DaoUsuario: " + e.getMessage());

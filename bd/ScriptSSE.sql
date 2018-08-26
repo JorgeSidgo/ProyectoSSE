@@ -214,6 +214,25 @@ alter table correo add constraint fk_correo_estudiante foreign key (idEstudiante
 ### Usuario
 
 -- Registrar
+
+delimiter $$
+create procedure mostrarIdUsuario(
+	in idUsuario int
+)
+begin
+	select * from usuario where id = idUsuario and estado = 1;
+end
+$$
+
+delimiter $$
+create procedure mostrarNombreUsuario(
+	in nombre varchar(50)
+)
+begin
+	select * from usuario where nomUsuario = nombre and estado = 1;
+end
+$$
+
 delimiter $$
 create procedure registrarUsuario(
 	in nom varchar(50),
@@ -241,16 +260,19 @@ delimiter $
 create procedure editarUsuario(
 	in nom varchar(50),
     in contra varchar(50),
-    in idR varchar(50)
+    in idR varchar(50),
+    in idUsuario int
 )
 begin
-	update usuario set nomUsuario = nom, pass = pass, idRol = idR;
+	update usuario 
+    set nomUsuario = nom, pass = sha1(pass), idRol = idR 
+    where id = idUsuario;
 end $
 
 	-- eliminar --
 delimiter $
 create procedure eliminarUsuario(
-	in idU varchar(50)
+	in idU int
 )
 begin
 	delete from usuario where id = idU;
@@ -259,10 +281,12 @@ end $
 	-- borrado logico --
 delimiter $
 create procedure borradoLogicoUsuario(
-	in idU varchar(50)
+	in idU int
 )
 begin
-	update usuario set estado = 0 where id = idU;
+	update usuario 
+    set estado = 0 
+    where id = idU;
 end $
 
 
@@ -270,44 +294,50 @@ end $
 	-- insertar --
 delimiter $
 create procedure insertarInstitucion(
-	in id int, in nombreInstitucion varchar(50),
-    in direccion text, in correo varchar(50),
+    in nombreInstitucion varchar(50),
+    in direccion text, 
+    in correo varchar(50),
     in telefono varchar(10),
     in idTipoInstitucion int
 )
 begin
-	insert into institucion values (id,nombreInstitucion,direccion,correo,telefono,idTipoInstitucion);
+	insert into institucion values (null,nombreInstitucion,direccion,correo,telefono,idTipoInstitucion);
 end $
 
 	-- editar --
 delimiter $
-create procedure editarInstitucion(in id int,
+create procedure editarInstitucion(
 	in nombreInstitucion varchar(50),
-    in direc text, in correro varchar(50),
+    in direc text, 
+    in correro varchar(50),
     in tel varchar(10),
-    in idTipoInst int
+    in idTipoInst int,
+    in idInstitucion int
 )
 begin
-	update institucion set nombreInstitucion = nombreInstitucion, direccion = direc, correo = correo, telefono = tel, idTipoinstitucion = idTipoInst
-	where id = id;
+	update institucion 
+    set nombreInstitucion = nombreInstitucion, direccion = direc, correo = correo, telefono = tel, idTipoinstitucion = idTipoInst
+	where id = idInstitucion;
 end $
 
 	-- eliminar --
 delimiter $
 create procedure eliminarInstitucion(
-	in idI int
+	in idInstitucion int
 )
 begin 
-	delete from institucion where id = idI;
+	delete from institucion where id = idInstitucion;
 end $
 
 	-- borrado logico --
 delimiter $
 create procedure borradoLogicoInstitucion(
-	in idI int
+	in idInstitucion int
 )
 begin
-	update institucion set estado = 0 where id = id;
+	update institucion 
+    set estado = 0 
+    where id = idInstitucion;
 end $
 
 	-- mostrar --
@@ -347,13 +377,13 @@ end $
 	-- buscarPapeleraID --
 delimiter $
 create procedure buscarPapeleraIDInstitucion(
-	in idI int
+	in idInstitucion int
 )
 begin
 	select * from institucion where estado = 0 and id = idInstitucion;
 end $
 
-	-- buscarPapeleraNombre --
+-- buscarPapeleraNombre --
 delimiter $
 create procedure buscarPapeleraNombreInstitucion(
 	in nombre varchar(50)
@@ -365,30 +395,40 @@ end $
 	-- restaurar --
 delimiter $
 create procedure restaurarInstitucion(
-	in idI int
+	in idInstitucion int
 )
 begin
-	update Institucion set estado = 1 where id = idI and estado = 0;
+	update Institucion set estado = 1 where id = idInstitucion and estado = 0;
 end $
 
-/* Para llamar un procedimiento
-	call nombreProcedimiento(parametros)
-*/
 
 ### Hoja de Solicitud
 	-- Insert --
 delimiter $
-create procedure insHojaServicio(in id int, in idEstudiante int, in idInstituicion int, in idCoordinador int, in fechaInicio date, in fechaFinalizacion date)
+create procedure insHojaServicio(	
+    in idEstudiante int, 
+    in idInstituicion int, 
+    in idCoordinador int, 
+    in fechaInicio date, 
+    in fechaFinalizacion date
+)
 begin 
-	insert into hojaserviciosocial values (id,idEstudiante,idInstitucion,idCoordinador,fechaInicio,fechaFinalizacion);
+	insert into hojaserviciosocial values (null,idEstudiante,idInstitucion,idCoordinador,fechaInicio,fechaFinalizacion);
 end $
 
 	-- Update --
 delimiter $
-create procedure updHojaServicio(in id int, in idEs int, in idInst int, in idCo int, in fechaInicio date, in fechaFin date)
+create procedure updHojaServicio(
+    in idEs int, 
+    in idInst int, 
+    in idCo int, 
+    in fechaInicio date, 
+    in fechaFin date,
+    in idHoja int
+)
 begin
 	update hojaserviciosocial set idEstudiante = idEs, idInstitucion = idInst, idCoordinador = idCo, fechaInicio = fechaInicio, fechaFinalizacion = fechaFin
-    where id = id;
+    where id = idHoja;
 end $
 
 	-- show --
@@ -404,24 +444,40 @@ end $
 ### Solicitud 
 	-- Insert
 delimiter $
-create procedure insSolicitud(in id int, in idEstudiante int, in idCoordinador int, in idInstituicion int, in fecha date, in com text, in estado int)
+create procedure insSolicitud(
+    in idEstudiante int, 
+    in idCoordinador int, 
+    in idInstituicion int, 
+    in fecha date, 
+    in com text,
+    in estado int)
 begin 
-	insert into solicitud values (id,idEstudiante,idCoordinador,idInstitucion,fecha,com,estado);
+	insert into solicitud values (null,idEstudiante,idCoordinador,idInstitucion,fecha,com,estado);
 end $
 
 	-- Update --
 delimiter $
-create procedure updSolicitud(in id int, in idEs int, in idCo int, in idInst int, in fecha date, in com text, in estado int)
+create procedure updSolicitud(
+	in idSolicitud int, 
+    in idEs int, 
+    in idCo int, 
+    in idInst int, 
+    in fecha date, 
+    in com text, 
+    in estado int)
 begin
-	update solicitud set idEstudiante = idEs, idCoordinador = idCo, idInstitucion = idInst, fecha = fecha, comentarios = com, estado = estado
-    where id = id;
+	update solicitud 
+    set idEstudiante = idEs, idCoordinador = idCo, idInstitucion = idInst, fecha = fecha, comentarios = com, estado = estado
+    where id = idSolicitud;
 end $
 
 	-- delete --
 delimiter $
-create procedure dltSolicitud(in id int)
+create procedure dltSolicitud(
+	in idSolicitud int
+)
 begin 
-	delete from solicitud where id = id;
+	delete from solicitud where id = idSolicitud;
 end $
 
 	-- show --
