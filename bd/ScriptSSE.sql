@@ -314,7 +314,7 @@ end $
 	-- buscarNombre --
 delimiter $
 create procedure buscarNombreUsuario(
-	in nombre int
+	in nombre varchar(50)
 )
 begin
 	select * from usuario where estado = 1 and nomUsuario like concat('%',nombre,'%');
@@ -332,8 +332,27 @@ delimiter $
 create procedure buscarPapeleraIDUsuario(
 	in idU int
 )
-begin select *
+begin 
+	select * from usuario where estado = 0 and id = idU;
+end $
+
+	-- buscarPapeleraNombre --
+delimiter $
+create procedure buscarPapeleraNombreUsuario(
+	in nombre varchar(50)
+)
+begin
+	select * from usuario where estado = 0 and nomUsuario like concat('%',nombre,'%');
+end $
     
+	-- restaurar --
+delimiter $
+create procedure restaurarUsuario(
+	in idU int
+)
+begin
+	update usuario set estado = 1 where estado = 0 and id = idU;
+end $
 
 ### Institucion
 	-- insertar --
