@@ -233,7 +233,7 @@ public class FrmLogin extends javax.swing.JFrame
         {
             u.setNomUsuario(this.jTxtNombre.getText());
             u.setPass(String.valueOf(this.jTxtPass.getPassword()).trim());
-            System.out.println(String.valueOf(this.jTxtPass.getPassword()).trim());
+            
             if(dao.login(u))
             {
                 FrmPrincipal frm = new FrmPrincipal();

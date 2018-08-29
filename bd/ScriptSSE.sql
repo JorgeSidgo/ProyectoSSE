@@ -27,20 +27,20 @@ use sse;
 create table escuela(
 	id int auto_increment primary key unique,
     nombreEscuela varchar(50),
-    estado int
+    estado int default 1
 );
 
 create table carrera(
 	id int auto_increment primary key unique,
     nombreCarrera varchar(50),
-    estado int,
+    estado int default 1,
     idEscuela int not null
 );
 
 create table grupo(
 	id int auto_increment primary key unique,
     nombreGrupo varchar(50),
-    estado int,
+    estado int default 1,
     idCarrera int not null
 );
 
@@ -48,7 +48,7 @@ create table usuario(
 	id int auto_increment primary key unique,
     nomUsuario varchar(25) not null,
     pass varchar(128),
-    estado int,
+    estado int default 1,
     idRol int
 );
 
@@ -60,7 +60,7 @@ create table rol(
 create table materia(
 	id int auto_increment primary key unique,
     nombreMateria varchar(50),
-    estado int,
+    estado int default 1,
     codMateria varchar(10)
 );
 
@@ -111,7 +111,7 @@ create table institucion(
     direccion text,
     correo varchar(50),
     telefono varchar(10),
-    estado int,
+    estado int default 1,
     idTipoInstitucion int
 );
 
@@ -127,7 +127,7 @@ create table solicitud(
     idInstitucion int not null,
     fecha date,
     comentarios text,
-    estado int
+    estado int default 1
 );
 
 create table estadoSolicitud(
@@ -142,7 +142,8 @@ create table estudiante(
     apellidos varchar(50),
     correo varchar(50),
     idGrupo int not null,
-    estado int,
+    solvencia int,
+    estado int default 1,
     idUsuario int not null
 );
 
@@ -151,7 +152,7 @@ create table coordinador(
     nombres varchar(50),
     apellidos varchar(50),
     correo varchar(125),
-    estado int,
+    estado int default 1,
     idUsuario int not null
 );
 
@@ -173,7 +174,7 @@ create table correo(
     fecha date,
     titulo varchar(25),
     idCoordinador int,
-    estado int,
+    estado int default 1,
     idEstudiante int
 );
 
@@ -499,9 +500,9 @@ create procedure p_registrarCoordinador(
 )
 begin
 	declare idUsuario int;
-	call p_registrarUsuario(nomUsuario, contra, 4);
+	call registrarUsuario(nomUsuario, contra, 4);
     set idUsuario = (select max(id) from usuario);
-    insert into coordinador values(null, nom, ape, corr, idUsuario);
+    insert into coordinador values(null, nom, ape, corr, 1, idUsuario);
 end
 $$
 
@@ -515,9 +516,11 @@ insert into rol values(null, 'Invitado');
 insert into rol values(null, 'Coordinador');
 insert into rol values(null, 'Estudiante');
 
-insert into escuela values (null, 'Escuela de Ingenieria en Computacion');
-insert into carrera values (null, 'Tecnico en Ingenieria de Sistemas', 1);
-insert into grupo values (null, 'SIS12-A', 1);
+select * from carrera;
+
+insert into escuela values (null, 'Escuela de Ingenieria en Computacion', 1);
+insert into carrera values (null, 'Tecnico en Ingenieria de Sistemas', 1, 1);
+insert into grupo values (null, 'SIS12-A', 1, 1);
 
 call p_registrarCoordinador('Giovanni Ariel', 'Tzec Chavez', 'giovanni.tzec@gmail.com', 'GiovanniTzec', 'tugfa');
 

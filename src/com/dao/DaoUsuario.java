@@ -180,7 +180,7 @@ public class DaoUsuario extends Conexion
         try
         {
             this.conectar();
-            String sql = "{call p_login(?, ?)}";
+            String sql = "{call login(?, ?)}";
             PreparedStatement pre = this.getCon().prepareStatement(sql);
             
             pre.setString(1, u.getNomUsuario());
