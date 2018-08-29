@@ -214,7 +214,7 @@ alter table correo add constraint fk_correo_estudiante foreign key (idEstudiante
 
 ### Usuario
 
--- Registrar
+	-- mostrarIdUsuario --
 
 delimiter $$
 create procedure mostrarIdUsuario(
@@ -225,6 +225,8 @@ begin
 end
 $$
 
+	-- mostrarNombreUsuario --
+
 delimiter $$
 create procedure mostrarNombreUsuario(
 	in nombre varchar(50)
@@ -233,6 +235,8 @@ begin
 	select * from usuario where nomUsuario = nombre and estado = 1;
 end
 $$
+
+	-- registrar --
 
 delimiter $$
 create procedure registrarUsuario(
@@ -290,6 +294,66 @@ begin
     where id = idU;
 end $
 
+	-- mostrar --
+delimiter $
+create procedure mostrarUsuario()
+begin
+	select * from usuario where estado = 1;
+end $
+
+drop procedure mostrarUsuario;
+
+	-- buscarID --
+delimiter $
+create procedure buscarIDUsuario(
+	in idU int
+)
+begin
+	select * from usuario where estado = 1 and id = idU;
+end $
+
+	-- buscarNombre --
+delimiter $
+create procedure buscarNombreUsuario(
+	in nombre varchar(50)
+)
+begin
+	select * from usuario where estado = 1 and nomUsuario like concat('%',nombre,'%');
+end $
+
+	-- papelera --
+delimiter $
+create procedure papeleraUsuario()
+begin
+	select * from usuario where estado = 0;
+end $
+
+	-- buscarPapeleraID --
+delimiter $
+create procedure buscarPapeleraIDUsuario(
+	in idU int
+)
+begin 
+	select * from usuario where estado = 0 and id = idU;
+end $
+
+	-- buscarPapeleraNombre --
+delimiter $
+create procedure buscarPapeleraNombreUsuario(
+	in nombre varchar(50)
+)
+begin
+	select * from usuario where estado = 0 and nomUsuario like concat('%',nombre,'%');
+end $
+    
+	-- restaurar --
+delimiter $
+create procedure restaurarUsuario(
+	in idU int
+)
+begin
+	update usuario set estado = 1 where estado = 0 and id = idU;
+end $
 
 ### Institucion
 	-- insertar --
