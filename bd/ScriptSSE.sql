@@ -504,6 +504,61 @@ begin
 	select * from hojaServicioSocial;
 end $
 
+-- Eliminar Hoja de servicio Social --
+delimiter $
+create procedure eliminarHojaServicio(
+	in idHS int
+)
+begin
+	delete from hojaServicioSocial where id = idHS;
+end $
+
+-- Borrado Logico Hoja de Servicio Social --
+delimiter $
+create procedure borradoLogioHojaServicio(
+	in idHS int
+)
+begin
+	update hojaServicioSocial set estado = 0 where id = idHs;
+end $
+
+-- Buscar por fecha de Inicio Exacta Hoja de servicio social --
+delimiter $
+create procedure buscarFechaInicioExactaHojaServicio(
+	in fechaEx date
+)
+begin
+	select * from hojaServicioSocial where fechaInicio like cast(concat('%',fechaEx,'%') as date);
+end $
+
+-- Buscar por fecha de Finalizacion Exacta Hoja de servicio social --
+delimiter $
+create procedure buscarFechaFinalizacionExactaHojaServicio(
+	in fechaEx date
+)
+begin
+	select * from hojaServicioSocial where fechaFinalizacion like cast(concat('%',fechaEx,'%') as date);
+end $
+
+-- Buscar por año en fecha inicio Hoja de Servicio Social --
+delimiter $
+create procedure buscarAnioInicioHojaServicio(
+	in anio year
+)
+begin
+	select * from hojaServicioSocial where year(fechaFinalizacion) like concat('%',anio,'%');
+end $
+
+-- buscar por mes en fecha inicio hoja de Servicio Social --
+delimiter $
+create procedure buscarMesInicioHojaServicio(
+	in mes varchar(2)
+)
+begin
+	select * from hojaServicioSocial where month(fechaFinalizacion) like concat('%',mes,'%');
+end $
+
+
 -- ==================================================================================================
 ### Solicitud
 -- ==================================================================================================
