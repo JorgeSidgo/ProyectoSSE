@@ -514,11 +514,10 @@ create procedure insertarSolicitud(
     in idEstudiante int, 
     in idCoordinador int, 
     in idInstituicion int, 
-    in fecha date, 
-    in com text
+    in fecha date    
 )
 begin 
-	insert into solicitud values (null,idEstudiante,idCoordinador,idInstitucion,fecha,com, default);
+	insert into solicitud values (null,idEstudiante,idCoordinador,idInstitucion,fecha,'', default);
 end $
 
 -- Editar Solicitud

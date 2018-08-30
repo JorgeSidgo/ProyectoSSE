@@ -69,7 +69,7 @@ public class FrmPrincipal extends javax.swing.JFrame
 
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
-        openMenuItem = new javax.swing.JMenuItem();
+        keysInstituciones = new javax.swing.JMenuItem();
         saveMenuItem = new javax.swing.JMenuItem();
         saveAsMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
@@ -105,10 +105,25 @@ public class FrmPrincipal extends javax.swing.JFrame
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
+        fileMenu.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                fileMenuActionPerformed(evt);
+            }
+        });
 
-        openMenuItem.setMnemonic('o');
-        openMenuItem.setText("Open");
-        fileMenu.add(openMenuItem);
+        keysInstituciones.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
+        keysInstituciones.setMnemonic('o');
+        keysInstituciones.setText("Instituciones");
+        keysInstituciones.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                keysInstitucionesActionPerformed(evt);
+            }
+        });
+        fileMenu.add(keysInstituciones);
 
         saveMenuItem.setMnemonic('s');
         saveMenuItem.setText("Save");
@@ -379,6 +394,7 @@ public class FrmPrincipal extends javax.swing.JFrame
         menuItInstituciones.setForeground(new java.awt.Color(255, 255, 255));
         menuItInstituciones.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8-building-16.png"))); // NOI18N
         menuItInstituciones.setText("Instituciones");
+        menuItInstituciones.setToolTipText("Mayus + Shift + I");
         menuItInstituciones.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 20, 0, 0)));
         menuItInstituciones.setIconTextGap(10);
         menuItInstituciones.setOpaque(true);
@@ -699,10 +715,16 @@ public class FrmPrincipal extends javax.swing.JFrame
         menu = false;
     }
     
-    private void menuItInstitucionesMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuItInstitucionesMouseClicked
-    {//GEN-HEADEREND:event_menuItInstitucionesMouseClicked
+    
+    private void abrirInstituciones()
+    {
         InternalFrmInstitucion frm = new InternalFrmInstitucion();
         abrirVentana(frm);
+    }
+    
+    private void menuItInstitucionesMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuItInstitucionesMouseClicked
+    {//GEN-HEADEREND:event_menuItInstitucionesMouseClicked
+        abrirInstituciones();
     }//GEN-LAST:event_menuItInstitucionesMouseClicked
 
     private void menuUsuariosMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuUsuariosMouseClicked
@@ -737,6 +759,16 @@ public class FrmPrincipal extends javax.swing.JFrame
     {//GEN-HEADEREND:event_menuPapeleraMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_menuPapeleraMouseClicked
+
+    private void fileMenuActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_fileMenuActionPerformed
+    {//GEN-HEADEREND:event_fileMenuActionPerformed
+        
+    }//GEN-LAST:event_fileMenuActionPerformed
+
+    private void keysInstitucionesActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_keysInstitucionesActionPerformed
+    {//GEN-HEADEREND:event_keysInstitucionesActionPerformed
+        abrirInstituciones();
+    }//GEN-LAST:event_keysInstitucionesActionPerformed
 
     private void borders(int a, int b, int c)
     {
@@ -923,6 +955,7 @@ public class FrmPrincipal extends javax.swing.JFrame
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JPanel jTitleBar;
+    private javax.swing.JMenuItem keysInstituciones;
     private javax.swing.JLabel lblIcon;
     private javax.swing.JLabel lblMax;
     private javax.swing.JLabel lblMenu;
@@ -940,7 +973,6 @@ public class FrmPrincipal extends javax.swing.JFrame
     private javax.swing.JLabel menuPapelera;
     private javax.swing.JLabel menuSS;
     private javax.swing.JLabel menuUsuarios;
-    private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JPanel panelArchivo;
     private javax.swing.JPanel panelMenu;
     private javax.swing.JPanel panelSS;
