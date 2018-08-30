@@ -643,7 +643,8 @@ insert into rol values(null, 'Administrador');
 insert into rol values(null, 'Invitado');
 insert into rol values(null, 'Coordinador');
 insert into rol values(null, 'Estudiante');
-
+use sse;
+select * from rol order by id asc;
 insert into escuela values (null, 'Escuela de Ingenieria en Computacion', 1);
 insert into carrera values (null, 'Tecnico en Ingenieria de Sistemas', 1, 1);
 insert into grupo values (null, 'SIS12-A', 1, 1);
