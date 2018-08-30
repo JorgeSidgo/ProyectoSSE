@@ -629,6 +629,106 @@ begin
 end
 $$
 
+-- Insertar Carrera --
+delimiter $
+create procedure insertarCarrera(
+	in nomCar varchar(50),
+    in idEsc int
+)
+begin
+	insert into carrera values(null,nomCar,default,idEsc);
+end $
+
+-- Modificar Carrera --
+delimiter $
+create procedure modificarCarrera(
+	in idCar int,
+    in nomCar varchar(50),
+    in idEsc int
+)
+begin
+	update carrera set id = idCar, nombreCarrera = nomCar, idEscuela = idEsc;
+end $
+
+-- Eliminar Carrera
+delimiter $
+create procedure eliminarCarrera(
+	in idCar int
+)
+begin
+	delete from carrera where id = idCar;
+end $
+
+-- Borrado Lógico --
+delimiter $
+create procedure borradoLogicoCarrera(
+	in idCar int
+)
+begin
+	update carrera set estado = 0;
+end $
+
+-- Mostrar Carrera --
+delimiter $
+create procedure mostrarCarrera()
+begin
+	select * from carrera where estado = 1;
+end $
+
+drop procedure mostrarCarrera;
+
+-- Buscar Carrera por nombre --
+delimiter $
+create procedure buscarNombreCarrera(
+	in nom varchar(50)
+)
+begin
+	select * from carrera where nombreCarrera = nom  and estado = 1;
+end $
+
+-- buscar Carrera por ID --
+delimiter $
+create procedure buscarIDCarrera(
+	in idCar int
+)
+begin
+	select * from carrera where id = idCar and estado = 1;
+end $
+
+-- mostrar Papelera Carrera --
+delimiter $
+create procedure mostrarPapeleraCarrera()
+begin
+	select * from carrera where estado = 0;
+end $
+
+-- buscar en papelera carrera por nombre --
+delimiter $
+create procedure buscarNombrePapeleraCarrera(
+	in nom varchar(50)
+)
+begin
+	select * from carrera where nombreCarrera = nom and estado = 0;
+end $
+
+-- buscar en papelera carrera por id --
+delimiter $
+create procedure buscarIDPapeleraCarrera(
+	in idCar int
+)
+begin
+	select * from carrera where id = idCar and estado = 0;
+end $
+
+-- restaurar carrera en papelera --
+delimiter $
+create procedure restaurarCarrera(
+	in idCar int
+)
+begin
+	update carrera set estado = 1 where id = idCar;
+end $
+
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##### VISTAS ######
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -643,15 +743,10 @@ insert into rol values(null, 'Administrador');
 insert into rol values(null, 'Invitado');
 insert into rol values(null, 'Coordinador');
 insert into rol values(null, 'Estudiante');
-
+use sse;
+select * from rol order by id asc;
 insert into escuela values (null, 'Escuela de Ingenieria en Computacion', 1);
 insert into carrera values (null, 'Tecnico en Ingenieria de Sistemas', 1, 1);
 insert into grupo values (null, 'SIS12-A', 1, 1);
 
-call insertarUsuario('Jorge Sidgo', 'tugfa', 1);
 call insertarCoordinador('Giovanni Ariel', 'Tzec Chavez', 'giovanni.tzec@gmail.com', 'GiovanniTzec', 'tugfa', 1);
-
-
-
-
-
