@@ -568,7 +568,7 @@ create procedure insertarCoordinador(
 )
 begin
 	declare idUsuario int;
-	call registrarUsuario(nomUsuario, contra, 4);
+	call insertarUsuario(nomUsuario, contra, 4);
     set idUsuario = (select max(id) from usuario);
     insert into coordinador values(null, nom, ape, corr, default, idUsuario, carrera);
 end
