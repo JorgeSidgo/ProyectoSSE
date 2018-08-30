@@ -9,7 +9,7 @@
  *      - Benjamín Ramírez
  *      - Abdiel Martínez
  *      - Jorge Sidgo
- * Fecha: 30/07/2018
+ * Fecha: 29/08/2018
  */
 
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -76,7 +76,8 @@ create table hojaServicioSocial(
     idInstitucion int,
     idCoordinador int,
     fechaInicio date,
-    fechaFinalizacion date
+    fechaFinalizacion date,
+    nHoras int
 );
 
 create table horarioServicio(
@@ -141,6 +142,7 @@ create table estudiante(
     nombres varchar(50),
     apellidos varchar(50),
     correo varchar(50),
+    fechaIngreso date,
     idGrupo int not null,
     solvencia int,
     estado int default 1,
@@ -153,7 +155,8 @@ create table coordinador(
     apellidos varchar(50),
     correo varchar(125),
     estado int default 1,
-    idUsuario int not null
+    idUsuario int not null,
+    idCarrera int not null
 );
 
 create table horarioAtencion(
@@ -188,6 +191,7 @@ alter table usuario add constraint fk_usuario_rol foreign key (idRol) references
 alter table estudiante add constraint fk_estudiante_usuario foreign key (idUsuario) references usuario(id);
 alter table estudiante add constraint fk_estudiante_grupo foreign key (idGrupo) references grupo(id);
 alter table coordinador add constraint fk_coordinador_usuario foreign key (idUsuario) references usuario(id);
+alter table coordinador add constraint fk_coordinador_carrera foreign key (idCarrera) references carrera(id);
 alter table horarioAtencion add constraint fk_horarioAtencion_coordinador foreign key (idCoordinador) references coordinador(id);
 alter table detalleHorarioAtencion add constraint fk_detalleHorarioAtencion_horarioAtencion foreign key (idHorarioAtencion) references horarioAtencion(id);
 alter table institucion add constraint fk_institucion_tipoInstitucion foreign key (idTipoInstitucion) references tipoInstitucion(id);
@@ -211,11 +215,11 @@ alter table correo add constraint fk_correo_estudiante foreign key (idEstudiante
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##### PROCEDIMIENTOS ALMACENADOS ######
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+-- ==================================================================================================
 ### Usuario
-
-	-- mostrarIdUsuario --
-
+-- ==================================================================================================
+	
+-- Mostrar Usuario por id
 delimiter $$
 create procedure mostrarIdUsuario(
 	in idUsuario int
@@ -225,8 +229,7 @@ begin
 end
 $$
 
-	-- mostrarNombreUsuario --
-
+-- Mostrar Usuario por Nombre
 delimiter $$
 create procedure mostrarNombreUsuario(
 	in nombre varchar(50)
@@ -236,16 +239,15 @@ begin
 end
 $$
 
-	-- registrar --
-
+-- Registrar Usuario
 delimiter $$
-create procedure registrarUsuario(
+create procedure insertarUsuario(
 	in nom varchar(50),
     in contra varchar(50),
     in rol int
 )
 begin
-	insert into usuario values(null, nom, sha1(contra), 1, rol);
+	insert into usuario values(null, nom, sha1(contra), default, rol);
 end
 $$
 
@@ -260,7 +262,7 @@ begin
 end
 $$
 
-  -- editar --
+-- Editar Usuario
 delimiter $
 create procedure editarUsuario(
 	in nom varchar(50),
@@ -274,7 +276,7 @@ begin
     where id = idUsuario;
 end $
 
-	-- eliminar --
+-- Eliminar Usuario
 delimiter $
 create procedure eliminarUsuario(
 	in idU int
@@ -283,7 +285,7 @@ begin
 	delete from usuario where id = idU;
 end $
 
-	-- borrado logico --
+-- Borrado Lógico de Usuario
 delimiter $
 create procedure borradoLogicoUsuario(
 	in idU int
@@ -294,25 +296,16 @@ begin
     where id = idU;
 end $
 
-	-- mostrar --
+-- Mostrar Usuarios
 delimiter $
-create procedure mostrarUsuario()
+create procedure mostrarUsuarios()
 begin
 	select * from usuario where estado = 1;
 end $
 
 drop procedure mostrarUsuario;
 
-	-- buscarID --
-delimiter $
-create procedure buscarIDUsuario(
-	in idU int
-)
-begin
-	select * from usuario where estado = 1 and id = idU;
-end $
-
-	-- buscarNombre --
+-- Buscar Usuario por Nombre
 delimiter $
 create procedure buscarNombreUsuario(
 	in nombre varchar(50)
@@ -321,14 +314,14 @@ begin
 	select * from usuario where estado = 1 and nomUsuario like concat('%',nombre,'%');
 end $
 
-	-- papelera --
+-- Mostrar Papelera de Usuarios
 delimiter $
 create procedure papeleraUsuario()
 begin
 	select * from usuario where estado = 0;
 end $
 
-	-- buscarPapeleraID --
+-- Buscar en papelera de Usuario por id
 delimiter $
 create procedure buscarPapeleraIDUsuario(
 	in idU int
@@ -337,7 +330,7 @@ begin
 	select * from usuario where estado = 0 and id = idU;
 end $
 
-	-- buscarPapeleraNombre --
+-- Buscar en papelera de Usuario por Nombre
 delimiter $
 create procedure buscarPapeleraNombreUsuario(
 	in nombre varchar(50)
@@ -346,7 +339,7 @@ begin
 	select * from usuario where estado = 0 and nomUsuario like concat('%',nombre,'%');
 end $
     
-	-- restaurar --
+-- Restaurar Usuario
 delimiter $
 create procedure restaurarUsuario(
 	in idU int
@@ -355,8 +348,11 @@ begin
 	update usuario set estado = 1 where estado = 0 and id = idU;
 end $
 
+-- ==================================================================================================
 ### Institucion
-	-- insertar --
+-- ==================================================================================================
+
+-- Insertar Institucion
 delimiter $
 create procedure insertarInstitucion(
     in nombreInstitucion varchar(50),
@@ -366,26 +362,26 @@ create procedure insertarInstitucion(
     in idTipoInstitucion int
 )
 begin
-	insert into institucion values (null,nombreInstitucion,direccion,correo,telefono,idTipoInstitucion);
+	insert into institucion values (null,nombreInstitucion,direccion,correo,telefono, default, idTipoInstitucion);
 end $
 
-	-- editar --
+-- Editar Institucion
 delimiter $
 create procedure editarInstitucion(
 	in nombreInstitucion varchar(50),
     in direc text, 
-    in correro varchar(50),
+    in corr varchar(50),
     in tel varchar(10),
     in idTipoInst int,
     in idInstitucion int
 )
 begin
 	update institucion 
-    set nombreInstitucion = nombreInstitucion, direccion = direc, correo = correo, telefono = tel, idTipoinstitucion = idTipoInst
+    set nombreInstitucion = nombreInstitucion, direccion = direc, correo = corr, telefono = tel, idTipoinstitucion = idTipoInst
 	where id = idInstitucion;
 end $
 
-	-- eliminar --
+-- Eliminar Institucion
 delimiter $
 create procedure eliminarInstitucion(
 	in idInstitucion int
@@ -394,7 +390,7 @@ begin
 	delete from institucion where id = idInstitucion;
 end $
 
-	-- borrado logico --
+-- Borrado Logico Institucion
 delimiter $
 create procedure borradoLogicoInstitucion(
 	in idInstitucion int
@@ -405,14 +401,14 @@ begin
     where id = idInstitucion;
 end $
 
-	-- mostrar --
+-- Mostrar Instituciones
 delimiter $
 create procedure mostrarInstitucion()
 begin 
-	select * from institucion;
+	select * from institucion where estado = 1;
 end $
 
-	-- buscarId --
+-- Buscar Institucion por id	
 delimiter $
 create procedure buscarIdInstitucion(
 	in idI int
@@ -423,7 +419,7 @@ end$
 
 
 
-	-- buscarNombre --
+-- Buscar Institucion por Nombre	
 delimiter $
 create procedure buscarNombreInstitucion(
 	in nombre varchar(50)
@@ -432,14 +428,14 @@ begin
 	select * from institucion where nombreInstitucion like concat('%',nombre,'%') and estado = 1;
 end $
 
-	-- papelera --
+-- Mostrar Papelera de Institucion
 delimiter $
 create procedure papeleraInstitucion()
 begin
 	select * from institucion where estado = 0;
 end $
 
-	-- buscarPapeleraID --
+-- Buscar Institucion en papelera por id
 delimiter $
 create procedure buscarPapeleraIDInstitucion(
 	in idInstitucion int
@@ -448,7 +444,7 @@ begin
 	select * from institucion where estado = 0 and id = idInstitucion;
 end $
 
--- buscarPapeleraNombre --
+-- Buscar Institucion en papelera por nombre
 delimiter $
 create procedure buscarPapeleraNombreInstitucion(
 	in nombre varchar(50)
@@ -457,136 +453,148 @@ begin
 	select * from institucion where estado = 0 and nombreInstitucion like concat('%',nombre,'%');
 end $
 
-	-- restaurar --
+-- Restaurar Institucion
 delimiter $
 create procedure restaurarInstitucion(
 	in idInstitucion int
 )
 begin
-	update Institucion set estado = 1 where id = idInstitucion and estado = 0;
+	update institucion set estado = 1 where id = idInstitucion and estado = 0;
 end $
 
 
-### Hoja de Solicitud
-	-- Insert --
+-- ==================================================================================================
+### Hoja de Servicio Social
+-- ==================================================================================================
+
+-- Insertar Hoja de Servicio Social
 delimiter $
-create procedure insHojaServicio(	
+create procedure insertarHojaServicio(	
     in idEstudiante int, 
     in idInstituicion int, 
     in idCoordinador int, 
     in fechaInicio date, 
-    in fechaFinalizacion date
+    in fechaFinalizacion date,
+    in horas int
 )
 begin 
-	insert into hojaserviciosocial values (null,idEstudiante,idInstitucion,idCoordinador,fechaInicio,fechaFinalizacion);
+	insert into hojaServicioSocial values (null,idEstudiante,idInstitucion,idCoordinador,fechaInicio,fechaFinalizacion, horas);
 end $
 
-	-- Update --
+-- Editar Hoja de Servicio Social
 delimiter $
-create procedure updHojaServicio(
+create procedure editarHojaServicio(
     in idEs int, 
     in idInst int, 
     in idCo int, 
     in fechaInicio date, 
     in fechaFin date,
-    in idHoja int
+    in idHoja int,
+    in horas int
 )
 begin
-	update hojaserviciosocial set idEstudiante = idEs, idInstitucion = idInst, idCoordinador = idCo, fechaInicio = fechaInicio, fechaFinalizacion = fechaFin
+	update hojaServicioSocial set idEstudiante = idEs, idInstitucion = idInst, idCoordinador = idCo, fechaInicio = fechaInicio, fechaFinalizacion = fechaFin, nHoras = horas
     where id = idHoja;
 end $
 
-	-- show --
+-- Mostrar Hojas de Servicio
 delimiter $
-create procedure showHojaServicio()
+create procedure mostrarHojaServicio()
 begin 
-	select * from hojaserviciosocial;
+	select * from hojaServicioSocial;
 end $
 
-	-- 
--- 
--- ------------------------------------------------------------------------------------------------------------------------------------------
-### Solicitud 
-	-- Insert
+-- ==================================================================================================
+### Solicitud
+-- ==================================================================================================
+	
+-- Insertar Solicitud
 delimiter $
-create procedure insSolicitud(
+create procedure insertarSolicitud(
     in idEstudiante int, 
     in idCoordinador int, 
     in idInstituicion int, 
     in fecha date, 
-    in com text,
-    in estado int)
+    in com text
+)
 begin 
-	insert into solicitud values (null,idEstudiante,idCoordinador,idInstitucion,fecha,com,estado);
+	insert into solicitud values (null,idEstudiante,idCoordinador,idInstitucion,fecha,com, default);
 end $
 
-	-- Update --
+-- Editar Solicitud
 delimiter $
-create procedure updSolicitud(
+create procedure editarSolicitud(
 	in idSolicitud int, 
     in idEs int, 
     in idCo int, 
     in idInst int, 
     in fecha date, 
-    in com text, 
-    in estado int)
+    in com text
+)
 begin
 	update solicitud 
-    set idEstudiante = idEs, idCoordinador = idCo, idInstitucion = idInst, fecha = fecha, comentarios = com, estado = estado
+    set idEstudiante = idEs, idCoordinador = idCo, idInstitucion = idInst, fecha = fecha, comentarios = com
     where id = idSolicitud;
 end $
 
-	-- delete --
+-- Eliminar Solicitud
 delimiter $
-create procedure dltSolicitud(
+create procedure eliminarSolicitud(
 	in idSolicitud int
 )
 begin 
 	delete from solicitud where id = idSolicitud;
 end $
 
-	-- show --
+-- Mostrar Solicitud
 delimiter $
-create procedure showSolicitud()
+create procedure mostrarSolicitud()
 begin 
 	select * from solicitud;
 end $
 
+-- ==================================================================================================
+### Coordinador
+-- ==================================================================================================
 
--- Coordinador
+-- Registrar Coordinador
 delimiter $$
-create procedure p_registrarCoordinador(
+create procedure insertarCoordinador(
 	in nom varchar(50),
     in ape varchar(50),
     in corr varchar(124),
     in nomUsuario varchar(50),
-    in contra varchar(50)
+    in contra varchar(50),
+    in carrera int
 )
 begin
 	declare idUsuario int;
 	call registrarUsuario(nomUsuario, contra, 4);
     set idUsuario = (select max(id) from usuario);
-    insert into coordinador values(null, nom, ape, corr, 1, idUsuario);
+    insert into coordinador values(null, nom, ape, corr, default, idUsuario, carrera);
 end
 $$
+
+-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
+##### VISTAS ######
+-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##### DATOS INICIALES ######
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+-- Roles de canela papu ;v
 insert into rol values(null, 'Desarrollador');
 insert into rol values(null, 'Administrador');
 insert into rol values(null, 'Invitado');
 insert into rol values(null, 'Coordinador');
 insert into rol values(null, 'Estudiante');
 
-select * from carrera;
-
 insert into escuela values (null, 'Escuela de Ingenieria en Computacion', 1);
 insert into carrera values (null, 'Tecnico en Ingenieria de Sistemas', 1, 1);
 insert into grupo values (null, 'SIS12-A', 1, 1);
 
-call p_registrarCoordinador('Giovanni Ariel', 'Tzec Chavez', 'giovanni.tzec@gmail.com', 'GiovanniTzec', 'tugfa');
+call insertarCoordinador('Giovanni Ariel', 'Tzec Chavez', 'giovanni.tzec@gmail.com', 'GiovanniTzec', 'tugfa', 1);
 
 
 
