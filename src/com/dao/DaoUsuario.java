@@ -1,8 +1,11 @@
 package com.dao;
 
 import com.conexion.Conexion;
+import com.modelo.Rol;
 import com.modelo.Usuario;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 /**
  * Favor iterar la versión si se requiere realizar un cambio en la estructura de la clase
@@ -23,6 +26,41 @@ public class DaoUsuario extends Conexion
     public static String nomUsuario;
     
     Usuario u = new Usuario();
+
+    public List<Usuario> mostrarUsuarios()
+    {
+        List<Usuario> listaUsuario = new ArrayList();
+        
+        try
+        {
+            this.conectar();
+            String sql = "{call mostrarUsuarios()}";
+            PreparedStatement pre = this.getCon().prepareStatement(sql);
+            
+            ResultSet res = pre.executeQuery();
+            
+            while(res.next())
+            {
+                Usuario u = new Usuario();
+                
+                u.setIdUsuario(res.getInt("id"));
+                u.setNomUsuario(res.getString("nomUsuario"));
+                u.setIdRol(res.getInt("idRol"));
+                
+                listaUsuario.add(u);
+            }
+            
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Error DaoUsuario: " + e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
+        
+        return listaUsuario;
+    }
     
     public Usuario mostrarIdUsuario(int id)
     {   
@@ -37,6 +75,7 @@ public class DaoUsuario extends Conexion
             
             while(res.next())
             {
+                Usuario u = new Usuario();
                 u.setIdUsuario(res.getInt("id"));
                 u.setNomUsuario(res.getString("nomUsuario"));
                 u.setIdRol(res.getInt("idRol"));
@@ -213,5 +252,73 @@ public class DaoUsuario extends Conexion
         }
         
         return respuesta;
+    }
+    
+    public Rol getRol(int id)
+    {
+        Rol r = new Rol();
+        
+        try
+        {
+            this.conectar();
+            String sql = "select * from rol where id = ?";
+            PreparedStatement pre = this.getCon().prepareStatement(sql);
+            pre.setInt(1, id);
+            ResultSet res = pre.executeQuery();
+            
+            while(res.next())
+            {
+                r.setId(res.getInt("id"));
+                r.setDescRol(res.getString("descRol"));
+            }
+            
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Error DaoUsuario: " + e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
+        
+        return r;
+    }
+    
+    public List<Rol> mostrarRoles()
+    {
+        List<Rol> listaRoles = new ArrayList();
+        
+        try
+        {
+            this.conectar();
+            String sql = "select * from rol order by id asc";
+            PreparedStatement pre = this.getCon().prepareStatement(sql);
+            ResultSet res = pre.executeQuery();
+            
+            while(res.next())
+            {   
+                Rol r = new Rol();
+    
+                if(res.getString("descRol").equals("Estudiante"))
+                {
+                }
+                else
+                {
+                    r.setId(res.getInt("id"));
+                    r.setDescRol(res.getString("descRol"));
+
+                    listaRoles.add(r);
+                }
+            }
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Error DaoUsuario: " + e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
+        
+        return listaRoles;
     }
 }
