@@ -62,9 +62,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
         jBtnEditar = new javax.swing.JButton();
         jBtnEliminar = new javax.swing.JButton();
         jBtnLimpiar = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTabla = new javax.swing.JTable();
+        jChShow = new javax.swing.JCheckBox();
         jPanelCoordinador = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jTxtNombreInstitucion1 = new javax.swing.JTextField();
@@ -74,6 +72,13 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
         jTxtNombreInstitucion3 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
+        jLayeredPane2 = new javax.swing.JLayeredPane();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTabla = new javax.swing.JTable();
+        jPanel4 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTablaCoordinadores = new javax.swing.JTable();
 
         setBorder(null);
         setClosable(true);
@@ -191,6 +196,16 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
         jBtnLimpiar.setIconTextGap(5);
         jBtnLimpiar.setPreferredSize(new java.awt.Dimension(73, 20));
 
+        jChShow.setBackground(new java.awt.Color(250, 250, 250));
+        jChShow.setText("Mostrar Coordinadores");
+        jChShow.addItemListener(new java.awt.event.ItemListener()
+        {
+            public void itemStateChanged(java.awt.event.ItemEvent evt)
+            {
+                jChShowItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -204,6 +219,8 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
                 .addComponent(jBtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jBtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jChShow)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -214,42 +231,8 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
                     .addComponent(jBtnRegistrar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                     .addComponent(jBtnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                     .addComponent(jBtnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(jBtnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-
-        jPanel4.setBackground(new java.awt.Color(250, 250, 250));
-
-        jTabla.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][]
-            {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String []
-            {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jTabla.setRowHeight(23);
-        jScrollPane1.setViewportView(jTabla);
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+                    .addComponent(jBtnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(jChShow))
                 .addContainerGap())
         );
 
@@ -284,7 +267,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
                 .addGroup(jPanelCoordinadorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
                     .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(64, Short.MAX_VALUE))
+                .addContainerGap(140, Short.MAX_VALUE))
         );
 
         jPanelCoordinadorLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jComboBox2, jTxtNombreInstitucion3});
@@ -315,6 +298,95 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
 
         jPanelCoordinadorLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jComboBox2, jTxtNombreInstitucion3});
 
+        jLayeredPane2.setBackground(new java.awt.Color(153, 153, 153));
+        jLayeredPane2.setOpaque(true);
+
+        jPanel2.setBackground(new java.awt.Color(250, 250, 250));
+
+        jTabla.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][]
+            {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String []
+            {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTabla);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel4.setBackground(new java.awt.Color(250, 250, 250));
+
+        jTablaCoordinadores.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][]
+            {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String []
+            {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTablaCoordinadores);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2)
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jLayeredPane2.setLayer(jPanel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(jPanel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
+        javax.swing.GroupLayout jLayeredPane2Layout = new javax.swing.GroupLayout(jLayeredPane2);
+        jLayeredPane2.setLayout(jLayeredPane2Layout);
+        jLayeredPane2Layout.setHorizontalGroup(
+            jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jLayeredPane2Layout.setVerticalGroup(
+            jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -323,7 +395,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
             .addComponent(jPanelUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanelCoordinador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLayeredPane2)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -336,7 +408,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLayeredPane2))
         );
 
         pack();
@@ -355,31 +427,45 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
             this.jPanelCoordinador.setVisible(false);
         }
     }//GEN-LAST:event_jCbxRolesItemStateChanged
+
+    private void jChShowItemStateChanged(java.awt.event.ItemEvent evt)//GEN-FIRST:event_jChShowItemStateChanged
+    {//GEN-HEADEREND:event_jChShowItemStateChanged
+        if(this.jChShow.isSelected())
+        {
+            jPanel4.setVisible(true);
+            jTabla.setVisible(true);
+        }
+        else
+        {
+            jPanel4.setVisible(false);
+            jTabla.setVisible(false);
+        }
+    }//GEN-LAST:event_jChShowItemStateChanged
     
     private void llenarTablaUsuarios()
     {
-        String[] columnas = {"N°", "Nombre de Usuario", "Permisos"};
-        Object[] obj = new Object[3];
-        DefaultTableModel tabla = new DefaultTableModel(null, columnas);
-        
-        try
-        {
-            List lista = daoU.mostrarUsuarios();
-            
-            for (int i = 0; i < lista.size(); i++)
-            {
-                u = (Usuario) lista.get(i);
-                
-                obj[0] = u.getIdUsuario();
-                obj[1] = u.getNomUsuario();
-                obj[2] = daoU.getRol(u.getIdRol()).getDescRol();
-                
-                tabla.addRow(obj);
-            }
-            this.jTabla.setModel(tabla);
-        } catch (Exception e)
-        {
-        }
+    String[] columnas = {"N°", "Nombre de Usuario", "Permisos"};
+    Object[] obj = new Object[3];
+    DefaultTableModel tabla = new DefaultTableModel(null, columnas);
+    
+    try
+    {
+    List lista = daoU.mostrarUsuarios();
+    
+    for (int i = 0; i < lista.size(); i++)
+    {
+    u = (Usuario) lista.get(i);
+    
+    obj[0] = u.getIdUsuario();
+    obj[1] = u.getNomUsuario();
+    obj[2] = daoU.getRol(u.getIdRol()).getDescRol();
+    
+    tabla.addRow(obj);
+    }
+    this.jTabla.setModel(tabla);
+    } catch (Exception e)
+    {
+    }
     }
     
     private void llenarComboRoles()
@@ -401,6 +487,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
     }
     private void initUi()
     {
+        jPanel4.setVisible(false);
         llenarComboRoles();
         llenarTablaUsuarios();
         jPanelCoordinador.setVisible(false);
@@ -416,6 +503,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
     private javax.swing.JButton jBtnLimpiar;
     private javax.swing.JButton jBtnRegistrar;
     private javax.swing.JComboBox<String> jCbxRoles;
+    private javax.swing.JCheckBox jChShow;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -425,14 +513,18 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLayeredPane jLayeredPane2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanelCoordinador;
     private javax.swing.JPanel jPanelUsuario;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTabla;
+    private javax.swing.JTable jTablaCoordinadores;
     private javax.swing.JTextField jTxtNombreInstitucion;
     private javax.swing.JTextField jTxtNombreInstitucion1;
     private javax.swing.JTextField jTxtNombreInstitucion2;
