@@ -239,7 +239,7 @@ begin
 end
 $$
 
--- Registrar Usuario
+-- Insertar Usuario
 delimiter $$
 create procedure insertarUsuario(
 	in nom varchar(50),
@@ -628,6 +628,19 @@ begin
     insert into coordinador values(null, nom, ape, corr, default, idUsuario, carrera);
 end
 $$
+
+-- Mostrar Coordinador
+
+delimiter $$
+create procedure mostrarCoordinadores()
+begin
+	select * from coordinador where estado = 1;
+end
+$$
+
+-- ==================================================================================================
+### Carrera
+-- ==================================================================================================
 
 -- Insertar Carrera --
 delimiter $

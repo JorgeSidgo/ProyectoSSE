@@ -20,17 +20,20 @@ public class Coordinador {
     private String nombres;
     private String apellidos;
     private String correo;
-    Usuario idUsuario;
+    private int idUsuario;
+    private int idCarrera;
 
     public Coordinador() {
     }
 
-    public Coordinador(int idCoordinador, String nombres, String apellidos, String correo, Usuario idUsuario) {
+    public Coordinador(int idCoordinador, String nombres, String apellidos, String correo, int idUsuario, int idCarrera)
+    {
         this.idCoordinador = idCoordinador;
         this.nombres = nombres;
         this.apellidos = apellidos;
         this.correo = correo;
         this.idUsuario = idUsuario;
+        this.idCarrera = idCarrera;
     }
 
     public int getIdCoordinador() {
@@ -65,12 +68,24 @@ public class Coordinador {
         this.correo = correo;
     }
 
-    public Usuario getIdUsuario() {
+    public int getIdUsuario()
+    {
         return idUsuario;
     }
 
-    public void setIdUsuario(Usuario idUsuario) {
+    public void setIdUsuario(int idUsuario)
+    {
         this.idUsuario = idUsuario;
+    }
+
+    public int getIdCarrera()
+    {
+        return idCarrera;
+    }
+
+    public void setIdCarrera(int idCarrera)
+    {
+        this.idCarrera = idCarrera;
     }
 
 }

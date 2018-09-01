@@ -75,14 +75,13 @@ public class DaoUsuario extends Conexion
             
             while(res.next())
             {
-                Usuario u = new Usuario();
                 u.setIdUsuario(res.getInt("id"));
                 u.setNomUsuario(res.getString("nomUsuario"));
                 u.setIdRol(res.getInt("idRol"));
             }
         } catch (Exception e)
         {
-            JOptionPane.showMessageDialog(null, "Error DaoUsuario: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error Usuario: " + e.getMessage());
         }
         finally
         {
@@ -111,7 +110,7 @@ public class DaoUsuario extends Conexion
             }
         } catch (Exception e)
         {
-            JOptionPane.showMessageDialog(null, "Error DaoUsuario: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error Usuario: " + e.getMessage());
         }
         finally
         {
@@ -126,7 +125,7 @@ public class DaoUsuario extends Conexion
         try
         {
             this.conectar();
-            String sql = "{call registrarUsuario(?, ?, ?)}";
+            String sql = "{call insertarUsuario(?, ?, ?)}";
             PreparedStatement pre = this.getCon().prepareStatement(sql);
             pre.setString(1, u.getNomUsuario());
             pre.setString(2, u.getPass());
@@ -136,7 +135,7 @@ public class DaoUsuario extends Conexion
             pre.close();
         } catch (Exception e)
         {
-            JOptionPane.showMessageDialog(null, "Error DaoUsuario: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error Usuario: " + e.getMessage());
         }
         finally
         {
@@ -160,7 +159,7 @@ public class DaoUsuario extends Conexion
             pre.close();
         } catch (Exception e)
         {
-            JOptionPane.showMessageDialog(null, "Error DaoUsuario: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error Usuario: " + e.getMessage());
         }
         finally
         {
@@ -182,7 +181,7 @@ public class DaoUsuario extends Conexion
             pre.close();
         } catch (Exception e)
         {
-            JOptionPane.showMessageDialog(null, "Error DaoUsuario: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error Usuario: " + e.getMessage());
         }
         finally
         {
@@ -204,7 +203,7 @@ public class DaoUsuario extends Conexion
             pre.close();
         } catch (Exception e)
         {
-            JOptionPane.showMessageDialog(null, "Error DaoUsuario: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error Usuario: " + e.getMessage());
         }
         finally
         {
@@ -244,7 +243,7 @@ public class DaoUsuario extends Conexion
             
         } catch (Exception e)
         {
-            JOptionPane.showMessageDialog(null, "Error DaoUsuario: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error Usuario: " + e.getMessage());
         }
         finally
         {
@@ -274,7 +273,7 @@ public class DaoUsuario extends Conexion
             
         } catch (Exception e)
         {
-            JOptionPane.showMessageDialog(null, "Error DaoUsuario: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error Usuario: " + e.getMessage());
         }
         finally
         {
@@ -312,7 +311,7 @@ public class DaoUsuario extends Conexion
             }
         } catch (Exception e)
         {
-            JOptionPane.showMessageDialog(null, "Error DaoUsuario: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Error Usuario: " + e.getMessage());
         }
         finally
         {
