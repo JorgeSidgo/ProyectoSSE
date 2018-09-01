@@ -239,7 +239,7 @@ begin
 end
 $$
 
--- Insertar Usuario
+-- Registrar Usuario
 delimiter $$
 create procedure insertarUsuario(
 	in nom varchar(50),
@@ -629,7 +629,7 @@ begin
 end
 $$
 
--- Mostrar Coordinador
+--- Mostrar Coordinador
 
 delimiter $$
 create procedure mostrarCoordinadores()
@@ -641,6 +641,7 @@ $$
 -- ==================================================================================================
 ### Carrera
 -- ==================================================================================================
+
 
 -- Insertar Carrera --
 delimiter $
@@ -742,6 +743,27 @@ begin
 	update carrera set estado = 1 where id = idCar;
 end $
 
+-- Solvencias --
+
+-- mostrar candidatos a solvencia --
+delimiter $
+create procedure mostrarCandidatos()
+begin
+	select e.id, e.carnet, e.nombres, e.apellidos, h.nHoras from estudiante e
+    inner join hojaserviciosocial h on e.id = h.idEstudiante
+    where nHoras >=300;
+end $
+
+-- buscar candidatos a solvencia por nombre --
+delimiter $
+create procedure buscarNombreCandidatos(
+	in nom varchar(50)
+)
+begin
+	select e.id, e.carnet, e.nombres, e.apellidos, h.nHoras from estudiante e
+    inner join hojaserviciosocial h on e.id = h.idEstudiante
+    where nHoras>=300 and e.nombres like concat('%',nom,'%');
+end $
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##### VISTAS ######
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
