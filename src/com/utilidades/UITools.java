@@ -4,8 +4,11 @@ import com.vista.FrmPrincipal;
 import com.vista.FrmPrincipalx;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.io.InputStream;
 import java.util.logging.Level;
@@ -30,9 +33,12 @@ import javax.swing.border.Border;
 public class UITools
 {
     private static boolean bandera = false;
+    private static boolean asdf = false;
 
     public void flatButton(JButton boton, String color1, String color2, String color3)
     {
+        asdf = false;
+        
         try
         {
             Color background = Color.decode(color1);
@@ -45,6 +51,25 @@ public class UITools
             boton.setContentAreaFilled(false);
             boton.setOpaque(true);
 
+            boton.addPropertyChangeListener(new PropertyChangeListener() {
+                @Override
+                public void propertyChange(PropertyChangeEvent evt) {
+                    if(!boton.isEnabled() && !asdf)
+                    {
+                        flatButton(boton, "#636e72", "#636e72", "#636e72");
+                        asdf = true;
+                    }
+                    else if(boton.isEnabled() && asdf)
+                    {
+                        flatButton(boton, color1, color2, color3);
+                        asdf = false;
+                    }
+                    else
+                    {
+                        
+                    }
+                }
+            });
             boton.addMouseListener(new MouseAdapter(){
             public void mouseEntered(MouseEvent e)
             {
@@ -62,6 +87,7 @@ public class UITools
             {
                 boton.setBackground(background);
             }
+            
         });
         } catch (Exception e)
         {

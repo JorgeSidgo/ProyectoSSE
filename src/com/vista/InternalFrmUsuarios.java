@@ -61,15 +61,14 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanelUsuario = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jTxtNombreUsuario = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
+        lblContra = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jCbxRoles = new javax.swing.JComboBox<>();
         jTxtPass = new javax.swing.JPasswordField();
@@ -124,14 +123,12 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Nombre de Usuario:");
 
-        jLabel4.setText("Contraseña:");
+        lblContra.setText("Contraseña:");
 
         jLabel5.setText("Permisos:");
 
-        jCbxRoles.addItemListener(new java.awt.event.ItemListener()
-        {
-            public void itemStateChanged(java.awt.event.ItemEvent evt)
-            {
+        jCbxRoles.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jCbxRolesItemStateChanged(evt);
             }
         });
@@ -147,7 +144,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
                     .addComponent(jTxtNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel4)
+                    .addComponent(lblContra)
                     .addComponent(jTxtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,7 +166,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
                         .addComponent(jTxtNombreUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelUsuarioLayout.createSequentialGroup()
                         .addGroup(jPanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblContra, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,10 +185,8 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
         jBtnRegistrar.setText("Registrar");
         jBtnRegistrar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jBtnRegistrar.setPreferredSize(new java.awt.Dimension(73, 20));
-        jBtnRegistrar.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jBtnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnRegistrarActionPerformed(evt);
             }
         });
@@ -201,6 +196,11 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
         jBtnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/PencilAngled_16xLG_color.png"))); // NOI18N
         jBtnEditar.setText("Editar");
         jBtnEditar.setPreferredSize(new java.awt.Dimension(73, 20));
+        jBtnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnEditarActionPerformed(evt);
+            }
+        });
 
         jBtnEliminar.setBackground(new java.awt.Color(231, 76, 60));
         jBtnEliminar.setForeground(new java.awt.Color(255, 255, 255));
@@ -217,10 +217,8 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
 
         jChShow.setBackground(new java.awt.Color(250, 250, 250));
         jChShow.setText("Mostrar Coordinadores");
-        jChShow.addItemListener(new java.awt.event.ItemListener()
-        {
-            public void itemStateChanged(java.awt.event.ItemEvent evt)
-            {
+        jChShow.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jChShowItemStateChanged(evt);
             }
         });
@@ -320,23 +318,19 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         jTabla.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][]
-            {
+            new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null}
             },
-            new String []
-            {
+            new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
         jTabla.setRowHeight(22);
-        jTabla.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        jTabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTablaMouseClicked(evt);
             }
         });
@@ -433,9 +427,25 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
         else
         {
             this.jTxtNombreUsuario.setText(jTabla.getValueAt(fila, 1).toString());
-            //this.jtxt
+            this.lblContra.setText("Nueva Contraseña:");
+            this.jCbxRoles.setSelectedItem(jTabla.getValueAt(fila, 2).toString());
         }
     }//GEN-LAST:event_jTablaMouseClicked
+
+    private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditarActionPerformed
+        jBtnEliminar.setEnabled(false);
+    }//GEN-LAST:event_jBtnEditarActionPerformed
+    
+    private void limpiar()
+    {
+        this.jTxtNombreUsuario.setText("");
+        this.jTxtPass.setText("");
+        this.jTxtNombre.setText("");
+        this.jTxtApellido.setText("");
+        this.jTxtCorreo.setText("");
+        this.jCbxRoles.setSelectedIndex(0);
+        this.jCbxCarrera.setSelectedIndex(0);
+    }
     
     private void llenarTablaUsuarios()
     {
@@ -514,6 +524,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
             
             daoU.insertarUsuario(u);
             
+            limpiar();
             llenarTablaUsuarios();
             
         } catch (Exception e)
@@ -587,6 +598,8 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
     }
     private void initUi()
     {
+        //jBtnEditar.setEnabled(false);
+        //jBtnEliminar.setEnabled(false);
         llenarComboRoles();
         llenarComboCarreras();
         llenarTablaUsuarios();
@@ -609,7 +622,6 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
@@ -626,5 +638,6 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTxtNombre;
     private javax.swing.JTextField jTxtNombreUsuario;
     private javax.swing.JPasswordField jTxtPass;
+    private javax.swing.JLabel lblContra;
     // End of variables declaration//GEN-END:variables
 }
