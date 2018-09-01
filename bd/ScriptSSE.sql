@@ -181,6 +181,14 @@ create table correo(
     idEstudiante int
 );
 
+create table solvencia(
+	id int auto_increment primary key unique,
+    fecha date,
+    idEstudiante int,
+    idCoordinador int,
+    estado int
+);
+
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##### LLAVES FORANEAS ######
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -749,9 +757,9 @@ end $
 delimiter $
 create procedure mostrarCandidatos()
 begin
-	select e.id, e.carnet, e.nombres, e.apellidos, h.nHoras from estudiante e
+	select e.id, e.carnet, e.nombres, e.apellidos, i.nombreInstitucion, h.nHoras from estudiante e
     inner join hojaserviciosocial h on e.id = h.idEstudiante
-    where nHoras >=300;
+    inner join institucion on i.id = h.idInstitucion;
 end $
 
 -- buscar candidatos a solvencia por nombre --
@@ -760,9 +768,22 @@ create procedure buscarNombreCandidatos(
 	in nom varchar(50)
 )
 begin
-	select e.id, e.carnet, e.nombres, e.apellidos, h.nHoras from estudiante e
+	select e.id, e.carnet, e.nombres, e.apellidos, i.nombreInstitucion, h.nHoras from estudiante e
     inner join hojaserviciosocial h on e.id = h.idEstudiante
-    where nHoras>=300 and e.nombres like concat('%',nom,'%');
+    inner join institucion on i.id = h.idInstitucion
+    where e.nombres like concat('%',nom,'%');
+end $
+
+-- buscar candidatos a solvencias por carnet --
+delimiter $
+create procedure buscarCarnetCandidatos(
+	in car varchar(10)
+)
+begin
+	select e.id, e.carnet, e.nombres, e.apellidos, i.nombreInstitucion, h.nHoras from estudiante e
+    inner join hojaserviciosocial h on e.id = h.idEstudiante
+    inner join institucion on i.id = h.idInstitucion
+    where e.carnet like concat('%',car,'%');
 end $
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##### VISTAS ######
