@@ -33,11 +33,35 @@ import javax.swing.border.Border;
 public class UITools
 {
     private static boolean bandera = false;
-    private static boolean asdf = false;
+    private boolean asdf;
+    
+    private Color b;
+    private Color h;
+    private Color a;
+    
+ 
+    
+    public void initBotones(JButton boton, String color1, String color2, String color3)
+    {
+        boton.addPropertyChangeListener(new PropertyChangeListener() {
+                @Override
+                public void propertyChange(PropertyChangeEvent evt) {
+                    if(!boton.isEnabled())
+                    {
+                        flatButton(boton, "#636e72", "#636e72", "#636e72");
+                        //asdf = false;
+                    }
+                    else
+                    {
+                        flatButton(boton, color1, color2, color3);
+                    //asdf = true;
+                    }
+                }
+            });
+    }
 
     public void flatButton(JButton boton, String color1, String color2, String color3)
     {
-        asdf = false;
         
         try
         {
@@ -50,26 +74,7 @@ public class UITools
             boton.setFocusPainted(false);
             boton.setContentAreaFilled(false);
             boton.setOpaque(true);
-
-            boton.addPropertyChangeListener(new PropertyChangeListener() {
-                @Override
-                public void propertyChange(PropertyChangeEvent evt) {
-                    if(!boton.isEnabled() && !asdf)
-                    {
-                        flatButton(boton, "#636e72", "#636e72", "#636e72");
-                        asdf = true;
-                    }
-                    else if(boton.isEnabled() && asdf)
-                    {
-                        flatButton(boton, color1, color2, color3);
-                        asdf = false;
-                    }
-                    else
-                    {
-                        
-                    }
-                }
-            });
+            
             boton.addMouseListener(new MouseAdapter(){
             public void mouseEntered(MouseEvent e)
             {
@@ -89,12 +94,16 @@ public class UITools
             }
             
         });
+           
+            
         } catch (Exception e)
         {
             
         }
         
     }
+    
+    
     
     public void menusitos(JLabel label, int p, int pad, boolean menuIt)
     {

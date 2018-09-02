@@ -13,8 +13,14 @@ import com.modelo.Coordinador;
 import com.modelo.Rol;
 import com.modelo.Usuario;
 import com.utilidades.UITools;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.List;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -61,7 +67,8 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -72,6 +79,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jCbxRoles = new javax.swing.JComboBox<>();
         jTxtPass = new javax.swing.JPasswordField();
+        jTxtId = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jBtnRegistrar = new javax.swing.JButton();
         jBtnEditar = new javax.swing.JButton();
@@ -127,8 +135,10 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Permisos:");
 
-        jCbxRoles.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+        jCbxRoles.addItemListener(new java.awt.event.ItemListener()
+        {
+            public void itemStateChanged(java.awt.event.ItemEvent evt)
+            {
                 jCbxRolesItemStateChanged(evt);
             }
         });
@@ -149,8 +159,11 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5)
-                    .addComponent(jCbxRoles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanelUsuarioLayout.createSequentialGroup()
+                        .addComponent(jCbxRoles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47)
+                        .addComponent(jTxtId, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(326, Short.MAX_VALUE))
         );
 
         jPanelUsuarioLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jCbxRoles, jTxtNombreUsuario, jTxtPass});
@@ -170,7 +183,9 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCbxRoles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanelUsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jCbxRoles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTxtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jTxtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
@@ -185,8 +200,10 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
         jBtnRegistrar.setText("Registrar");
         jBtnRegistrar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jBtnRegistrar.setPreferredSize(new java.awt.Dimension(73, 20));
-        jBtnRegistrar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jBtnRegistrar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 jBtnRegistrarActionPerformed(evt);
             }
         });
@@ -196,8 +213,10 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
         jBtnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/PencilAngled_16xLG_color.png"))); // NOI18N
         jBtnEditar.setText("Editar");
         jBtnEditar.setPreferredSize(new java.awt.Dimension(73, 20));
-        jBtnEditar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jBtnEditar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
                 jBtnEditarActionPerformed(evt);
             }
         });
@@ -207,6 +226,13 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
         jBtnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/StatusAnnotations_Blocked_16xMD_color.png"))); // NOI18N
         jBtnEliminar.setText("Eliminar");
         jBtnEliminar.setPreferredSize(new java.awt.Dimension(73, 20));
+        jBtnEliminar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jBtnEliminarActionPerformed(evt);
+            }
+        });
 
         jBtnLimpiar.setBackground(new java.awt.Color(127, 140, 141));
         jBtnLimpiar.setForeground(new java.awt.Color(255, 255, 255));
@@ -214,11 +240,20 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
         jBtnLimpiar.setText("Limpiar");
         jBtnLimpiar.setIconTextGap(5);
         jBtnLimpiar.setPreferredSize(new java.awt.Dimension(73, 20));
+        jBtnLimpiar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jBtnLimpiarActionPerformed(evt);
+            }
+        });
 
         jChShow.setBackground(new java.awt.Color(250, 250, 250));
         jChShow.setText("Mostrar Coordinadores");
-        jChShow.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+        jChShow.addItemListener(new java.awt.event.ItemListener()
+        {
+            public void itemStateChanged(java.awt.event.ItemEvent evt)
+            {
                 jChShowItemStateChanged(evt);
             }
         });
@@ -237,7 +272,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jBtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jChShow)
+                .addComponent(jChShow, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -318,19 +353,23 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         jTabla.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+            new Object [][]
+            {
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null}
             },
-            new String [] {
+            new String []
+            {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
         jTabla.setRowHeight(22);
-        jTabla.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jTabla.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
                 jTablaMouseClicked(evt);
             }
         });
@@ -410,7 +449,11 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
 
     private void jBtnRegistrarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBtnRegistrarActionPerformed
     {//GEN-HEADEREND:event_jBtnRegistrarActionPerformed
-        if(this.jCbxRoles.getSelectedItem().toString() != "Coordinador")
+        if(jCbxRoles.getSelectedItem().toString().equals("Coordinador"))
+        {
+            insertarCoordinador();
+        }
+        else
         {
             insertarUsuario();
         }
@@ -426,15 +469,103 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
         }
         else
         {
+            this.jTxtId.setText(jTabla.getValueAt(fila, 0).toString());
             this.jTxtNombreUsuario.setText(jTabla.getValueAt(fila, 1).toString());
             this.lblContra.setText("Nueva Contraseña:");
             this.jCbxRoles.setSelectedItem(jTabla.getValueAt(fila, 2).toString());
         }
+        
+        jBtnEditar.setEnabled(true);
+        jBtnEliminar.setEnabled(true);
+        jBtnRegistrar.setEnabled(false);
     }//GEN-LAST:event_jTablaMouseClicked
 
     private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditarActionPerformed
-        jBtnEliminar.setEnabled(false);
+        
+        if(confirmar("¿Desea guardar los cambios hechos al registro?"))
+        {
+            if(compContra("Ingrese su contraseña actual para efectuar los cambios"))
+            {
+                if(jCbxRoles.getSelectedItem().toString().equals("Coordinador"))
+                {
+                    editarCoordinador();
+                }
+                else
+                {
+                    editarUsuario();
+                }
+            }
+        }
     }//GEN-LAST:event_jBtnEditarActionPerformed
+
+    private void jBtnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLimpiarActionPerformed
+        limpiar();
+    }//GEN-LAST:event_jBtnLimpiarActionPerformed
+
+    private void jBtnEliminarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBtnEliminarActionPerformed
+    {//GEN-HEADEREND:event_jBtnEliminarActionPerformed
+        if(confirmar("¿Desea eliminar este registro?"))
+        {
+            if(compContra("Ingrese su contraseña actual para eliminar el registro"))
+            {
+                if(jCbxRoles.getSelectedItem().toString().equals("Coordinador"))
+                {
+                    eliminarCoordinador();
+                }
+                else
+                {
+                    eliminarUsuario();
+                }
+            }
+        }
+    }//GEN-LAST:event_jBtnEliminarActionPerformed
+    
+    private boolean confirmar(String mensaje)
+    {
+        int opcion;
+        
+        opcion = JOptionPane.showConfirmDialog(this, mensaje, "Confirmar", JOptionPane.YES_NO_OPTION);
+        
+        if(opcion == 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    private boolean compContra(String mensaje)
+    {
+       
+        try
+        {
+            String contra;
+            JLabel lbl = new JLabel(mensaje);
+            JTextField pswd = new JPasswordField();
+            Object[] obj = {lbl, pswd};
+            JOptionPane.showConfirmDialog(null, obj, "Contraseña", JOptionPane.OK_CANCEL_OPTION);
+
+            contra = pswd.getText();
+
+            u.setIdUsuario(Integer.parseInt(jTxtId.getText()));
+            u.setPass(contra);
+            
+            if(daoU.compContra(u))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        } catch (Exception e)
+        {
+            return false;
+        }
+        
+    }
     
     private void limpiar()
     {
@@ -445,6 +576,10 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
         this.jTxtCorreo.setText("");
         this.jCbxRoles.setSelectedIndex(0);
         this.jCbxCarrera.setSelectedIndex(0);
+        this.lblContra.setText("Contraseña:");
+        jBtnEditar.setEnabled(false);
+        jBtnEliminar.setEnabled(false);
+        jBtnRegistrar.setEnabled(true);
     }
     
     private void llenarTablaUsuarios()
@@ -506,11 +641,6 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
         }
     }
     
-    private void editarUsuario()
-    {
-        
-    }
-    
     private void insertarUsuario()
     {
         try
@@ -532,11 +662,116 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
         }
     }
     
-    private void validarUsuario()
+    private void editarUsuario()
     {
-        
+        try
+        {
+            u.setIdUsuario(Integer.parseInt(this.jTxtId.getText()));
+            u.setNomUsuario(this.jTxtNombreUsuario.getText().trim());
+            u.setPass(String.valueOf(this.jTxtPass.getPassword()).trim());
+            u.setIdRol(seleccionarComboRoles(this.jCbxRoles.getSelectedItem().toString()));
+            
+            daoU.editarUsuario(u);
+            
+            limpiar();
+            llenarTablaUsuarios();
+            
+        } catch (Exception e)
+        {
+        }
     }
     
+    private void eliminarUsuario()
+    {
+        try
+        {
+            u.setIdUsuario(Integer.parseInt(this.jTxtId.getText()));
+            
+            
+            daoU.eliminarUsuario(u);
+            
+            limpiar();
+            llenarTablaUsuarios();
+            
+        } catch (Exception e)
+        {
+        }
+    }
+    
+    private void insertarCoordinador()
+    {
+        try
+        {
+            u.setNomUsuario(this.jTxtNombreUsuario.getText().trim());
+            u.setPass(String.valueOf(this.jTxtPass.getPassword()).trim());
+            //u.setIdRol(seleccionarComboRoles(this.jCbxRoles.getSelectedItem().toString()));
+            
+            c.setNombres(jTxtNombre.getText().trim());
+            c.setApellidos(jTxtApellido.getText().trim());
+            c.setCorreo(jTxtCorreo.getText().trim());
+            c.setIdCarrera(seleccionarComboCarreras(jCbxCarrera.getSelectedItem().toString()));
+            
+            daoC.insertarCoordinador(c, u);
+            
+            limpiar();
+            llenarTablaUsuarios();
+            
+        } catch (Exception e)
+        {
+        }
+    }
+    
+    private void eliminarCoordinador()
+    {
+        try
+        {
+            u.setIdUsuario(Integer.parseInt(this.jTxtId.getText()));
+            
+            
+            daoU.eliminarUsuario(u);
+            
+            limpiar();
+            llenarTablaUsuarios();
+            
+        } catch (Exception e)
+        {
+        }
+    }
+    
+    private void editarCoordinador()
+    {
+        try
+        {
+            u.setNomUsuario(this.jTxtNombreUsuario.getText().trim());
+            u.setPass(String.valueOf(this.jTxtPass.getPassword()).trim());
+            //u.setIdRol(seleccionarComboRoles(this.jCbxRoles.getSelectedItem().toString()));
+            
+            c.setNombres(jTxtNombre.getText().trim());
+            c.setApellidos(jTxtApellido.getText().trim());
+            c.setCorreo(jTxtCorreo.getText().trim());
+            c.setIdCarrera(seleccionarComboCarreras(jCbxCarrera.getSelectedItem().toString()));
+            
+            daoC.insertarCoordinador(c, u);
+            
+            limpiar();
+            llenarTablaUsuarios();
+            
+        } catch (Exception e)
+        {
+        }
+    }
+    
+    private void validarUsuario()
+    {
+        Object[] obj = new Object[4];
+        String[] colors = {"#000000", "#000000", "#000001"};
+        obj[1] = colors;
+        
+        String[] c = (String[]) obj[1];
+        JOptionPane.showMessageDialog(null, obj);
+        JOptionPane.showMessageDialog(null, c[2]);
+    }
+
     private void llenarComboCarreras()
     {
         this.setListaCarrera(daoCarrera.mostrarCarrera());
@@ -598,12 +833,13 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
     }
     private void initUi()
     {
-        //jBtnEditar.setEnabled(false);
-        //jBtnEliminar.setEnabled(false);
+        //validarUsuario();
+        jBtnEditar.setEnabled(false);
+        jBtnEliminar.setEnabled(false);
+        jTxtId.setVisible(false);
         llenarComboRoles();
         llenarComboCarreras();
         llenarTablaUsuarios();
-        //llenarTablaCoordinadores();
         jPanelCoordinador.setVisible(false);
         ui.flatButton(jBtnRegistrar, "#2ECC71", "#28B463", "#58D68D");
         ui.flatButton(jBtnEditar, "#3498DB", "#2E86C1", "#5DADE2");
@@ -635,6 +871,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTabla;
     private javax.swing.JTextField jTxtApellido;
     private javax.swing.JTextField jTxtCorreo;
+    private javax.swing.JTextField jTxtId;
     private javax.swing.JTextField jTxtNombre;
     private javax.swing.JTextField jTxtNombreUsuario;
     private javax.swing.JPasswordField jTxtPass;

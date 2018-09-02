@@ -62,6 +62,44 @@ public class DaoUsuario extends Conexion
         return listaUsuario;
     }
     
+    public boolean compContra(Usuario u)
+    {
+        boolean respuesta = false;
+        int filas = 0;
+        try 
+        {
+            this.conectar();
+            String sql = "{call compContra(?, ?)}";
+            PreparedStatement pre = this.getCon().prepareStatement(sql);
+            
+            pre.setInt(1, u.getIdUsuario());
+            pre.setString(2, u.getPass());
+            
+            ResultSet res = pre.executeQuery();
+            res.last();
+            filas = res.getRow();
+            
+            if(filas == 1)
+            {
+                respuesta = true;
+            }
+            else
+            {
+                respuesta = false;
+            }
+            
+        } catch (Exception e) 
+        {
+            JOptionPane.showMessageDialog(null, "Error Usuario: " + e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
+        
+        return respuesta;
+    }
+    
     public Usuario mostrarIdUsuario(int id)
     {   
         try
@@ -167,7 +205,7 @@ public class DaoUsuario extends Conexion
         }
     }
     
-    public void eliminarUsuario(int id)
+    public void eliminarUsuario(Usuario u)
     {
         try
         {
@@ -175,7 +213,7 @@ public class DaoUsuario extends Conexion
             String sql = "{call eliminarUsuario(?)}";
             PreparedStatement pre = this.getCon().prepareStatement(sql);
 
-            pre.setInt(1, id);
+            pre.setInt(1, u.getIdUsuario());
             
             pre.executeUpdate();
             pre.close();
