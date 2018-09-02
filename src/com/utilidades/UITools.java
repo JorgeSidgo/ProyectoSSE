@@ -62,7 +62,6 @@ public class UITools
 
     public void flatButton(JButton boton, String color1, String color2, String color3)
     {
-        //this.asdf = false;
         
         try
         {
