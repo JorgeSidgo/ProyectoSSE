@@ -7,6 +7,19 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
+/**
+ * Favor iterar la versión si se requiere realizar un cambio en la estructura de la clase
+ * 
+ * Nombre de la Clase: DaoCarrera
+ * Version: 1.0
+ * Fecha de Creación: 06-08-18
+ * CopyRight: ITCA-FEPADE
+ * @Autores 
+ *      Benjamin Rivas 
+ *      Jorge Pimentel
+ *      Abdiel Martinez
+ *      Javier Montoya
+ */
 public class DaoCarrera extends Conexion
 {
 

@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 /**
  * Favor iterar la versión si se requiere realizar un cambio en la estructura de la clase
  * 
- * Nombre de la Clase: Usuario
+ * Nombre de la Clase: DaoUsuario
  * Versión: 1.0
  * Fecha: 06-08-18
  * Copyright: ITCA FEPADE
