@@ -144,7 +144,6 @@ create table estudiante(
     correo varchar(50),
     fechaIngreso date,
     idGrupo int not null,
-    solvencia int,
     estado int default 1,
     idUsuario int not null
 );
@@ -785,6 +784,26 @@ begin
     inner join institucion on i.id = h.idInstitucion
     where e.carnet like concat('%',car,'%');
 end $
+
+-- ==================================================================================================
+### Estudiante
+-- ==================================================================================================
+
+-- Insertar Estudiante --
+delimiter $
+create procedure insertarEstudiante(
+	in carnet varchar(10),
+    in nombres varchar(50),
+    in apellidos varchar(50),
+    in correo varchar(50),
+    in fechaIngreso date,
+    in idG int(11),
+    in idU int(11)
+)
+begin
+	insert into estudiante values(null,carnet,nombres,apellidos,correo,fechaIngreso,idG,null,default,idU);
+end $
+
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##### VISTAS ######
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------

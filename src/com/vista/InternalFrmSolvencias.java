@@ -92,6 +92,8 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Carnet del Estudiante");
 
+        jBtnLimpiar.setBackground(new java.awt.Color(127, 140, 141));
+        jBtnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/EraseTool_203.png"))); // NOI18N
         jBtnLimpiar.setText("Limpiar");
 
         jLabel4.setText("Nombre de Estudiante:");
@@ -102,6 +104,8 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
         buttonGroup1.add(jRbBuscarID);
         jRbBuscarID.setText("Buscar por Carnet");
 
+        jBtnBuscar.setBackground(new java.awt.Color(102, 102, 255));
+        jBtnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/search-icon.png"))); // NOI18N
         jBtnBuscar.setText("Buscar");
 
         javax.swing.GroupLayout jPanelBusquedaLayout = new javax.swing.GroupLayout(jPanelBusqueda);
@@ -167,8 +171,12 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel13.setText("Candidato Seleccionado:");
 
+        jBtnLimpiarCandidato.setBackground(new java.awt.Color(127, 140, 141));
+        jBtnLimpiarCandidato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/EraseTool_203.png"))); // NOI18N
         jBtnLimpiarCandidato.setText("Limpiar");
 
+        jBtnSolventar.setBackground(new java.awt.Color(255, 0, 0));
+        jBtnSolventar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/yes-icon.png"))); // NOI18N
         jBtnSolventar.setText("Solventar");
 
         javax.swing.GroupLayout jPanelCandidatoLayout = new javax.swing.GroupLayout(jPanelCandidato);
