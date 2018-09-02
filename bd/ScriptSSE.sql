@@ -259,6 +259,18 @@ begin
 end
 $$
 
+
+-- Comprobar Contraseña
+delimiter $$
+create procedure compContra(
+	in idUs int,
+    in contra varchar(50)
+)
+begin
+	select * from usuario where id = idUs and pass = sha1(contra) and estado = 1;
+end
+$$
+
 -- Login
 delimiter $$
 create procedure login(
@@ -280,7 +292,7 @@ create procedure editarUsuario(
 )
 begin
 	update usuario 
-    set nomUsuario = nom, pass = sha1(pass), idRol = idR 
+    set nomUsuario = nom, pass = sha1(contra), idRol = idR 
     where id = idUsuario;
 end $
 
@@ -625,7 +637,7 @@ create procedure insertarCoordinador(
 	in nom varchar(50),
     in ape varchar(50),
     in corr varchar(124),
-    in nomUsuario varchar(50),
+    in nomU varchar(50),
     in contra varchar(50),
     in carrera int
 )
@@ -637,7 +649,33 @@ begin
 end
 $$
 
---- Mostrar Coordinador
+-- Editar Coordinador
+
+create procedure editarCoordinador(
+	in nom varchar(50),
+    in ape varchar(50),
+    in corr varchar(124),
+    in nomU varchar(50),
+    in contra varchar(50),
+    in carrera int,
+    in idCo int
+)
+begin
+	declare idUs int;
+    set idUs = (select idUsuario from carrera where estado = 1 and id = idCo);
+    
+    update coordinador
+    set nombres = nom, apellidos = ape, correo = corr, idCarrera = carrera
+    where id = idCo;
+    
+    update usuario
+    set nomUsuario = nomU, pass = sha1(contra)
+    where id = idUs;
+end
+$$
+
+
+-- Mostrar Coordinador
 
 delimiter $$
 create procedure mostrarCoordinadores()

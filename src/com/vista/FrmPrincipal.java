@@ -628,7 +628,7 @@ public class FrmPrincipal extends javax.swing.JFrame
     {//GEN-HEADEREND:event_menuLogoutMouseClicked
         try
         {
-            int opcion = JOptionPane.showConfirmDialog(this, "¿Desea cerrar sesión?, los cambios que no han sido guardados se perderán", "Confirmar", JOptionPane.YES_NO_OPTION);
+            int opcion = JOptionPane.showConfirmDialog(this, "Los cambios sin guardar se perderán", "¿Desea cerrar sesión?", JOptionPane.YES_NO_OPTION);
             
             if(opcion == 0)
             {
@@ -726,7 +726,8 @@ public class FrmPrincipal extends javax.swing.JFrame
 
     private void menuItSolvenciaMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuItSolvenciaMouseClicked
     {//GEN-HEADEREND:event_menuItSolvenciaMouseClicked
-        // TODO add your handling code here:
+        InternalFrmSolvencias frm = new InternalFrmSolvencias();
+        abrirVentana(frm);
     }//GEN-LAST:event_menuItSolvenciaMouseClicked
 
     private void menuItSolicitudesMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuItSolicitudesMouseClicked
