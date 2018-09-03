@@ -4,8 +4,11 @@ import com.vista.FrmPrincipal;
 import com.vista.FrmPrincipalx;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.io.InputStream;
 import java.util.logging.Level;
@@ -30,9 +33,36 @@ import javax.swing.border.Border;
 public class UITools
 {
     private static boolean bandera = false;
+    private boolean asdf;
+    
+    private Color b;
+    private Color h;
+    private Color a;
+    
+ 
+    
+    public void initBotones(JButton boton, String color1, String color2, String color3)
+    {
+        boton.addPropertyChangeListener(new PropertyChangeListener() {
+                @Override
+                public void propertyChange(PropertyChangeEvent evt) {
+                    if(!boton.isEnabled())
+                    {
+                        flatButton(boton, "#636e72", "#636e72", "#636e72");
+                        //asdf = false;
+                    }
+                    else
+                    {
+                        flatButton(boton, color1, color2, color3);
+                    //asdf = true;
+                    }
+                }
+            });
+    }
 
     public void flatButton(JButton boton, String color1, String color2, String color3)
     {
+        
         try
         {
             Color background = Color.decode(color1);
@@ -44,7 +74,7 @@ public class UITools
             boton.setFocusPainted(false);
             boton.setContentAreaFilled(false);
             boton.setOpaque(true);
-
+            
             boton.addMouseListener(new MouseAdapter(){
             public void mouseEntered(MouseEvent e)
             {
@@ -62,13 +92,18 @@ public class UITools
             {
                 boton.setBackground(background);
             }
+            
         });
+           
+            
         } catch (Exception e)
         {
             
         }
         
     }
+    
+    
     
     public void menusitos(JLabel label, int p, int pad, boolean menuIt)
     {

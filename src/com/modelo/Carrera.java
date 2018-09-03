@@ -18,12 +18,13 @@ public class Carrera
     
     private int id;
     private String nombreCarrera;
-    Escuela idEscuela;
+    private int idEscuela;
 
     public Carrera() {
     }
 
-    public Carrera(int id, String nombreCarrera, Escuela idEscuela) {
+    public Carrera(int id, String nombreCarrera, int idEscuela)
+    {
         this.id = id;
         this.nombreCarrera = nombreCarrera;
         this.idEscuela = idEscuela;
@@ -45,12 +46,16 @@ public class Carrera
         this.nombreCarrera = nombreCarrera;
     }
 
-    public Escuela getIdEscuela() {
+    public int getIdEscuela()
+    {
         return idEscuela;
     }
 
-    public void setIdEscuela(Escuela idEscuela) {
+    public void setIdEscuela(int idEscuela)
+    {
         this.idEscuela = idEscuela;
     }
+
+    
     
 }

@@ -64,8 +64,7 @@ public class FrmPrincipal extends javax.swing.JFrame
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
@@ -101,14 +100,13 @@ public class FrmPrincipal extends javax.swing.JFrame
         menuItSolvencia = new javax.swing.JLabel();
         menuItSolicitudes = new javax.swing.JLabel();
         menuUsuarios = new javax.swing.JLabel();
+        menuReportes = new javax.swing.JLabel();
         menuPapelera = new javax.swing.JLabel();
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
-        fileMenu.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        fileMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 fileMenuActionPerformed(evt);
             }
         });
@@ -116,10 +114,8 @@ public class FrmPrincipal extends javax.swing.JFrame
         keysInstituciones.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
         keysInstituciones.setMnemonic('o');
         keysInstituciones.setText("Instituciones");
-        keysInstituciones.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        keysInstituciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 keysInstitucionesActionPerformed(evt);
             }
         });
@@ -136,10 +132,8 @@ public class FrmPrincipal extends javax.swing.JFrame
 
         exitMenuItem.setMnemonic('x');
         exitMenuItem.setText("Exit");
-        exitMenuItem.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 exitMenuItemActionPerformed(evt);
             }
         });
@@ -187,17 +181,13 @@ public class FrmPrincipal extends javax.swing.JFrame
 
         jTitleBar.setBackground(new java.awt.Color(204, 204, 204));
         jTitleBar.setPreferredSize(new java.awt.Dimension(769, 30));
-        jTitleBar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter()
-        {
-            public void mouseDragged(java.awt.event.MouseEvent evt)
-            {
+        jTitleBar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
                 jTitleBarMouseDragged(evt);
             }
         });
-        jTitleBar.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mousePressed(java.awt.event.MouseEvent evt)
-            {
+        jTitleBar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
                 jTitleBarMousePressed(evt);
             }
         });
@@ -206,10 +196,8 @@ public class FrmPrincipal extends javax.swing.JFrame
         lblMenu.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/men.png"))); // NOI18N
         lblMenu.setOpaque(true);
-        lblMenu.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        lblMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblMenuMouseClicked(evt);
             }
         });
@@ -230,10 +218,8 @@ public class FrmPrincipal extends javax.swing.JFrame
         lblX.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/vista/x.png"))); // NOI18N
         lblX.setLabelFor(this);
         lblX.setOpaque(true);
-        lblX.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        lblX.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblXMouseClicked(evt);
             }
         });
@@ -243,10 +229,8 @@ public class FrmPrincipal extends javax.swing.JFrame
         lblMax.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/vista/maxSec.png"))); // NOI18N
         lblMax.setLabelFor(this);
         lblMax.setOpaque(true);
-        lblMax.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        lblMax.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblMaxMouseClicked(evt);
             }
         });
@@ -256,10 +240,8 @@ public class FrmPrincipal extends javax.swing.JFrame
         lblMin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/min.png"))); // NOI18N
         lblMin.setLabelFor(this);
         lblMin.setOpaque(true);
-        lblMin.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        lblMin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblMinMouseClicked(evt);
             }
         });
@@ -268,10 +250,8 @@ public class FrmPrincipal extends javax.swing.JFrame
         lblUsuario.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblUsuario.setLabelFor(this);
         lblUsuario.setText("Usuario");
-        lblUsuario.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        lblUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblUsuarioMouseClicked(evt);
             }
         });
@@ -311,10 +291,8 @@ public class FrmPrincipal extends javax.swing.JFrame
         lblIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/vista/logo.png"))); // NOI18N
         lblIcon.setToolTipText("");
-        lblIcon.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        lblIcon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblIconMouseClicked(evt);
             }
         });
@@ -344,10 +322,8 @@ public class FrmPrincipal extends javax.swing.JFrame
         menuArchivo.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0)));
         menuArchivo.setIconTextGap(10);
         menuArchivo.setOpaque(true);
-        menuArchivo.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        menuArchivo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuArchivoMouseClicked(evt);
             }
         });
@@ -361,10 +337,8 @@ public class FrmPrincipal extends javax.swing.JFrame
         menuSS.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0)));
         menuSS.setIconTextGap(10);
         menuSS.setOpaque(true);
-        menuSS.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        menuSS.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuSSMouseClicked(evt);
             }
         });
@@ -378,10 +352,8 @@ public class FrmPrincipal extends javax.swing.JFrame
         menuLogout.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0)));
         menuLogout.setIconTextGap(10);
         menuLogout.setOpaque(true);
-        menuLogout.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        menuLogout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuLogoutMouseClicked(evt);
             }
         });
@@ -398,10 +370,8 @@ public class FrmPrincipal extends javax.swing.JFrame
         menuItInstituciones.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 20, 0, 0)));
         menuItInstituciones.setIconTextGap(10);
         menuItInstituciones.setOpaque(true);
-        menuItInstituciones.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        menuItInstituciones.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuItInstitucionesMouseClicked(evt);
             }
         });
@@ -430,10 +400,8 @@ public class FrmPrincipal extends javax.swing.JFrame
         menuItServicio.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 20, 0, 0)));
         menuItServicio.setIconTextGap(10);
         menuItServicio.setOpaque(true);
-        menuItServicio.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        menuItServicio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuItServicioMouseClicked(evt);
             }
         });
@@ -447,10 +415,8 @@ public class FrmPrincipal extends javax.swing.JFrame
         menuItSolvencia.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 20, 0, 0)));
         menuItSolvencia.setIconTextGap(10);
         menuItSolvencia.setOpaque(true);
-        menuItSolvencia.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        menuItSolvencia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuItSolvenciaMouseClicked(evt);
             }
         });
@@ -464,10 +430,8 @@ public class FrmPrincipal extends javax.swing.JFrame
         menuItSolicitudes.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 20, 0, 0)));
         menuItSolicitudes.setIconTextGap(10);
         menuItSolicitudes.setOpaque(true);
-        menuItSolicitudes.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        menuItSolicitudes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuItSolicitudesMouseClicked(evt);
             }
         });
@@ -499,11 +463,24 @@ public class FrmPrincipal extends javax.swing.JFrame
         menuUsuarios.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0)));
         menuUsuarios.setIconTextGap(10);
         menuUsuarios.setOpaque(true);
-        menuUsuarios.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        menuUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuUsuariosMouseClicked(evt);
+            }
+        });
+
+        menuReportes.setBackground(new java.awt.Color(36, 37, 38));
+        menuReportes.setDisplayedMnemonic('n');
+        menuReportes.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        menuReportes.setForeground(new java.awt.Color(255, 255, 255));
+        menuReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8-books-16.png"))); // NOI18N
+        menuReportes.setText("Reportes");
+        menuReportes.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0)));
+        menuReportes.setIconTextGap(10);
+        menuReportes.setOpaque(true);
+        menuReportes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuReportesMouseClicked(evt);
             }
         });
 
@@ -516,10 +493,8 @@ public class FrmPrincipal extends javax.swing.JFrame
         menuPapelera.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0)));
         menuPapelera.setIconTextGap(10);
         menuPapelera.setOpaque(true);
-        menuPapelera.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        menuPapelera.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 menuPapeleraMouseClicked(evt);
             }
         });
@@ -534,6 +509,7 @@ public class FrmPrincipal extends javax.swing.JFrame
             .addComponent(panelArchivo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(panelSS, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(menuUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+            .addComponent(menuReportes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
             .addComponent(menuPapelera, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
         );
         panelMenuLayout.setVerticalGroup(
@@ -549,6 +525,8 @@ public class FrmPrincipal extends javax.swing.JFrame
                 .addComponent(panelSS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(menuUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(menuReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(menuPapelera, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -650,7 +628,7 @@ public class FrmPrincipal extends javax.swing.JFrame
     {//GEN-HEADEREND:event_menuLogoutMouseClicked
         try
         {
-            int opcion = JOptionPane.showConfirmDialog(this, "¿Desea cerrar sesión?, los cambios que no han sido guardados se perderán", "Confirmar", JOptionPane.YES_NO_OPTION);
+            int opcion = JOptionPane.showConfirmDialog(this, "Los cambios sin guardar se perderán", "¿Desea cerrar sesión?", JOptionPane.YES_NO_OPTION);
             
             if(opcion == 0)
             {
@@ -729,7 +707,8 @@ public class FrmPrincipal extends javax.swing.JFrame
 
     private void menuUsuariosMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuUsuariosMouseClicked
     {//GEN-HEADEREND:event_menuUsuariosMouseClicked
-        // TODO add your handling code here:
+        InternalFrmUsuarios frm = new InternalFrmUsuarios();
+        abrirVentana(frm);
     }//GEN-LAST:event_menuUsuariosMouseClicked
 
     private void lblIconMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_lblIconMouseClicked
@@ -747,7 +726,8 @@ public class FrmPrincipal extends javax.swing.JFrame
 
     private void menuItSolvenciaMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuItSolvenciaMouseClicked
     {//GEN-HEADEREND:event_menuItSolvenciaMouseClicked
-        // TODO add your handling code here:
+        InternalFrmSolvencias frm = new InternalFrmSolvencias();
+        abrirVentana(frm);
     }//GEN-LAST:event_menuItSolvenciaMouseClicked
 
     private void menuItSolicitudesMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuItSolicitudesMouseClicked
@@ -755,10 +735,10 @@ public class FrmPrincipal extends javax.swing.JFrame
         // TODO add your handling code here:
     }//GEN-LAST:event_menuItSolicitudesMouseClicked
 
-    private void menuPapeleraMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuPapeleraMouseClicked
-    {//GEN-HEADEREND:event_menuPapeleraMouseClicked
+    private void menuReportesMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuReportesMouseClicked
+    {//GEN-HEADEREND:event_menuReportesMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_menuPapeleraMouseClicked
+    }//GEN-LAST:event_menuReportesMouseClicked
 
     private void fileMenuActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_fileMenuActionPerformed
     {//GEN-HEADEREND:event_fileMenuActionPerformed
@@ -769,6 +749,10 @@ public class FrmPrincipal extends javax.swing.JFrame
     {//GEN-HEADEREND:event_keysInstitucionesActionPerformed
         abrirInstituciones();
     }//GEN-LAST:event_keysInstitucionesActionPerformed
+
+    private void menuPapeleraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuPapeleraMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuPapeleraMouseClicked
 
     private void borders(int a, int b, int c)
     {
@@ -846,11 +830,11 @@ public class FrmPrincipal extends javax.swing.JFrame
         ui.flatLabel(menuArchivo, "#242526", "#2D2E2F", "#111111");
         ui.menuClass(menuArchivo, dropArchivo, 1);
         ui.flatLabel(menuSS, "#242526", "#2D2E2F", "#111111");
-        ui.menuClass(menuSS, dropSS, 10);
+        ui.menuClass(menuSS, dropSS, 2);
         ui.flatLabel(menuLogout, "#242526", "#D74738", "#E74C3C");
-        ui.menusitos(menuLogout, 1, 10, false);
+        ui.menusitos(menuLogout, 2, 10, false);
         ui.flatLabel(menuUsuarios, "#242526", "#2D2E2F", "#111111");
-        ui.menusitos(menuUsuarios, 1, 10, false);
+        ui.menusitos(menuUsuarios, 2, 10, false);
         ui.flatLabel(menuItInstituciones, "#363839", "#111111", "#2c3e50");
         ui.menusitos(menuItInstituciones, 2, 20, true);
         ui.flatLabel(menuItServicio, "#363839", "#111111", "#2c3e50");
@@ -859,8 +843,14 @@ public class FrmPrincipal extends javax.swing.JFrame
         ui.menusitos(menuItSolvencia, 2, 20, true);
         ui.flatLabel(menuItSolicitudes, "#363839", "#111111", "#2c3e50");
         ui.menusitos(menuItSolicitudes, 2, 20, true);
+        ui.flatLabel(menuReportes,"#242526", "#2D2E2F", "#111111");
+        ui.menusitos(menuReportes, 2, 10, false);
         ui.flatLabel(menuPapelera,"#242526", "#2D2E2F", "#111111");
-        ui.menusitos(menuPapelera, 1, 10, false);
+        ui.menusitos(menuPapelera, 2, 10, false);
+        /*if((DaoUsuario.codRol != 1) || (DaoUsuario.codRol != 2))
+        {
+        menuUsuarios.setVisible(false);
+        }*/
 
     }
 
@@ -971,6 +961,7 @@ public class FrmPrincipal extends javax.swing.JFrame
     private javax.swing.JLabel menuItSolvencia;
     private javax.swing.JLabel menuLogout;
     private javax.swing.JLabel menuPapelera;
+    private javax.swing.JLabel menuReportes;
     private javax.swing.JLabel menuSS;
     private javax.swing.JLabel menuUsuarios;
     private javax.swing.JPanel panelArchivo;

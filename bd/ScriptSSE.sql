@@ -144,7 +144,6 @@ create table estudiante(
     correo varchar(50),
     fechaIngreso date,
     idGrupo int not null,
-    solvencia int,
     estado int default 1,
     idUsuario int not null
 );
@@ -179,6 +178,14 @@ create table correo(
     idCoordinador int,
     estado int default 1,
     idEstudiante int
+);
+
+create table solvencia(
+	id int auto_increment primary key unique,
+    fecha date,
+    idEstudiante int,
+    idCoordinador int,
+    estado int
 );
 
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -251,6 +258,18 @@ begin
 end
 $$
 
+
+-- Comprobar Contraseña
+delimiter $$
+create procedure compContra(
+	in idUs int,
+    in contra varchar(50)
+)
+begin
+	select * from usuario where id = idUs and pass = sha1(contra) and estado = 1;
+end
+$$
+
 -- Login
 delimiter $$
 create procedure login(
@@ -272,7 +291,7 @@ create procedure editarUsuario(
 )
 begin
 	update usuario 
-    set nomUsuario = nom, pass = sha1(pass), idRol = idR 
+    set nomUsuario = nom, pass = sha1(contra), idRol = idR 
     where id = idUsuario;
 end $
 
@@ -504,6 +523,61 @@ begin
 	select * from hojaServicioSocial;
 end $
 
+-- Eliminar Hoja de servicio Social --
+delimiter $
+create procedure eliminarHojaServicio(
+	in idHS int
+)
+begin
+	delete from hojaServicioSocial where id = idHS;
+end $
+
+-- Borrado Logico Hoja de Servicio Social --
+delimiter $
+create procedure borradoLogioHojaServicio(
+	in idHS int
+)
+begin
+	update hojaServicioSocial set estado = 0 where id = idHs;
+end $
+
+-- Buscar por fecha de Inicio Exacta Hoja de servicio social --
+delimiter $
+create procedure buscarFechaInicioExactaHojaServicio(
+	in fechaEx date
+)
+begin
+	select * from hojaServicioSocial where fechaInicio like cast(concat('%',fechaEx,'%') as date);
+end $
+
+-- Buscar por fecha de Finalizacion Exacta Hoja de servicio social --
+delimiter $
+create procedure buscarFechaFinalizacionExactaHojaServicio(
+	in fechaEx date
+)
+begin
+	select * from hojaServicioSocial where fechaFinalizacion like cast(concat('%',fechaEx,'%') as date);
+end $
+
+-- Buscar por año en fecha inicio Hoja de Servicio Social --
+delimiter $
+create procedure buscarAnioInicioHojaServicio(
+	in anio year
+)
+begin
+	select * from hojaServicioSocial where year(fechaFinalizacion) like concat('%',anio,'%');
+end $
+
+-- buscar por mes en fecha inicio hoja de Servicio Social --
+delimiter $
+create procedure buscarMesInicioHojaServicio(
+	in mes varchar(2)
+)
+begin
+	select * from hojaServicioSocial where month(fechaFinalizacion) like concat('%',mes,'%');
+end $
+
+
 -- ==================================================================================================
 ### Solicitud
 -- ==================================================================================================
@@ -574,17 +648,261 @@ create procedure insertarCoordinador(
 	in nom varchar(50),
     in ape varchar(50),
     in corr varchar(124),
-    in nomUsuario varchar(50),
+    in nomU varchar(50),
     in contra varchar(50),
     in carrera int
 )
 begin
 	declare idUsuario int;
-	call registrarUsuario(nomUsuario, contra, 4);
+	call insertarUsuario(nomU, contra, 4);
     set idUsuario = (select max(id) from usuario);
     insert into coordinador values(null, nom, ape, corr, default, idUsuario, carrera);
 end
 $$
+
+-- Editar Coordinador
+
+create procedure editarCoordinador(
+	in nom varchar(50),
+    in ape varchar(50),
+    in corr varchar(124),
+    in nomU varchar(50),
+    in contra varchar(50),
+    in carrera int,
+    in idCo int
+)
+begin
+	declare idUs int;
+    set idUs = (select idUsuario from carrera where estado = 1 and id = idCo);
+    
+    update coordinador
+    set nombres = nom, apellidos = ape, correo = corr, idCarrera = carrera
+    where id = idCo;
+    
+    update usuario
+    set nomUsuario = nomU, pass = sha1(contra)
+    where id = idUs;
+end
+$$
+
+--- Borrado Lógico Coordinador
+delimiter $$
+create procedure borradoLogicoCoordinador(
+	in idCo int
+)
+begin
+	declare idUs int;
+    set idUs = (select idUsuario from coordinador where id =  idCo);
+    
+    update coordinador
+    set estado = 0
+    where id = idCo;
+    
+    update usuario
+    set estado = 0
+    where id = idUs;
+end
+$$
+
+-- Eliminar Coordinador
+delimiter $$
+create procedure eliminarCoordinador(
+	in idCo int
+)
+begin
+	declare idUs int;
+    set idUs = (select idUsuario from coordinador where id =  idCo);
+    
+	delete from coordinador where id = idCo;
+    delete from usuario where id = idUs;
+end
+$$
+
+-- Cambiar Rol de Coordinador -- Lógico
+
+delimiter $$
+create procedure cambiarRolCoordinador(
+	in idCo int,
+    in idR int
+)
+begin
+	declare idUs int;
+    set idUs = (select idUsuario from coordinador where id =  idCo);
+    
+    update usuario
+    set idRol = idR
+    where id = idUs;
+	
+    delete from coordinador where id = idR;
+end
+$$
+-- Mostrar Coordinador
+
+delimiter $$
+create procedure mostrarCoordinadores()
+begin
+	select * from coordinador where estado = 1;
+end
+$$
+
+-- ==================================================================================================
+### Carrera
+-- ==================================================================================================
+
+
+-- Insertar Carrera --
+delimiter $
+create procedure insertarCarrera(
+	in nomCar varchar(50),
+    in idEsc int
+)
+begin
+	insert into carrera values(null,nomCar,default,idEsc);
+end $
+
+-- Modificar Carrera --
+delimiter $
+create procedure modificarCarrera(
+	in idCar int,
+    in nomCar varchar(50),
+    in idEsc int
+)
+begin
+	update carrera set id = idCar, nombreCarrera = nomCar, idEscuela = idEsc;
+end $
+
+-- Eliminar Carrera
+delimiter $
+create procedure eliminarCarrera(
+	in idCar int
+)
+begin
+	delete from carrera where id = idCar;
+end $
+
+-- Borrado Lógico --
+delimiter $
+create procedure borradoLogicoCarrera(
+	in idCar int
+)
+begin
+	update carrera set estado = 0;
+end $
+
+-- Mostrar Carrera --
+delimiter $
+create procedure mostrarCarrera()
+begin
+	select * from carrera where estado = 1;
+end $
+
+drop procedure mostrarCarrera;
+
+-- Buscar Carrera por nombre --
+delimiter $
+create procedure buscarNombreCarrera(
+	in nom varchar(50)
+)
+begin
+	select * from carrera where nombreCarrera = nom  and estado = 1;
+end $
+
+-- buscar Carrera por ID --
+delimiter $
+create procedure buscarIDCarrera(
+	in idCar int
+)
+begin
+	select * from carrera where id = idCar and estado = 1;
+end $
+
+-- mostrar Papelera Carrera --
+delimiter $
+create procedure mostrarPapeleraCarrera()
+begin
+	select * from carrera where estado = 0;
+end $
+
+-- buscar en papelera carrera por nombre --
+delimiter $
+create procedure buscarNombrePapeleraCarrera(
+	in nom varchar(50)
+)
+begin
+	select * from carrera where nombreCarrera = nom and estado = 0;
+end $
+
+-- buscar en papelera carrera por id --
+delimiter $
+create procedure buscarIDPapeleraCarrera(
+	in idCar int
+)
+begin
+	select * from carrera where id = idCar and estado = 0;
+end $
+
+-- restaurar carrera en papelera --
+delimiter $
+create procedure restaurarCarrera(
+	in idCar int
+)
+begin
+	update carrera set estado = 1 where id = idCar;
+end $
+
+-- Solvencias --
+
+-- mostrar candidatos a solvencia --
+delimiter $
+create procedure mostrarCandidatos()
+begin
+	select e.id, e.carnet, e.nombres, e.apellidos, i.nombreInstitucion, h.nHoras from estudiante e
+    inner join hojaserviciosocial h on e.id = h.idEstudiante
+    inner join institucion i on i.id = h.idInstitucion;
+end $
+
+-- buscar candidatos a solvencia por nombre --
+delimiter $
+create procedure buscarNombreCandidatos(
+	in nom varchar(50)
+)
+begin
+	select e.id, e.carnet, e.nombres, e.apellidos, i.nombreInstitucion, h.nHoras from estudiante e
+    inner join hojaserviciosocial h on e.id = h.idEstudiante
+    inner join institucion i on i.id = h.idInstitucion
+    where e.nombres like concat('%',nom,'%');
+end $
+
+-- buscar candidatos a solvencias por carnet --
+delimiter $
+create procedure buscarCarnetCandidatos(
+	in car varchar(10)
+)
+begin
+	select e.id, e.carnet, e.nombres, e.apellidos, i.nombreInstitucion, h.nHoras from estudiante e
+    inner join hojaserviciosocial h on e.id = h.idEstudiante
+    inner join institucion i on i.id = h.idInstitucion
+    where e.carnet like concat('%',car,'%');
+end $
+
+-- ==================================================================================================
+### Estudiante
+-- ==================================================================================================
+
+-- Insertar Estudiante --
+delimiter $
+create procedure insertarEstudiante(
+	in carnet varchar(10),
+    in nombres varchar(50),
+    in apellidos varchar(50),
+    in correo varchar(50),
+    in fechaIngreso date,
+    in idG int(11),
+    in idU int(11)
+)
+begin
+	insert into estudiante values(null,carnet,nombres,apellidos,correo,fechaIngreso,idG,null,default,idU);
+end $
 
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##### VISTAS ######
@@ -605,9 +923,13 @@ insert into escuela values (null, 'Escuela de Ingenieria en Computacion', 1);
 insert into carrera values (null, 'Tecnico en Ingenieria de Sistemas', 1, 1);
 insert into grupo values (null, 'SIS12-A', 1, 1);
 
+call insertarUsuario('Jorge Sidgo', 'tugfa', 1);
+call insertarUsuario('Benja Parker', '123', 1);
+call insertarUsuario('Abdiel Martinez', '123', 1);
+call insertarUsuario('Francisco Montoya', '123', 1);
+
+call buscarIDInstitucion(1);
+
+call mostrarCandidatos;
+
 call insertarCoordinador('Giovanni Ariel', 'Tzec Chavez', 'giovanni.tzec@gmail.com', 'GiovanniTzec', 'tugfa', 1);
-
-
-
-
-
