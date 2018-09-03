@@ -217,6 +217,8 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jChShow" min="-2" pref="145" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jTxtBuscar" min="-2" pref="230" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -225,11 +227,12 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jBtnRegistrar" alignment="3" pref="30" max="32767" attributes="0"/>
-                      <Component id="jBtnEditar" alignment="3" pref="30" max="32767" attributes="0"/>
-                      <Component id="jBtnEliminar" alignment="3" pref="30" max="32767" attributes="0"/>
-                      <Component id="jBtnLimpiar" alignment="3" pref="30" max="32767" attributes="0"/>
+                      <Component id="jBtnRegistrar" linkSize="5" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="jBtnEditar" linkSize="5" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="jBtnEliminar" linkSize="5" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="jBtnLimpiar" linkSize="5" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="jChShow" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTxtBuscar" linkSize="5" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -330,6 +333,13 @@
             <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jChShowItemStateChanged"/>
           </Events>
         </Component>
+        <Component class="javax.swing.JTextField" name="jTxtBuscar">
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTxtBuscarFocusGained"/>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTxtBuscarFocusLost"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTxtBuscarKeyTyped"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="jPanelCoordinador">
@@ -406,8 +416,14 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTxtNombre">
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTxtNombreKeyPressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTxtApellido">
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTxtApellidoKeyPressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
@@ -420,6 +436,11 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTxtCorreo">
+          <Properties>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Cursor de Texto"/>
+            </Property>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>

@@ -661,7 +661,7 @@ create procedure editarCoordinador(
 )
 begin
 	declare idUs int;
-    set idUs = (select idUsuario from carrera where estado = 1 and id = idCo);
+    set idUs = (select idUsuario from coordinador where estado = 1 and id = idCo);
     
     update coordinador
     set nombres = nom, apellidos = ape, correo = corr, idCarrera = carrera
@@ -916,8 +916,8 @@ call insertarUsuario('Benja Parker', '123', 1);
 call insertarUsuario('Abdiel Martinez', '123', 1);
 call insertarUsuario('Francisco Montoya', '123', 1);
 
-call buscarIDInstitucion(1);
+-- call buscarIDInstitucion(1);
 
-call mostrarCandidatos;
+-- call mostrarCandidatos;
 
 call insertarCoordinador('Giovanni Ariel', 'Tzec Chavez', 'giovanni.tzec@gmail.com', 'GiovanniTzec', 'tugfa', 1);
