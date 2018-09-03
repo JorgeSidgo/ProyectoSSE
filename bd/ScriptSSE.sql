@@ -673,7 +673,7 @@ begin
 end
 $$
 
--- Borrado Lógico Coordinador
+--- Borrado Lógico Coordinador
 delimiter $$
 create procedure borradoLogicoCoordinador(
 	in idCo int
@@ -724,7 +724,6 @@ begin
     delete from coordinador where id = idR;
 end
 $$
-
 -- Mostrar Coordinador
 
 delimiter $$
@@ -847,7 +846,7 @@ create procedure mostrarCandidatos()
 begin
 	select e.id, e.carnet, e.nombres, e.apellidos, i.nombreInstitucion, h.nHoras from estudiante e
     inner join hojaserviciosocial h on e.id = h.idEstudiante
-    inner join institucion on i.id = h.idInstitucion;
+    inner join institucion i on i.id = h.idInstitucion;
 end $
 
 -- buscar candidatos a solvencia por nombre --
@@ -858,7 +857,7 @@ create procedure buscarNombreCandidatos(
 begin
 	select e.id, e.carnet, e.nombres, e.apellidos, i.nombreInstitucion, h.nHoras from estudiante e
     inner join hojaserviciosocial h on e.id = h.idEstudiante
-    inner join institucion on i.id = h.idInstitucion
+    inner join institucion i on i.id = h.idInstitucion
     where e.nombres like concat('%',nom,'%');
 end $
 
@@ -870,7 +869,7 @@ create procedure buscarCarnetCandidatos(
 begin
 	select e.id, e.carnet, e.nombres, e.apellidos, i.nombreInstitucion, h.nHoras from estudiante e
     inner join hojaserviciosocial h on e.id = h.idEstudiante
-    inner join institucion on i.id = h.idInstitucion
+    inner join institucion i on i.id = h.idInstitucion
     where e.carnet like concat('%',car,'%');
 end $
 
@@ -916,5 +915,9 @@ call insertarUsuario('Jorge Sidgo', 'tugfa', 1);
 call insertarUsuario('Benja Parker', '123', 1);
 call insertarUsuario('Abdiel Martinez', '123', 1);
 call insertarUsuario('Francisco Montoya', '123', 1);
+
+call buscarIDInstitucion(1);
+
+call mostrarCandidatos;
 
 call insertarCoordinador('Giovanni Ariel', 'Tzec Chavez', 'giovanni.tzec@gmail.com', 'GiovanniTzec', 'tugfa', 1);
