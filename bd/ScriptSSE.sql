@@ -851,6 +851,10 @@ begin
     inner join institucion i on h.idInstitucion = i.id;
 end $
 
+select e.id, e.carnet, e.nombres, e.apellidos, i.nombreInstitucion, h.nHoras from estudiante e
+    inner join hojaserviciosocial h on e.id = h.idEstudiante
+    inner join institucion i on h.idInstitucion = i.id;
+
 -- buscar candidatos a solvencia por nombre --
 delimiter $
 create procedure buscarNombreCandidatos(
