@@ -227,7 +227,7 @@ public class DaoUsuario extends Conexion
         }
     }
     
-    public void borradoLogicoUsuario(int id)
+    public void borradoLogicoUsuario(Usuario u)
     {
         try
         {
@@ -235,7 +235,7 @@ public class DaoUsuario extends Conexion
             String sql = "{call borradoLogicoUsuario(?)}";
             PreparedStatement pre = this.getCon().prepareStatement(sql);
 
-            pre.setInt(1, id);
+            pre.setInt(1, u.getIdUsuario());
             
             pre.executeUpdate();
             pre.close();

@@ -86,4 +86,54 @@ public class DaoCoordinador extends Conexion
             this.desconectar();
         }
     }
+    
+    public void editarCoordinador(Coordinador c, Usuario u)
+    {
+        try
+        {
+            this.conectar();
+            String sql = "{call editarCoordinador(?,?,?,?,?,?,?)}";
+            PreparedStatement pre = this.getCon().prepareStatement(sql);
+            
+            pre.setString(1, c.getNombres());
+            pre.setString(2, c.getApellidos());
+            pre.setString(3, c.getCorreo());
+            pre.setString(4, u.getNomUsuario());
+            pre.setString(5, u.getPass());
+            pre.setInt(6, c.getIdCarrera());
+            pre.setInt(7, c.getIdCoordinador());
+            
+            pre.execute();
+            pre.close();            
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Error Coordinador: " + e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
+    }
+    
+    public void borradoLogicoCoordinador(Coordinador c)
+    {
+        try
+        {
+            this.conectar();
+            String sql = "{call borradoLogicoCoordinador(?)}";
+            PreparedStatement pre = this.getCon().prepareStatement(sql);
+            
+            pre.setInt(1, c.getIdCoordinador());
+            
+            pre.execute();
+            pre.close();            
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Error Coordinador: " + e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
+    }
 }

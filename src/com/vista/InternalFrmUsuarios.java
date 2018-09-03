@@ -13,6 +13,7 @@ import com.modelo.Coordinador;
 import com.modelo.Rol;
 import com.modelo.Usuario;
 import com.utilidades.UITools;
+import com.utilidades.Validacion;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -30,6 +31,7 @@ import javax.swing.table.DefaultTableModel;
 public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
 
     UITools ui = new UITools();
+    Validacion val = new Validacion();
     Usuario u = new Usuario();
     Coordinador c = new Coordinador();
     DaoUsuario daoU = new DaoUsuario();
@@ -41,7 +43,9 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
         initUi();
         
     }
-
+/*
+* jionda
+* */
     private List listaRoles;
     private List listaCarrera;
 
@@ -465,7 +469,13 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
         
         if(this.jChShow.isSelected())
         {
-            
+            this.jTxtId.setText(jTabla.getValueAt(fila, 0).toString());
+            this.jTxtNombreUsuario.setText(jTabla.getValueAt(fila, 3).toString());
+            this.jCbxRoles.setSelectedItem("Coordinador");
+            this.jTxtNombre.setText(jTabla.getValueAt(fila, 1).toString());
+            this.jTxtApellido.setText(jTabla.getValueAt(fila, 2).toString());
+            this.jTxtCorreo.setText(jTabla.getValueAt(fila, 4).toString());
+            this.jCbxCarrera.setSelectedItem((jTabla.getValueAt(fila, 5).toString()));
         }
         else
         {
@@ -552,14 +562,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
             u.setIdUsuario(Integer.parseInt(jTxtId.getText()));
             u.setPass(contra);
             
-            if(daoU.compContra(u))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return daoU.compContra(u);
         } catch (Exception e)
         {
             return false;
@@ -688,7 +691,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
             u.setIdUsuario(Integer.parseInt(this.jTxtId.getText()));
             
             
-            daoU.eliminarUsuario(u);
+            daoU.borradoLogicoUsuario(u);
             
             limpiar();
             llenarTablaUsuarios();
@@ -714,7 +717,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
             daoC.insertarCoordinador(c, u);
             
             limpiar();
-            llenarTablaUsuarios();
+            llenarTablaCoordinadores();
             
         } catch (Exception e)
         {
@@ -725,13 +728,13 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
     {
         try
         {
-            u.setIdUsuario(Integer.parseInt(this.jTxtId.getText()));
+            c.setIdCoordinador(Integer.parseInt(this.jTxtId.getText()));
             
             
-            daoU.eliminarUsuario(u);
+            daoC.borradoLogicoCoordinador(c);
             
             limpiar();
-            llenarTablaUsuarios();
+            llenarTablaCoordinadores();
             
         } catch (Exception e)
         {
@@ -750,26 +753,38 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
             c.setApellidos(jTxtApellido.getText().trim());
             c.setCorreo(jTxtCorreo.getText().trim());
             c.setIdCarrera(seleccionarComboCarreras(jCbxCarrera.getSelectedItem().toString()));
+            c.setIdCoordinador(Integer.parseInt(jTxtId.getText()));
             
-            daoC.insertarCoordinador(c, u);
+            daoC.editarCoordinador(c, u);
             
             limpiar();
-            llenarTablaUsuarios();
+            llenarTablaCoordinadores();
             
         } catch (Exception e)
         {
         }
     }
     
-    private void validarUsuario()
+    private int validarUsuario()
     {
-        Object[] obj = new Object[4];
-        String[] colors = {"#000000", "#000000", "#000001"};
-        obj[1] = colors;
+        int contador = 0;
         
-        String[] c = (String[]) obj[1];
-        JOptionPane.showMessageDialog(null, obj);
-        JOptionPane.showMessageDialog(null, c[2]);
+        try
+        {
+            
+            if(val.IsNullOrEmpty(jTxtNombreUsuario.getText().trim()))
+            {
+                contador++;
+            }
+            if(val.IsNullOrEmpty(String.valueOf(jTxtPass.getPassword()).trim()))
+            {
+                contador++;
+            }
+        } catch (Exception e)
+        {
+        }
+        
+        return contador;
     }
 
     private void llenarComboCarreras()

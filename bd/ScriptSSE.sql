@@ -643,7 +643,7 @@ create procedure insertarCoordinador(
 )
 begin
 	declare idUsuario int;
-	call insertarUsuario(nomUsuario, contra, 4);
+	call insertarUsuario(nomU, contra, 4);
     set idUsuario = (select max(id) from usuario);
     insert into coordinador values(null, nom, ape, corr, default, idUsuario, carrera);
 end
@@ -674,6 +674,57 @@ begin
 end
 $$
 
+-- Borrado Lógico Coordinador
+delimiter $$
+create procedure borradoLogicoCoordinador(
+	in idCo int
+)
+begin
+	declare idUs int;
+    set idUs = (select idUsuario from coordinador where id =  idCo);
+    
+    update coordinador
+    set estado = 0
+    where id = idCo;
+    
+    update usuario
+    set estado = 0
+    where id = idUs;
+end
+$$
+
+-- Eliminar Coordinador
+delimiter $$
+create procedure eliminarCoordinador(
+	in idCo int
+)
+begin
+	declare idUs int;
+    set idUs = (select idUsuario from coordinador where id =  idCo);
+    
+	delete from coordinador where id = idCo;
+    delete from usuario where id = idUs;
+end
+$$
+
+-- Cambiar Rol de Coordinador -- Lógico
+
+delimiter $$
+create procedure cambiarRolCoordinador(
+	in idCo int,
+    in idR int
+)
+begin
+	declare idUs int;
+    set idUs = (select idUsuario from coordinador where id =  idCo);
+    
+    update usuario
+    set idRol = idR
+    where id = idUs;
+	
+    delete from coordinador where id = idR;
+end
+$$
 
 -- Mostrar Coordinador
 
