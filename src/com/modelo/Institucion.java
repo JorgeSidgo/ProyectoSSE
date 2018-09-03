@@ -21,12 +21,12 @@ public class Institucion {
     private String direccionIns;
     private String correoIns;
     private String teleIns;
-    TipoInstitucion idTipo;
+    private int idTipo;
 
     public Institucion() {
     }
 
-    public Institucion(int idIns, String nombreIns, String direccionIns, String correoIns, String teleIns, TipoInstitucion idTipo) {
+    public Institucion(int idIns, String nombreIns, String direccionIns, String correoIns, String teleIns, int idTipo) {
         this.idIns = idIns;
         this.nombreIns = nombreIns;
         this.direccionIns = direccionIns;
@@ -75,11 +75,11 @@ public class Institucion {
         this.teleIns = teleIns;
     }
 
-    public TipoInstitucion getIdTipo() {
+    public int getIdTipo() {
         return idTipo;
     }
 
-    public void setIdTipo(TipoInstitucion idTipo) {
+    public void setIdTipo(int idTipo) {
         this.idTipo = idTipo;
     }
     
