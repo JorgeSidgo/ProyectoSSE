@@ -419,7 +419,7 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
         jTxtNombreEstudiante.addKeyListener(new KeyAdapter(){
             @Override
             public void keyReleased(KeyEvent ke){
-                trs.setRowFilter(RowFilter.regexFilter("(?i)"+jTxtNombreEstudiante.getText(), 3));
+                trs.setRowFilter(RowFilter.regexFilter("(?i)"+jTxtNombreEstudiante.getText(), 2));
             }
         });
         
