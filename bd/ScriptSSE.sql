@@ -547,9 +547,21 @@ end $
 
 -- Mostrar Solicitud
 delimiter $
-create procedure mostrarSolicitud()
+create procedure solEstudiante()
 begin 
-	select * from solicitud;
+	select e.nombres as nombre_Estudiante, s.idEstudiante as id_Estudiante from estudiante e inner join solicitud s on e.id=s.idEstudiante where e.estado = true and s.estado=true;
+end $
+
+delimiter $
+create procedure solCoordinador()
+begin
+	select c.nombres as nombre_Coordinador, s.idCoordinador as id_Coordinador from coordinador c inner join solicitud s on c.id=s.idCoordinador where c.estado = true and s.estado=true;
+end $
+
+delimiter $
+create procedure solInstitucion()
+begin
+	select s.idInstitucion as id_Intitucion, i.nombreInstitucion as nombre_Institucion from institucion i inner join solicitud s on i.id=s.idInstitucion where i.estado = true and s.estado = true;
 end $
 
 -- ==================================================================================================
