@@ -30,6 +30,7 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
     Candidato c = new Candidato();
     public InternalFrmSolvencias() {
         initComponents();
+        mostrarCandidatos();
     }
     
     public void mostrarCandidatos()
