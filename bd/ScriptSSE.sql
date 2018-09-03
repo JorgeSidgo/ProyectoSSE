@@ -490,7 +490,7 @@ end $
 delimiter $
 create procedure insertarHojaServicio(	
     in idEstudiante int, 
-    in idInstituicion int, 
+    in idInstitucion int, 
     in idCoordinador int, 
     in fechaInicio date, 
     in fechaFinalizacion date,
@@ -499,6 +499,8 @@ create procedure insertarHojaServicio(
 begin 
 	insert into hojaServicioSocial values (null,idEstudiante,idInstitucion,idCoordinador,fechaInicio,fechaFinalizacion, horas);
 end $
+
+call insertarHojaServicio(1,1,1,NOW(),null,100);
 
 -- Editar Hoja de Servicio Social
 delimiter $
@@ -585,13 +587,13 @@ end $
 -- Insertar Solicitud
 delimiter $
 create procedure insertarSolicitud(
-    in idEstudiante int, 
-    in idCoordinador int, 
-    in idInstituicion int, 
+    in idEs int, 
+    in idCo int, 
+    in idIn int, 
     in fecha date    
 )
 begin 
-	insert into solicitud values (null,idEstudiante,idCoordinador,idInstitucion,fecha,'', default);
+	insert into solicitud values (null,idEs,idCo,idIn,fecha,'', default);
 end $
 
 -- Editar Solicitud
@@ -846,8 +848,12 @@ create procedure mostrarCandidatos()
 begin
 	select e.id, e.carnet, e.nombres, e.apellidos, i.nombreInstitucion, h.nHoras from estudiante e
     inner join hojaserviciosocial h on e.id = h.idEstudiante
-    inner join institucion i on i.id = h.idInstitucion;
+    inner join institucion i on h.idInstitucion = i.id;
 end $
+
+select e.id, e.carnet, e.nombres, e.apellidos, i.nombreInstitucion, h.nHoras from estudiante e
+    inner join hojaserviciosocial h on e.id = h.idEstudiante
+    inner join institucion i on h.idInstitucion = i.id;
 
 -- buscar candidatos a solvencia por nombre --
 delimiter $
@@ -889,7 +895,7 @@ create procedure insertarEstudiante(
     in idU int(11)
 )
 begin
-	insert into estudiante values(null,carnet,nombres,apellidos,correo,fechaIngreso,idG,null,default,idU);
+	insert into estudiante values(null,carnet,nombres,apellidos,correo,fechaIngreso,idG,default,idU);
 end $
 
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -922,8 +928,11 @@ call insertarUsuario('Benja Parker', '123', 1);
 call insertarUsuario('Abdiel Martinez', '123', 1);
 call insertarUsuario('Francisco Montoya', '123', 1);
 
--- call buscarIDInstitucion(1);
-
--- call mostrarCandidatos;
-
+call buscarIDInstitucion(1);
+insert into tipoinstitucion values(null,"gubernamental");
+call insertarEstudiante("426017","Francisco Javier","Montoya Díaz","javicitoCasanova@gmail.com",now(),1,4); -- no me sirvio el now() :'C --
+call insertarInstitucion("Institucion 1","a la vuelta de la esquina","institucion1@gmail.com","2222-2222",1);
 call insertarCoordinador('Giovanni Ariel', 'Tzec Chavez', 'giovanni.tzec@gmail.com', 'GiovanniTzec', 'tugfa', 1);
+insert into estadosolicitud values(null,"estado 1");
+call insertarSolicitud(1,1,1,now());
+call insertarHojaServicio(1,1,1,null,null,100)
