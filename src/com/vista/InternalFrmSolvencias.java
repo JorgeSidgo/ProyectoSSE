@@ -5,6 +5,15 @@
  */
 package com.vista;
 
+import com.dao.DaoCandidato;
+import com.dao.DaoInstitucion;
+import com.dao.DaoSolvencia;
+import com.modelo.Candidato;
+import com.modelo.Solvencia;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Ramirez
@@ -14,8 +23,41 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
     /**
      * Creates new form InternalFrmSolvencias
      */
+    DaoCandidato daoC = new DaoCandidato();
+    DaoSolvencia daoS = new DaoSolvencia();
+    DaoInstitucion daI = new DaoInstitucion();
+    Solvencia s = new Solvencia();
+    Candidato c = new Candidato();
     public InternalFrmSolvencias() {
         initComponents();
+    }
+    
+    public void mostrarCandidatos()
+    {
+        String[] columnas = {"ID de Estudiante","Carnet","Nombres","Apellidos","Institucion Supervisora","Horas Realizadas"};
+        Object[] obj = new Object[6];
+        DefaultTableModel tabla = new DefaultTableModel(null, columnas);
+        List lista;
+        try
+        {
+            lista = daoC.mostrarCandidatos();
+            for (int i = 0; i < lista.size(); i++) 
+            {
+                c = (Candidato) lista.get(i);
+                obj[0] = c.getId();
+                obj[1] = c.getCarnet();
+                obj[2] = c.getNombres();
+                obj[3] = c.getApellidos();
+                obj[4] = c.getNombreInstitucion();
+                obj[5] = c.getnHoras();
+                tabla.addRow(obj);
+            }
+            this.jTablaCandidatos.setModel(tabla);
+        }
+        catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Error al mostrar en tabla!!","Carga Fallida!! "+e.getMessage(),JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**
@@ -25,8 +67,7 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
@@ -58,9 +99,9 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
         jLabel13 = new javax.swing.JLabel();
         jBtnLimpiarCandidato = new javax.swing.JButton();
         jBtnSolventar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTablaCandidatos = new javax.swing.JTable();
         jLabel14 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTablaCandidatos = new javax.swing.JTable();
 
         setBorder(null);
         setClosable(true);
@@ -270,23 +311,21 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
                 .addGap(36, 36, 36))
         );
 
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel14.setText("Seleccione entre los resultados el candidato que desea solventar:");
+
         jTablaCandidatos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][]
-            {
+            new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null}
             },
-            new String []
-            {
+            new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTablaCandidatos);
-
-        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel14.setText("Seleccione entre los resultados el candidato que desea solventar:");
+        jScrollPane2.setViewportView(jTablaCandidatos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -296,13 +335,13 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanelBusqueda, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel14))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -320,14 +359,14 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
                 .addComponent(jPanelBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 225, Short.MAX_VALUE)
                 .addComponent(jLabel14)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(208, 208, 208)
                     .addComponent(jPanelCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(318, Short.MAX_VALUE)))
+                    .addContainerGap(302, Short.MAX_VALUE)))
         );
 
         pack();
@@ -358,7 +397,7 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanelCandidato;
     private javax.swing.JRadioButton jRbBuscarID;
     private javax.swing.JRadioButton jRbBuscarNombre;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTablaCandidatos;
     private javax.swing.JTextField jTxtApellidos;
     private javax.swing.JTextField jTxtCarnet;
