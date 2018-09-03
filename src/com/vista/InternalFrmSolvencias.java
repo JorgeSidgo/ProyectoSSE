@@ -10,9 +10,13 @@ import com.dao.DaoInstitucion;
 import com.dao.DaoSolvencia;
 import com.modelo.Candidato;
 import com.modelo.Solvencia;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -31,6 +35,7 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
     
     String[] columnas = {"ID de Estudiante","Carnet","Nombres","Apellidos","Institucion Supervisora","Horas Realizadas"};
     DefaultTableModel tabla = new DefaultTableModel(null, columnas);
+    TableRowSorter trs;
     
     public InternalFrmSolvencias() {
         initComponents();
@@ -410,6 +415,16 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
 
     private void jTxtNombreEstudianteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtNombreEstudianteKeyTyped
         
+        
+        jTxtNombreEstudiante.addKeyListener(new KeyAdapter(){
+            @Override
+            public void keyReleased(KeyEvent ke){
+                trs.setRowFilter(RowFilter.regexFilter("(?i)"+jTxtNombreEstudiante.getText(), 3));
+            }
+        });
+        
+        trs = new TableRowSorter(tabla);
+        jTablaCandidatos.setRowSorter(trs);
     }//GEN-LAST:event_jTxtNombreEstudianteKeyTyped
 
     private void jTablaCandidatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablaCandidatosMouseClicked
