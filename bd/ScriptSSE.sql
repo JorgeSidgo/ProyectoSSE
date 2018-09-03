@@ -621,22 +621,36 @@ end $
 
 -- Mostrar Solicitud
 delimiter $
-create procedure solEstudiante()
+create procedure showEstudiante()
+begin
+	select s.id as idSolicitud, s.fecha as fecha, s.comentarios as comentarios from solicitud s where estado = true;
+end $
+
+delimiter $
+create procedure solEstudiante(in id int)
 begin 
-	select e.nombres as nombre_Estudiante, s.idEstudiante as id_Estudiante from estudiante e inner join solicitud s on e.id=s.idEstudiante where e.estado = true and s.estado=true;
+	select e.nombres as nombre_Estudiante, s.idEstudiante as id_Estudiante from estudiante e inner join solicitud s on e.id=s.idEstudiante where s.id=id and e.estado = true and s.estado=true;
 end $
 
 delimiter $
-create procedure solCoordinador()
+create procedure solCoordinador(in id int)
 begin
-	select c.nombres as nombre_Coordinador, s.idCoordinador as id_Coordinador from coordinador c inner join solicitud s on c.id=s.idCoordinador where c.estado = true and s.estado=true;
+	select c.nombres as nombre_Coordinador, s.idCoordinador as id_Coordinador from coordinador c inner join solicitud s on c.id=s.idCoordinador where s.id=id and c.estado = true and s.estado=true;
 end $
 
 delimiter $
-create procedure solInstitucion()
+create procedure solInstitucion(in id int)
 begin
-	select s.idInstitucion as id_Intitucion, i.nombreInstitucion as nombre_Institucion from institucion i inner join solicitud s on i.id=s.idInstitucion where i.estado = true and s.estado = true;
+	select s.idInstitucion as id_Intitucion, i.nombreInstitucion as nombre_Institucion from institucion i inner join solicitud s on i.id=s.idInstitucion where s.id=id and i.estado = true and s.estado = true;
 end $
+
+call insertarCoordinador('Giovanni Ariel', 'Tzec Chavez', 'giovanni.tzec@gmail.com', 'GiovanniTzec', 'tugfa', 1);
+call insertarEstudiante("426017","Juan Jose","Monroy Díaz","javicitoCasanova@gmail.com","02-09-18",1,4); -- no me sirvio el now() :'C --
+call insertarCoordinador('Milis Triquis', 'Ka Gaua', 'milis.triquis@gmail.com', 'MilisTrikis', 'trikis', 1);
+insert into tipoinstitucion values(null,"gubernamental");
+call insertarInstitucion("Institucion 1","a la vuelta de la esquina","institucion1@gmail.com","2222-2222",1);
+call mostrarInstitucion;
+select * from solicitud;
 
 -- ==================================================================================================
 ### Coordinador
