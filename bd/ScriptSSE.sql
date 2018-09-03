@@ -490,7 +490,7 @@ end $
 delimiter $
 create procedure insertarHojaServicio(	
     in idEstudiante int, 
-    in idInstituicion int, 
+    in idInstitucion int, 
     in idCoordinador int, 
     in fechaInicio date, 
     in fechaFinalizacion date,
@@ -499,6 +499,8 @@ create procedure insertarHojaServicio(
 begin 
 	insert into hojaServicioSocial values (null,idEstudiante,idInstitucion,idCoordinador,fechaInicio,fechaFinalizacion, horas);
 end $
+
+call insertarHojaServicio(1,1,1,NOW(),null,100);
 
 -- Editar Hoja de Servicio Social
 delimiter $
@@ -846,7 +848,7 @@ create procedure mostrarCandidatos()
 begin
 	select e.id, e.carnet, e.nombres, e.apellidos, i.nombreInstitucion, h.nHoras from estudiante e
     inner join hojaserviciosocial h on e.id = h.idEstudiante
-    inner join institucion i on i.id = h.idInstitucion;
+    inner join institucion i on h.idInstitucion = i.id;
 end $
 
 -- buscar candidatos a solvencia por nombre --
@@ -923,4 +925,4 @@ call insertarInstitucion("Institucion 1","a la vuelta de la esquina","institucio
 call insertarCoordinador('Giovanni Ariel', 'Tzec Chavez', 'giovanni.tzec@gmail.com', 'GiovanniTzec', 'tugfa', 1);
 insert into estadosolicitud values(null,"estado 1");
 call insertarSolicitud(1,1,1,now());
-
+call insertarHojaServicio(1,1,1,null,null,100)
