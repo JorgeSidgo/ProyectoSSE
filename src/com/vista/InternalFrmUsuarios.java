@@ -15,6 +15,9 @@ import com.modelo.Usuario;
 import com.utilidades.UITools;
 import com.utilidades.Validacion;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -26,6 +29,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -42,6 +46,8 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame
     DaoUsuario daoU = new DaoUsuario();
     DaoCoordinador daoC = new DaoCoordinador();
     DaoCarrera daoCarrera = new DaoCarrera();
+    Timer timer;
+    boolean llenarTabla = false;
 
     public InternalFrmUsuarios()
     {
@@ -206,7 +212,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame
 
         jBtnRegistrar.setBackground(new java.awt.Color(46, 204, 113));
         jBtnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/NewFile_6276.png"))); // NOI18N
+        jBtnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8_Add_File_16px.png"))); // NOI18N
         jBtnRegistrar.setText("Registrar");
         jBtnRegistrar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jBtnRegistrar.setPreferredSize(new java.awt.Dimension(73, 20));
@@ -220,7 +226,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame
 
         jBtnEditar.setBackground(new java.awt.Color(52, 152, 219));
         jBtnEditar.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/PencilAngled_16xLG_color.png"))); // NOI18N
+        jBtnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8_Edit_16px.png"))); // NOI18N
         jBtnEditar.setText("Editar");
         jBtnEditar.setPreferredSize(new java.awt.Dimension(73, 20));
         jBtnEditar.addActionListener(new java.awt.event.ActionListener()
@@ -233,7 +239,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame
 
         jBtnEliminar.setBackground(new java.awt.Color(231, 76, 60));
         jBtnEliminar.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/StatusAnnotations_Blocked_16xMD_color.png"))); // NOI18N
+        jBtnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8_No_16px.png"))); // NOI18N
         jBtnEliminar.setText("Eliminar");
         jBtnEliminar.setPreferredSize(new java.awt.Dimension(73, 20));
         jBtnEliminar.addActionListener(new java.awt.event.ActionListener()
@@ -246,7 +252,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame
 
         jBtnLimpiar.setBackground(new java.awt.Color(127, 140, 141));
         jBtnLimpiar.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/EraseTool_203.png"))); // NOI18N
+        jBtnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8_Broom_16px.png"))); // NOI18N
         jBtnLimpiar.setText("Limpiar");
         jBtnLimpiar.setIconTextGap(5);
         jBtnLimpiar.setPreferredSize(new java.awt.Dimension(73, 20));
@@ -584,15 +590,36 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame
 
     private void jTxtBuscarFocusLost(java.awt.event.FocusEvent evt)//GEN-FIRST:event_jTxtBuscarFocusLost
     {//GEN-HEADEREND:event_jTxtBuscarFocusLost
+
+        
         jTxtBuscar.setText("Buscar por Nombre de Usuario");
-        //llenarTablaUsuarios();
+        
+        /*timer = new Timer(1000, (ActionEvent e) ->
+        {
+        JOptionPane.showMessageDialog(null, "dec");
+        if(!llenarTabla)
+        {
+        llenarTablaUsuarios();
+        llenarTabla = true;
+        }
+        else
+        {
+        timer.stop();
+        llenarTabla = false;
+        }
+        });
+        
+        if(llenarTabla)
+        {
+        timer.start();
+        }*/
     }//GEN-LAST:event_jTxtBuscarFocusLost
 
     private void jTxtBuscarKeyTyped(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jTxtBuscarKeyTyped
     {//GEN-HEADEREND:event_jTxtBuscarKeyTyped
         String buscar = this.jTxtBuscar.getText();
         int longitud = buscar.length();
-        if((buscar != "Buscar por Nombre de Usuario") && (longitud > 2))
+        if((buscar != "Buscar por Nombre de Usuario") && (longitud > 1))
         {
             llenarTablaBuscarUsuarios();
         }
@@ -619,7 +646,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame
 
     private boolean compContra(String mensaje)
     {
-
+        boolean res = false;
         try
         {
             String contra;
@@ -629,19 +656,24 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame
             {
                 lbl, pswd
             };
-            JOptionPane.showConfirmDialog(null, obj, "Contraseña", JOptionPane.OK_CANCEL_OPTION);
-
-            contra = pswd.getText();
-
-            u.setIdUsuario(Integer.parseInt(jTxtId.getText()));
-            u.setPass(contra);
+            int opcion = JOptionPane.showConfirmDialog(null, obj, "Contraseña", JOptionPane.OK_CANCEL_OPTION);
             
-            boolean res = daoU.compContra(u);
             
-            if(!res)
+            if(opcion == 0)
             {
-                JOptionPane.showMessageDialog(this, "Contraseña Incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
+                contra = pswd.getText();
+
+                u.setIdUsuario(Integer.parseInt(jTxtId.getText()));
+                u.setPass(contra);
+
+                res = daoU.compContra(u);
+
+                if(!res)
+                {
+                    JOptionPane.showMessageDialog(this, "Contraseña Incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
+            
                 
             return res;
         } catch (Exception e)
