@@ -631,7 +631,7 @@ begin
     where id = idSolicitud;
 end $
 
--- Eliminar Solicitud
+-- Eliminar Fisico Solicitud
 delimiter $
 create procedure eliminarSolicitud(
 	in idSolicitud int
@@ -640,13 +640,21 @@ begin
 	delete from solicitud where id = idSolicitud;
 end $
 
+-- Eliminar Lógico solicitud --
+delimiter $
+create procedure ocultarSolicitud(
+	in idSol int
+)
+begin
+	update solicitud set estado = false where id=idSol; 
+end $
+
 -- Mostrar Solicitud
 delimiter $
 create procedure showSolicitud()
 begin
 	select * from solicitud where estado = true;
 end $
-call showSolicitud()
 -- ==================================================================================================
 ### Coordinador
 -- ==================================================================================================
