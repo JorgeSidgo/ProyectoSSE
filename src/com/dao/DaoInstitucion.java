@@ -82,6 +82,7 @@ public class DaoInstitucion extends Conexion
         
         return nombreI;
     }   
+
     public List papelera(){
         List registros= new ArrayList();
         ResultSet res;
@@ -146,5 +147,4 @@ public class DaoInstitucion extends Conexion
         }
     }
     
-
 }

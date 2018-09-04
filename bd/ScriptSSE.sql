@@ -969,6 +969,7 @@ call insertarInstitucion("Institucion 1","a la vuelta de la esquina","institucio
 call insertarCoordinador('Giovanni Ariel', 'Tzec Chavez', 'giovanni.tzec@gmail.com', 'GiovanniTzec', 'tugfa', 1);
 insert into estadosolicitud values(null,"estado 1");
 <<<<<<< HEAD
+<<<<<<< HEAD
 call insertarSolicitud("aprobado",2,2,1,"18-9-3","ejemplo");
 
 select * from estudiante;
@@ -977,3 +978,9 @@ select * from solicitud;
 call insertarSolicitud(1,1,1,now());
 call insertarHojaServicio(1,1,1,null,null,100)
 >>>>>>> master
+=======
+call insertarSolicitud(1,1,1,now());
+call insertarHojaServicio(1,1,1,null,null,100)
+call insertarSolicitud("aprobado",2,2,1,"18-9-3","ejemplo");
+
+>>>>>>> 0ce3fe73dab73e9b6e914364bbcfe79a5af21b36
