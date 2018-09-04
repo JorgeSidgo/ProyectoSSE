@@ -10,9 +10,13 @@ import com.dao.DaoInstitucion;
 import com.dao.DaoSolvencia;
 import com.modelo.Candidato;
 import com.modelo.Solvencia;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -28,16 +32,26 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
     DaoInstitucion daI = new DaoInstitucion();
     Solvencia s = new Solvencia();
     Candidato c = new Candidato();
+    
+    String[] columnas = {"ID de Estudiante","Carnet","Nombres","Apellidos","Institucion Supervisora","Horas Realizadas"};
+    DefaultTableModel tabla = new DefaultTableModel(null, columnas);
+    TableRowSorter trs;
+    
     public InternalFrmSolvencias() {
         initComponents();
         mostrarCandidatos();
+        this.jBtnSolventar.setEnabled(false);
+        this.jTxtIDEstudiante.setEnabled(false);
+        this.jTxtCarnet.setEnabled(false);
+        this.jTxtNombres.setEnabled(false);
+        this.jTxtApellidos.setEnabled(false);
+        this.jTxtInstitucionS.setEnabled(false);
+        this.jTxtNHoras.setEnabled(false);
     }
     
     public void mostrarCandidatos()
     {
-        String[] columnas = {"ID de Estudiante","Carnet","Nombres","Apellidos","Institucion Supervisora","Horas Realizadas"};
         Object[] obj = new Object[6];
-        DefaultTableModel tabla = new DefaultTableModel(null, columnas);
         List lista;
         try
         {
@@ -58,6 +72,21 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
         catch (Exception e)
         {
             JOptionPane.showMessageDialog(null, "Error al mostrar en tabla!!","Carga Fallida!! "+e.getMessage(),JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void llenarForm()
+    {
+        this.jBtnSolventar.setEnabled(true);
+        int index = this.jTablaCandidatos.getSelectedRow();
+        
+        if (index>-1) {
+            this.jTxtIDEstudiante.setText(String.valueOf(this.jTablaCandidatos.getValueAt(index, 0)));
+            this.jTxtCarnet.setText(String.valueOf(this.jTablaCandidatos.getValueAt(index, 1)));
+            this.jTxtNombres.setText(String.valueOf(this.jTablaCandidatos.getValueAt(index, 2)));
+            this.jTxtApellidos.setText(String.valueOf(this.jTablaCandidatos.getValueAt(index, 3)));
+            this.jTxtInstitucionS.setText(String.valueOf(this.jTablaCandidatos.getValueAt(index, 4)));
+            this.jTxtNHoras.setText(String.valueOf(this.jTablaCandidatos.getValueAt(index, 5)));
         }
     }
 
@@ -121,7 +150,7 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(849, Short.MAX_VALUE))
+                .addContainerGap(852, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -141,6 +170,12 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
         jBtnLimpiar.setBackground(new java.awt.Color(127, 140, 141));
         jBtnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/EraseTool_203.png"))); // NOI18N
         jBtnLimpiar.setText("Limpiar");
+
+        jTxtNombreEstudiante.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTxtNombreEstudianteKeyTyped(evt);
+            }
+        });
 
         jLabel4.setText("Nombre de Estudiante:");
 
@@ -169,10 +204,10 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
                     .addComponent(jLabel3)
                     .addComponent(jTxtCarnetEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jRbBuscarID))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
                 .addGroup(jPanelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jBtnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jBtnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE))
+                    .addComponent(jBtnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                    .addComponent(jBtnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanelBusquedaLayout.setVerticalGroup(
@@ -260,10 +295,10 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
                                     .addComponent(jTxtNHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jBtnLimpiarCandidato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jBtnSolventar, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                        .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jBtnSolventar, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                            .addComponent(jBtnLimpiarCandidato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jPanelCandidatoLayout.createSequentialGroup()
                         .addComponent(jLabel13)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -326,6 +361,11 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTablaCandidatos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTablaCandidatosMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTablaCandidatos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -342,7 +382,7 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel14))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 567, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -372,6 +412,24 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTxtNombreEstudianteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtNombreEstudianteKeyTyped
+        
+        
+        jTxtNombreEstudiante.addKeyListener(new KeyAdapter(){
+            @Override
+            public void keyReleased(KeyEvent ke){
+                trs.setRowFilter(RowFilter.regexFilter("(?i)"+jTxtNombreEstudiante.getText(), 2));
+            }
+        });
+        
+        trs = new TableRowSorter(tabla);
+        jTablaCandidatos.setRowSorter(trs);
+    }//GEN-LAST:event_jTxtNombreEstudianteKeyTyped
+
+    private void jTablaCandidatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablaCandidatosMouseClicked
+        llenarForm();
+    }//GEN-LAST:event_jTablaCandidatosMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -217,6 +217,8 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="jChShow" min="-2" pref="145" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jTxtBuscar" min="-2" pref="230" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -225,11 +227,12 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jBtnRegistrar" alignment="3" pref="30" max="32767" attributes="0"/>
-                      <Component id="jBtnEditar" alignment="3" pref="30" max="32767" attributes="0"/>
-                      <Component id="jBtnEliminar" alignment="3" pref="30" max="32767" attributes="0"/>
-                      <Component id="jBtnLimpiar" alignment="3" pref="30" max="32767" attributes="0"/>
+                      <Component id="jBtnRegistrar" linkSize="5" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="jBtnEditar" linkSize="5" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="jBtnEliminar" linkSize="5" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                      <Component id="jBtnLimpiar" linkSize="5" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="jChShow" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jTxtBuscar" linkSize="5" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -246,7 +249,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/com/iconos/NewFile_6276.png"/>
+              <Image iconType="3" name="/com/iconos/icons8_Add_File_16px.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Registrar"/>
             <Property name="horizontalAlignment" type="int" value="2"/>
@@ -267,7 +270,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/com/iconos/PencilAngled_16xLG_color.png"/>
+              <Image iconType="3" name="/com/iconos/icons8_Edit_16px.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Editar"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -287,7 +290,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/com/iconos/StatusAnnotations_Blocked_16xMD_color.png"/>
+              <Image iconType="3" name="/com/iconos/icons8_No_16px.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Eliminar"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -307,7 +310,7 @@
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/com/iconos/EraseTool_203.png"/>
+              <Image iconType="3" name="/com/iconos/icons8_Broom_16px.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Limpiar"/>
             <Property name="iconTextGap" type="int" value="5"/>
@@ -328,6 +331,13 @@
           </Properties>
           <Events>
             <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jChShowItemStateChanged"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTxtBuscar">
+          <Events>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTxtBuscarFocusGained"/>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTxtBuscarFocusLost"/>
+            <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTxtBuscarKeyTyped"/>
           </Events>
         </Component>
       </SubComponents>
@@ -406,8 +416,14 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTxtNombre">
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTxtNombreKeyPressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTxtApellido">
+          <Events>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTxtApellidoKeyPressed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
@@ -420,6 +436,11 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTxtCorreo">
+          <Properties>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Cursor de Texto"/>
+            </Property>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel8">
           <Properties>

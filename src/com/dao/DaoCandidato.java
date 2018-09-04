@@ -39,7 +39,7 @@ public class DaoCandidato extends Conexion{
                 can.setCarnet(res.getString("carnet"));
                 can.setNombres(res.getString("nombres"));
                 can.setApellidos(res.getString("apellidos"));
-                can.setNombreInstitucion("nombreInstitucion");
+                can.setNombreInstitucion(res.getString("nombreInstitucion"));
                 can.setnHoras(res.getInt("nHoras"));
                 lista.add(can);
             }

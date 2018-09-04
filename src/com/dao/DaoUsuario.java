@@ -27,6 +27,42 @@ public class DaoUsuario extends Conexion
     
     Usuario u = new Usuario();
 
+    public List<Usuario> buscarUsuario(Usuario u)
+    {
+        List<Usuario> listaUsuario = new ArrayList();
+        
+        try
+        {
+            this.conectar();
+            String sql = "{call buscarNombreUsuario(?)}";
+            PreparedStatement pre = this.getCon().prepareStatement(sql);
+            pre.setString(1, u.getNomUsuario());
+            
+            ResultSet res = pre.executeQuery();
+            
+            while(res.next())
+            {
+                Usuario user = new Usuario();
+                
+                user.setIdUsuario(res.getInt("id"));
+                user.setNomUsuario(res.getString("nomUsuario"));
+                user.setIdRol(res.getInt("idRol"));
+                
+                listaUsuario.add(user);
+            }
+            
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Error DaoUsuario: " + e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
+        
+        return listaUsuario;
+    }
+    
     public List<Usuario> mostrarUsuarios()
     {
         List<Usuario> listaUsuario = new ArrayList();
@@ -106,7 +142,7 @@ public class DaoUsuario extends Conexion
         {
             this.conectar();
             String sql = "{call mostrarIdUsuario(?)}";
-            PreparedStatement pre = this.getCon().prepareStatement(sql);
+            PreparedStatement pre = this.getCon().prepareStatement(sql);        
             pre.setInt(1, id);
             
             ResultSet res = pre.executeQuery();
@@ -358,4 +394,69 @@ public class DaoUsuario extends Conexion
         
         return listaRoles;
     }
+    
+    public List papelera(){
+        List registros =new ArrayList();
+        ResultSet res;
+        try
+        {
+            this.conectar();
+            String sql="call papeleraUsuario()";
+            PreparedStatement query= this.getCon().prepareCall(sql);
+            res= query.executeQuery();
+            
+            ResultSetMetaData meta= res.getMetaData();
+            int nColumnas= meta.getColumnCount();
+            
+            String[] thead= new String[nColumnas];
+            for (int i = 0; i < nColumnas; i++)
+            {
+                thead[i]=meta.getColumnLabel(i+1);
+            }
+            registros.add(thead);
+            
+            
+            while(res.next()){
+                String[] tBody = new String[nColumnas];
+                for (int i = 0; i < nColumnas; i++)
+                {
+                    tBody[i]=res.getString(i+1);
+                }
+                registros.add(tBody);
+            }
+            
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Error Usuario: " + e.getMessage());
+        }finally{
+            this.desconectar();
+        }
+        
+        
+        return registros;
+    }
+    
+    public void restaurar(int u)
+    {
+        try
+        {
+            this.conectar();
+            String sql = "call restaurarUsuario(?)";
+            PreparedStatement pre = this.getCon().prepareStatement(sql);
+
+            pre.setInt(1, u);
+            
+            pre.executeUpdate();
+            pre.close();
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Error Usuario: " + e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
+    }
+    
+    
 }

@@ -14,21 +14,30 @@ import com.modelo.Rol;
 import com.modelo.Usuario;
 import com.utilidades.UITools;
 import com.utilidades.Validacion;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.Timer;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author jsidg
  */
-public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
+public class InternalFrmUsuarios extends javax.swing.JInternalFrame
+{
 
     UITools ui = new UITools();
     Validacion val = new Validacion();
@@ -37,13 +46,15 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
     DaoUsuario daoU = new DaoUsuario();
     DaoCoordinador daoC = new DaoCoordinador();
     DaoCarrera daoCarrera = new DaoCarrera();
-    
-    public InternalFrmUsuarios() {
+    Timer timer;
+    boolean llenarTabla = false;
+
+    public InternalFrmUsuarios()
+    {
         initComponents();
         initUi();
-        
     }
-/*
+    /*
 * jionda
 * */
     private List listaRoles;
@@ -68,7 +79,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
     {
         this.listaCarrera = listaCarrera;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents()
@@ -90,6 +101,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
         jBtnEliminar = new javax.swing.JButton();
         jBtnLimpiar = new javax.swing.JButton();
         jChShow = new javax.swing.JCheckBox();
+        jTxtBuscar = new javax.swing.JTextField();
         jPanelCoordinador = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jTxtNombre = new javax.swing.JTextField();
@@ -200,7 +212,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
 
         jBtnRegistrar.setBackground(new java.awt.Color(46, 204, 113));
         jBtnRegistrar.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/NewFile_6276.png"))); // NOI18N
+        jBtnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8_Add_File_16px.png"))); // NOI18N
         jBtnRegistrar.setText("Registrar");
         jBtnRegistrar.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jBtnRegistrar.setPreferredSize(new java.awt.Dimension(73, 20));
@@ -214,7 +226,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
 
         jBtnEditar.setBackground(new java.awt.Color(52, 152, 219));
         jBtnEditar.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/PencilAngled_16xLG_color.png"))); // NOI18N
+        jBtnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8_Edit_16px.png"))); // NOI18N
         jBtnEditar.setText("Editar");
         jBtnEditar.setPreferredSize(new java.awt.Dimension(73, 20));
         jBtnEditar.addActionListener(new java.awt.event.ActionListener()
@@ -227,7 +239,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
 
         jBtnEliminar.setBackground(new java.awt.Color(231, 76, 60));
         jBtnEliminar.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/StatusAnnotations_Blocked_16xMD_color.png"))); // NOI18N
+        jBtnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8_No_16px.png"))); // NOI18N
         jBtnEliminar.setText("Eliminar");
         jBtnEliminar.setPreferredSize(new java.awt.Dimension(73, 20));
         jBtnEliminar.addActionListener(new java.awt.event.ActionListener()
@@ -240,7 +252,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
 
         jBtnLimpiar.setBackground(new java.awt.Color(127, 140, 141));
         jBtnLimpiar.setForeground(new java.awt.Color(255, 255, 255));
-        jBtnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/EraseTool_203.png"))); // NOI18N
+        jBtnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8_Broom_16px.png"))); // NOI18N
         jBtnLimpiar.setText("Limpiar");
         jBtnLimpiar.setIconTextGap(5);
         jBtnLimpiar.setPreferredSize(new java.awt.Dimension(73, 20));
@@ -262,6 +274,25 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
             }
         });
 
+        jTxtBuscar.addFocusListener(new java.awt.event.FocusAdapter()
+        {
+            public void focusGained(java.awt.event.FocusEvent evt)
+            {
+                jTxtBuscarFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt)
+            {
+                jTxtBuscarFocusLost(evt);
+            }
+        });
+        jTxtBuscar.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyTyped(java.awt.event.KeyEvent evt)
+            {
+                jTxtBuscarKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -277,28 +308,51 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
                 .addComponent(jBtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jChShow, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jBtnRegistrar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(jBtnEditar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(jBtnEliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(jBtnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                    .addComponent(jChShow))
+                    .addComponent(jBtnRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jChShow)
+                    .addComponent(jTxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
+
+        jPanel3Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jBtnEditar, jBtnEliminar, jBtnLimpiar, jBtnRegistrar, jTxtBuscar});
 
         jPanelCoordinador.setBackground(new java.awt.Color(250, 250, 250));
 
         jLabel3.setText("Nombre:");
 
+        jTxtNombre.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyPressed(java.awt.event.KeyEvent evt)
+            {
+                jTxtNombreKeyPressed(evt);
+            }
+        });
+
+        jTxtApellido.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyPressed(java.awt.event.KeyEvent evt)
+            {
+                jTxtApellidoKeyPressed(evt);
+            }
+        });
+
         jLabel6.setText("Apellido:");
 
         jLabel7.setText("Correo:");
+
+        jTxtCorreo.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         jLabel8.setText("Carrera:");
 
@@ -426,11 +480,11 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
     private void jCbxRolesItemStateChanged(java.awt.event.ItemEvent evt)//GEN-FIRST:event_jCbxRolesItemStateChanged
     {//GEN-HEADEREND:event_jCbxRolesItemStateChanged
         String selected = this.jCbxRoles.getSelectedItem().toString();
-        
-        if(selected.equals("Coordinador"))
+
+        if (selected.equals("Coordinador"))
         {
             this.jPanelCoordinador.setVisible(true);
-        }
+        } 
         else
         {
             this.jPanelCoordinador.setVisible(false);
@@ -439,12 +493,11 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
 
     private void jChShowItemStateChanged(java.awt.event.ItemEvent evt)//GEN-FIRST:event_jChShowItemStateChanged
     {//GEN-HEADEREND:event_jChShowItemStateChanged
-        if(this.jChShow.isSelected())
+        if (this.jChShow.isSelected())
         {
             llenarTablaCoordinadores();
             jPanelCoordinador.setVisible(true);
-        }
-        else
+        } else
         {
             llenarTablaUsuarios();
             jPanelCoordinador.setVisible(false);
@@ -453,58 +506,54 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
 
     private void jBtnRegistrarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBtnRegistrarActionPerformed
     {//GEN-HEADEREND:event_jBtnRegistrarActionPerformed
-        if(jCbxRoles.getSelectedItem().toString().equals("Coordinador"))
-        {
-            insertarCoordinador();
-        }
-        else
-        {
-            insertarUsuario();
-        }
+       String estado = this.jCbxRoles.getSelectedItem().toString();
+       if(estado.equals("Coordinador"))
+       {
+           insertarCoordinador();
+       }
+       else
+       {
+           insertarUsuario();
+       }
     }//GEN-LAST:event_jBtnRegistrarActionPerformed
 
     private void jTablaMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jTablaMouseClicked
     {//GEN-HEADEREND:event_jTablaMouseClicked
         int fila = this.jTabla.getSelectedRow();
-        
-        if(this.jChShow.isSelected())
+
+        if (this.jChShow.isSelected())
         {
             this.jTxtId.setText(jTabla.getValueAt(fila, 0).toString());
             this.jTxtNombreUsuario.setText(jTabla.getValueAt(fila, 3).toString());
+            this.lblContra.setText("Nueva Contraseña:");
             this.jCbxRoles.setSelectedItem("Coordinador");
             this.jTxtNombre.setText(jTabla.getValueAt(fila, 1).toString());
             this.jTxtApellido.setText(jTabla.getValueAt(fila, 2).toString());
             this.jTxtCorreo.setText(jTabla.getValueAt(fila, 4).toString());
             this.jCbxCarrera.setSelectedItem((jTabla.getValueAt(fila, 5).toString()));
-        }
-        else
+        } else
         {
             this.jTxtId.setText(jTabla.getValueAt(fila, 0).toString());
             this.jTxtNombreUsuario.setText(jTabla.getValueAt(fila, 1).toString());
             this.lblContra.setText("Nueva Contraseña:");
             this.jCbxRoles.setSelectedItem(jTabla.getValueAt(fila, 2).toString());
+            this.jPanelCoordinador.setVisible(false);
         }
-        
+
         jBtnEditar.setEnabled(true);
         jBtnEliminar.setEnabled(true);
         jBtnRegistrar.setEnabled(false);
     }//GEN-LAST:event_jTablaMouseClicked
 
     private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditarActionPerformed
-        
-        if(confirmar("¿Desea guardar los cambios hechos al registro?"))
+
+
+        if (jCbxRoles.getSelectedItem().toString().equals("Coordinador"))
         {
-            if(compContra("Ingrese su contraseña actual para efectuar los cambios"))
-            {
-                if(jCbxRoles.getSelectedItem().toString().equals("Coordinador"))
-                {
-                    editarCoordinador();
-                }
-                else
-                {
-                    editarUsuario();
-                }
-            }
+            editarCoordinador();
+        } else
+        {
+            editarUsuario();
         }
     }//GEN-LAST:event_jBtnEditarActionPerformed
 
@@ -514,62 +563,126 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
 
     private void jBtnEliminarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBtnEliminarActionPerformed
     {//GEN-HEADEREND:event_jBtnEliminarActionPerformed
-        if(confirmar("¿Desea eliminar este registro?"))
+
+        if (jCbxRoles.getSelectedItem().toString().equals("Coordinador"))
         {
-            if(compContra("Ingrese su contraseña actual para eliminar el registro"))
-            {
-                if(jCbxRoles.getSelectedItem().toString().equals("Coordinador"))
-                {
-                    eliminarCoordinador();
-                }
-                else
-                {
-                    eliminarUsuario();
-                }
-            }
+            eliminarCoordinador();
+        } else
+        {
+            eliminarUsuario();
         }
     }//GEN-LAST:event_jBtnEliminarActionPerformed
-    
+
+    private void jTxtNombreKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jTxtNombreKeyPressed
+    {//GEN-HEADEREND:event_jTxtNombreKeyPressed
+        val.wordsOnly(evt);
+    }//GEN-LAST:event_jTxtNombreKeyPressed
+
+    private void jTxtApellidoKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jTxtApellidoKeyPressed
+    {//GEN-HEADEREND:event_jTxtApellidoKeyPressed
+        val.wordsOnly(evt);
+    }//GEN-LAST:event_jTxtApellidoKeyPressed
+
+    private void jTxtBuscarFocusGained(java.awt.event.FocusEvent evt)//GEN-FIRST:event_jTxtBuscarFocusGained
+    {//GEN-HEADEREND:event_jTxtBuscarFocusGained
+        jTxtBuscar.setText("");
+    }//GEN-LAST:event_jTxtBuscarFocusGained
+
+    private void jTxtBuscarFocusLost(java.awt.event.FocusEvent evt)//GEN-FIRST:event_jTxtBuscarFocusLost
+    {//GEN-HEADEREND:event_jTxtBuscarFocusLost
+
+        
+        jTxtBuscar.setText("Buscar por Nombre de Usuario");
+        
+        /*timer = new Timer(1000, (ActionEvent e) ->
+        {
+        JOptionPane.showMessageDialog(null, "dec");
+        if(!llenarTabla)
+        {
+        llenarTablaUsuarios();
+        llenarTabla = true;
+        }
+        else
+        {
+        timer.stop();
+        llenarTabla = false;
+        }
+        });
+        
+        if(llenarTabla)
+        {
+        timer.start();
+        }*/
+    }//GEN-LAST:event_jTxtBuscarFocusLost
+
+    private void jTxtBuscarKeyTyped(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jTxtBuscarKeyTyped
+    {//GEN-HEADEREND:event_jTxtBuscarKeyTyped
+        String buscar = this.jTxtBuscar.getText();
+        int longitud = buscar.length();
+        if((buscar != "Buscar por Nombre de Usuario") && (longitud > 1))
+        {
+            llenarTablaBuscarUsuarios();
+        }
+        else if((buscar != "Buscar por Nombre de Usuario") && (longitud == 0))
+        {
+            llenarTablaUsuarios();
+        }
+    }//GEN-LAST:event_jTxtBuscarKeyTyped
+
     private boolean confirmar(String mensaje)
     {
         int opcion;
-        
+
         opcion = JOptionPane.showConfirmDialog(this, mensaje, "Confirmar", JOptionPane.YES_NO_OPTION);
-        
-        if(opcion == 0)
+
+        if (opcion == 0)
         {
             return true;
-        }
-        else
+        } else
         {
             return false;
         }
     }
-    
+
     private boolean compContra(String mensaje)
     {
-       
+        boolean res = false;
         try
         {
             String contra;
             JLabel lbl = new JLabel(mensaje);
             JTextField pswd = new JPasswordField();
-            Object[] obj = {lbl, pswd};
-            JOptionPane.showConfirmDialog(null, obj, "Contraseña", JOptionPane.OK_CANCEL_OPTION);
-
-            contra = pswd.getText();
-
-            u.setIdUsuario(Integer.parseInt(jTxtId.getText()));
-            u.setPass(contra);
+            Object[] obj =
+            {
+                lbl, pswd
+            };
+            int opcion = JOptionPane.showConfirmDialog(null, obj, "Contraseña", JOptionPane.OK_CANCEL_OPTION);
             
-            return daoU.compContra(u);
+            
+            if(opcion == 0)
+            {
+                contra = pswd.getText();
+
+                u.setIdUsuario(Integer.parseInt(jTxtId.getText()));
+                u.setPass(contra);
+
+                res = daoU.compContra(u);
+
+                if(!res)
+                {
+                    JOptionPane.showMessageDialog(this, "Contraseña Incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            
+                
+            return res;
         } catch (Exception e)
         {
             return false;
         }
-        
+
     }
-    
+
     private void limpiar()
     {
         this.jTxtNombreUsuario.setText("");
@@ -584,26 +697,29 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
         jBtnEliminar.setEnabled(false);
         jBtnRegistrar.setEnabled(true);
     }
-    
+
     private void llenarTablaUsuarios()
     {
-        String[] columnas = {"N°", "Nombre de Usuario", "Permisos"};
+        String[] columnas =
+        {
+            "N°", "Nombre de Usuario", "Permisos"
+        };
         Object[] obj = new Object[3];
         DefaultTableModel tabla = new DefaultTableModel(null, columnas);
-    
+
         try
         {
             List lista = daoU.mostrarUsuarios();
 
             for (int i = 0; i < lista.size(); i++)
             {
-            u = (Usuario) lista.get(i);
+                u = (Usuario) lista.get(i);
 
-            obj[0] = u.getIdUsuario();
-            obj[1] = u.getNomUsuario();
-            obj[2] = daoU.getRol(u.getIdRol()).getDescRol();
+                obj[0] = u.getIdUsuario();
+                obj[1] = u.getNomUsuario();
+                obj[2] = daoU.getRol(u.getIdRol()).getDescRol();
 
-            tabla.addRow(obj);
+                tabla.addRow(obj);
             }
             this.jTabla.setModel(tabla);
         } catch (Exception e)
@@ -611,186 +727,297 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
         }
     }
     
+    private void llenarTablaBuscarUsuarios()
+    {
+        String[] columnas =
+        {
+            "N°", "Nombre de Usuario", "Permisos"
+        };
+        Object[] obj = new Object[3];
+        DefaultTableModel tabla = new DefaultTableModel(null, columnas);
+        u.setNomUsuario(this.jTxtBuscar.getText());
+        
+        
+        try
+        {
+            List lista = daoU.buscarUsuario(u);
+
+            for (int i = 0; i < lista.size(); i++)
+            {
+                u = (Usuario) lista.get(i);
+
+                obj[0] = u.getIdUsuario();
+                obj[1] = u.getNomUsuario();
+                obj[2] = daoU.getRol(u.getIdRol()).getDescRol();
+
+                tabla.addRow(obj);
+            }
+            this.jTabla.setModel(tabla);
+        } catch (Exception e)
+        {
+        }
+    }
+
     private void llenarTablaCoordinadores()
     {
-        String[] columnas = {
-            "N°", "Nombres", "Apellidos", "Nombre de Usuario",  "Correo", "Carrera"
+        String[] columnas =
+        {
+            "N°", "Nombres", "Apellidos", "Nombre de Usuario", "Correo", "Carrera"
         };
         Object[] obj = new Object[6];
         DefaultTableModel tabla = new DefaultTableModel(null, columnas);
-       
+
         try
         {
             List listaCoordinador = daoC.mostrarCoordinadores();
-            
+
             for (int i = 0; i < listaCoordinador.size(); i++)
             {
                 c = (Coordinador) listaCoordinador.get(i);
-                
+
                 obj[0] = c.getIdCoordinador();
                 obj[1] = c.getNombres();
                 obj[2] = c.getApellidos();
                 obj[3] = daoU.mostrarIdUsuario(c.getIdUsuario()).getNomUsuario();
                 obj[4] = c.getCorreo();
                 obj[5] = daoCarrera.buscarIdCarrera(c.getIdCarrera()).getNombreCarrera();
-                
+
                 tabla.addRow(obj);
             }
             this.jTabla.setModel(tabla);
-        } 
-        catch (Exception e)
+        } catch (Exception e)
         {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }
-    
+
     private void insertarUsuario()
     {
         try
         {
-            u.setNomUsuario(this.jTxtNombreUsuario.getText().trim());
-            u.setPass(String.valueOf(this.jTxtPass.getPassword()).trim());
-            
-            int index = seleccionarComboRoles(this.jCbxRoles.getSelectedItem().toString());
-            
-            u.setIdRol(index);
-            
-            daoU.insertarUsuario(u);
-            
-            limpiar();
-            llenarTablaUsuarios();
-            
+            if (validarUsuario() == 0)
+            {
+                if (confirmar("¿Desea hacer este registro?"))
+                {
+                    u.setNomUsuario(this.jTxtNombreUsuario.getText().trim());
+                    u.setPass(String.valueOf(this.jTxtPass.getPassword()).trim());
+
+                    int index = seleccionarComboRoles(this.jCbxRoles.getSelectedItem().toString());
+
+                    u.setIdRol(index);
+
+                    daoU.insertarUsuario(u);
+
+                    limpiar();
+                    llenarTablaUsuarios();
+                }
+            }
         } catch (Exception e)
         {
         }
     }
-    
+
     private void editarUsuario()
     {
         try
         {
-            u.setIdUsuario(Integer.parseInt(this.jTxtId.getText()));
-            u.setNomUsuario(this.jTxtNombreUsuario.getText().trim());
-            u.setPass(String.valueOf(this.jTxtPass.getPassword()).trim());
-            u.setIdRol(seleccionarComboRoles(this.jCbxRoles.getSelectedItem().toString()));
-            
-            daoU.editarUsuario(u);
-            
-            limpiar();
-            llenarTablaUsuarios();
-            
+            if (validarUsuario() == 0)
+            {
+                if (confirmar("¿Desea guardar los cambios hechos a este registro?"))
+                {
+                    if (compContra("Ingrese la contraseña actual para confirmar los cambios el registro"))
+                    {
+                        u.setIdUsuario(Integer.parseInt(this.jTxtId.getText()));
+                        u.setNomUsuario(this.jTxtNombreUsuario.getText().trim());
+                        u.setPass(String.valueOf(this.jTxtPass.getPassword()).trim());
+                        u.setIdRol(seleccionarComboRoles(this.jCbxRoles.getSelectedItem().toString()));
+
+                        daoU.editarUsuario(u);
+
+                        limpiar();
+                        llenarTablaUsuarios();
+                    }
+                }
+            }
         } catch (Exception e)
         {
         }
     }
-    
+
     private void eliminarUsuario()
     {
         try
         {
-            u.setIdUsuario(Integer.parseInt(this.jTxtId.getText()));
-            
-            
-            daoU.borradoLogicoUsuario(u);
-            
-            limpiar();
-            llenarTablaUsuarios();
-            
+
+            if (confirmar("¿Desea eliminar este registro?"))
+            {
+                if (compContra("Ingrese la contraseña actual para eliminar el registro"))
+                {
+                    u.setIdUsuario(Integer.parseInt(this.jTxtId.getText()));
+
+                    daoU.borradoLogicoUsuario(u);
+
+                    limpiar();
+                    llenarTablaUsuarios();
+                }
+            }
         } catch (Exception e)
         {
         }
     }
-    
+
     private void insertarCoordinador()
     {
         try
         {
-            u.setNomUsuario(this.jTxtNombreUsuario.getText().trim());
-            u.setPass(String.valueOf(this.jTxtPass.getPassword()).trim());
-            //u.setIdRol(seleccionarComboRoles(this.jCbxRoles.getSelectedItem().toString()));
-            
-            c.setNombres(jTxtNombre.getText().trim());
-            c.setApellidos(jTxtApellido.getText().trim());
-            c.setCorreo(jTxtCorreo.getText().trim());
-            c.setIdCarrera(seleccionarComboCarreras(jCbxCarrera.getSelectedItem().toString()));
-            
-            daoC.insertarCoordinador(c, u);
-            
-            limpiar();
-            llenarTablaCoordinadores();
-            
+            if (validarCoordinador() == 0)
+            {
+                if (confirmar("¿Desea hacer este registro?"))
+                {
+                    u.setNomUsuario(this.jTxtNombreUsuario.getText().trim());
+                    u.setPass(String.valueOf(this.jTxtPass.getPassword()).trim());
+                    //u.setIdRol(seleccionarComboRoles(this.jCbxRoles.getSelectedItem().toString()));
+
+                    c.setNombres(jTxtNombre.getText().trim());
+                    c.setApellidos(jTxtApellido.getText().trim());
+                    c.setCorreo(jTxtCorreo.getText().trim());
+                    c.setIdCarrera(seleccionarComboCarreras(jCbxCarrera.getSelectedItem().toString()));
+
+                    daoC.insertarCoordinador(c, u);
+
+                    limpiar();
+                    llenarTablaCoordinadores();
+                }
+            }
         } catch (Exception e)
         {
         }
     }
-    
+
     private void eliminarCoordinador()
     {
         try
         {
-            c.setIdCoordinador(Integer.parseInt(this.jTxtId.getText()));
-            
-            
-            daoC.borradoLogicoCoordinador(c);
-            
-            limpiar();
-            llenarTablaCoordinadores();
-            
+
+            if (confirmar("¿Desea eliminar este registro?"))
+            {
+                if (compContra("Ingrese la contraseña actual para eliminar el registro"))
+                {
+                    c.setIdCoordinador(Integer.parseInt(this.jTxtId.getText()));
+
+                    daoC.borradoLogicoCoordinador(c);
+
+                    limpiar();
+                    llenarTablaCoordinadores();
+                }
+            }
         } catch (Exception e)
         {
         }
     }
-    
+
     private void editarCoordinador()
     {
         try
         {
-            u.setNomUsuario(this.jTxtNombreUsuario.getText().trim());
-            u.setPass(String.valueOf(this.jTxtPass.getPassword()).trim());
-            //u.setIdRol(seleccionarComboRoles(this.jCbxRoles.getSelectedItem().toString()));
-            
-            c.setNombres(jTxtNombre.getText().trim());
-            c.setApellidos(jTxtApellido.getText().trim());
-            c.setCorreo(jTxtCorreo.getText().trim());
-            c.setIdCarrera(seleccionarComboCarreras(jCbxCarrera.getSelectedItem().toString()));
-            c.setIdCoordinador(Integer.parseInt(jTxtId.getText()));
-            
-            daoC.editarCoordinador(c, u);
-            
-            limpiar();
-            llenarTablaCoordinadores();
-            
+            if (validarCoordinador() == 0)
+            {
+                if (confirmar("¿Desea guardar los cambios hechos a este registro?"))
+                {
+                    if (compContra("Ingrese la contraseña actual para confirmar los cambios el registro"))
+                    {
+                        u.setNomUsuario(this.jTxtNombreUsuario.getText().trim());
+                        u.setPass(String.valueOf(this.jTxtPass.getPassword()).trim());
+                        //u.setIdRol(seleccionarComboRoles(this.jCbxRoles.getSelectedItem().toString()));
+
+                        c.setNombres(jTxtNombre.getText().trim());
+                        c.setApellidos(jTxtApellido.getText().trim());
+                        c.setCorreo(jTxtCorreo.getText().trim());
+                        c.setIdCarrera(seleccionarComboCarreras(jCbxCarrera.getSelectedItem().toString()));
+                        c.setIdCoordinador(Integer.parseInt(jTxtId.getText()));
+
+                        daoC.editarCoordinador(c, u);
+
+                        limpiar();
+                        llenarTablaCoordinadores();
+                    }
+                }
+            }
+
         } catch (Exception e)
         {
         }
     }
-    
-    private int validarUsuario()
+
+    private int validarCoordinador()
     {
         int contador = 0;
-        
+
         try
         {
-            
-            if(val.IsNullOrEmpty(jTxtNombreUsuario.getText().trim()))
+            if (val.IsNullOrEmpty(jTxtNombreUsuario.getText().trim()))
             {
                 contador++;
             }
-            if(val.IsNullOrEmpty(String.valueOf(jTxtPass.getPassword()).trim()))
+            if (val.IsNullOrEmpty(String.valueOf(jTxtPass.getPassword()).trim()))
             {
                 contador++;
+            }
+            if (val.IsNullOrEmpty(jTxtNombre.getText().trim()))
+            {
+                contador++;
+            }
+            if (val.IsNullOrEmpty(jTxtApellido.getText().trim()))
+            {
+                contador++;
+            }
+            if (val.IsNullOrEmpty(jTxtCorreo.getText().trim()))
+            {
+                contador++;
+            }
+            
+            if(contador > 0)
+            {
+                JOptionPane.showMessageDialog(this, "Complete los campos", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
             }
         } catch (Exception e)
         {
         }
-        
+
+        return contador;
+    }
+
+    private int validarUsuario()
+    {
+        int contador = 0;
+
+        try
+        {
+
+            if (val.IsNullOrEmpty(jTxtNombreUsuario.getText().trim()))
+            {
+                contador++;
+            }
+            if (val.IsNullOrEmpty(String.valueOf(jTxtPass.getPassword()).trim()))
+            {
+                contador++;
+            }
+            
+            if(contador > 0)
+        {
+            JOptionPane.showMessageDialog(this, "Complete los campos", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+        }
+        } catch (Exception e)
+        {
+        }
+
         return contador;
     }
 
     private void llenarComboCarreras()
     {
         this.setListaCarrera(daoCarrera.mostrarCarrera());
-        
+
         for (int i = 0; i < listaCarrera.size(); i++)
         {
             Carrera c = new Carrera();
@@ -798,12 +1025,11 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
             this.jCbxCarrera.addItem(c.getNombreCarrera());
         }
     }
-    
+
     private void llenarComboRoles()
     {
         this.setListaRoles(daoU.mostrarRoles());
 
-        
         for (int i = 0; i < this.listaRoles.size(); i++)
         {
             Rol r = new Rol();
@@ -811,41 +1037,53 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
             this.jCbxRoles.addItem(r.getDescRol());
         }
     }
-    
+
     private int seleccionarComboCarreras(String item)
     {
         int index = 0;
-        
+
         for (int i = 0; i < listaCarrera.size(); i++)
         {
             Carrera c = new Carrera();
             c = (Carrera) listaCarrera.get(i);
-            
-            if(item.equals(c.getNombreCarrera()))
+
+            if (item.equals(c.getNombreCarrera()))
             {
                 index = c.getId();
             }
         }
-        
+
         return index;
     }
-    
+
     private int seleccionarComboRoles(String item)
     {
         int index = 0;
-        
+
         for (int i = 0; i < listaRoles.size(); i++)
         {
             Rol r = new Rol();
             r = (Rol) listaRoles.get(i);
-            if(item.equals(r.getDescRol()))
+            if (item.equals(r.getDescRol()))
             {
                 index = r.getId();
             }
         }
-        
-        return index;    
+
+        return index;
     }
+        
+    private void initBusqueda()
+    {
+        JLabel internal = new JLabel();
+        
+        jTxtBuscar.setLayout(new BoxLayout(jTxtBuscar, BoxLayout.X_AXIS));
+        internal.setIcon(new ImageIcon(getClass().getResource("../iconos/lupe.png")));
+        jTxtBuscar.add(Box.createRigidArea(new Dimension(200,0)));
+        jTxtBuscar.add(internal);
+        jTxtBuscar.setText("Buscar por Nombre de Usuario");
+    }
+    
     private void initUi()
     {
         //validarUsuario();
@@ -853,6 +1091,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
         jBtnEliminar.setEnabled(false);
         jTxtId.setVisible(false);
         llenarComboRoles();
+        initBusqueda();
         llenarComboCarreras();
         llenarTablaUsuarios();
         jPanelCoordinador.setVisible(false);
@@ -885,6 +1124,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTabla;
     private javax.swing.JTextField jTxtApellido;
+    private javax.swing.JTextField jTxtBuscar;
     private javax.swing.JTextField jTxtCorreo;
     private javax.swing.JTextField jTxtId;
     private javax.swing.JTextField jTxtNombre;

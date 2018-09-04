@@ -34,6 +34,13 @@ public class Usuario {
         this.estado = estado;
     }
 
+    public Usuario(int idUsuario)
+    {
+        this.idUsuario = idUsuario;
+    }
+    
+    
+
     public int getIdRol()
     {
         return idRol;

@@ -54,4 +54,20 @@ public class Validacion
         }
         return false;
     }
+    
+    public boolean isEnter(KeyEvent evt){
+        if(evt.getKeyChar()==KeyEvent.VK_ENTER){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    
+    public boolean isEsc(KeyEvent evt){
+        if(evt.getKeyChar()==KeyEvent.VK_ESCAPE){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
