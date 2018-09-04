@@ -138,11 +138,6 @@ create table solicitud(
     estado int default 1
 );
 
-create table estadoSolicitud(
-    id int auto_increment primary key unique,
-    descEstado varchar(15)
-);
-
 create table estudiante(
 	id int auto_increment primary key unique,
     carnet varchar(10) not null,
@@ -226,7 +221,6 @@ alter table institucion add constraint fk_institucion_tipoInstitucion foreign ke
 alter table solicitud add constraint fk_solicitud_estudiante foreign key (idEstudiante) references estudiante(id);
 alter table solicitud add constraint fk_solicitud_coordinador foreign key (idCoordinador) references coordinador(id);
 alter table solicitud add constraint fk_solicitud_institucion foreign key (idInstitucion) references institucion(id);
-alter table solicitud add constraint fk_solicitud_estadoSolicitud foreign key (estado) references estadoSolicitud(id);
 alter table materiasEstudiante add constraint fk_materiasEstudiante_materia foreign key (idMateria) references materia(id);
 alter table materiasEstudiante add constraint fk_materiasEstudiante_estudiante foreign key (idEstudiante) references estudiante(id);
 alter table hojaServicioSocial add constraint fk_hojaServicioSocial_estudiante foreign key (idEstudiante) references estudiante(id);
@@ -543,12 +537,12 @@ begin
 		end if;
         
 	elseif (tCarrera = 2) then
-		if (totHoras > 299) then
+		if (totHoras > 499) then
 			update estudiante
 			set idEstadoSS = 3
 			where id = idEs;
 		
-        elseif (totHoras < 300) then
+        elseif (totHoras < 500) then
 			update estudiante
 			set idEstadoSS = 2
 			where id = idEs;
@@ -646,14 +640,14 @@ end $
 delimiter $
 create procedure insertarSolicitud(
     in esta varchar(50),
-    in idEs int, 
+    in idEstu int, 
     in idCo int, 
     in idIn int, 
     in fecha date,
     in come text
 )
 begin 
-	insert into solicitud values (null,esta,idEs,idCo,idIn,fecha,come, default);
+	insert into solicitud values (null,esta,idEstu,idCo,idIn,fecha,come, default);
 end $
 
 drop procedure editarSolicitud;
@@ -1004,10 +998,6 @@ call insertarUsuario('Jorge Sidgo', 'tugfa', 1);
 call insertarUsuario('Benja Parker', '123', 1);
 call insertarUsuario('anb', '123', 1);
 call insertarUsuario('Francisco Montoya', '123', 1);
-
-insert into estadosolicitud values(null,'Aprobada');
-insert into estadosolicitud values(null,'Denegada');
-insert into estadosolicitud values(null,'Observaciones');
 
 insert into estadoEstudiante values(null, 'No apto para Servicio Social');
 insert into estadoEstudiante values(null, 'Solvente');
