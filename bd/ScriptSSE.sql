@@ -971,12 +971,10 @@ end $
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 create view estudiantesPro as (
-	select e.*, u.nomUsuario, c.nombreCarrera, g.nombreGrupo, s.descEstado as estadoEstudiante, ee.descEstado as estadoSS
+	select e.*, u.nomUsuario, c.nombreCarrera, g.nombreGrupo, s.descEstado as estadoSS, ee.descEstado as estadoEstudiante
     from estudiante e, grupo g, carrera c, estadoSS s, estadoEstudiante ee, usuario u
     where e.idUsuario = u.id and e.idGrupo = g.id and g.idCarrera = c.id and e.idEstadoEstudiante = ee.id and e.idEstadoSS = s.id
 );
-
-select * from estudiantesSolvencia;
 
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##### DATOS INICIALES ######
@@ -1028,9 +1026,7 @@ insert into tipoinstitucion values(null, 'Publica');
 call insertarEstudiante('DonFrancisco', '123', '426017','Francisco Javier','Montoya Díaz','javicitoCasanova@gmail.com','2018-01-01',1); 
 call insertarInstitucion('Institucion 1','a la vuelta de la esquina','institucion1@gmail.com','2222-2222',1);
 call insertarCoordinador('Giovanni Ariel', 'Tzec Chavez', 'giovanni.tzec@gmail.com', 'GiovanniTzec', 'tugfa', 1);
+call insertarSolicitud('Aprobado',1,1,1,'2018-06-01','Ejemplo');
+call insertarHojaServicio(1,1,1,'2018-01-01','2018-06-01',100)
 
-
-call insertarSolicitud(1,1,1,now());
-call insertarHojaServicio(1,1,1,null,null,100)
-call insertarSolicitud("aprobado",2,2,1,"18-9-3","ejemplo");
-
+-- select * from estudiantesPro;
