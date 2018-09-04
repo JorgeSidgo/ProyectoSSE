@@ -18,17 +18,18 @@ import java.util.Date;
 public class Solicitud {
     
     private int id;
-    private Date fecha;
+    private String fecha;
     private String comentarios;
     private int estado;
-    Estudiante idEstudiante;
-    Institucion idInstitucion;
-    Coordinador idCoordinador;
+    private int idEstudiante;
+    private int idInstitucion;
+    private int idCoordinador;
+    private String estadoSolicitud;
     
     public Solicitud() {
     }
 
-    public Solicitud(int id, Date fecha, String comentarios, int estado, Estudiante idEstudiante, Institucion idInstitucion, Coordinador idCoordinador) {
+    public Solicitud(int id, String fecha, String comentarios, int estado, int idEstudiante, int idInstitucion, int idCoordinador, String estadoSolicitud) {
         this.id = id;
         this.fecha = fecha;
         this.comentarios = comentarios;
@@ -36,6 +37,7 @@ public class Solicitud {
         this.idEstudiante = idEstudiante;
         this.idInstitucion = idInstitucion;
         this.idCoordinador = idCoordinador;
+        this.estadoSolicitud = estadoSolicitud;
     }
 
     public int getId() {
@@ -46,11 +48,11 @@ public class Solicitud {
         this.id = id;
     }
 
-    public Date getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
@@ -70,28 +72,38 @@ public class Solicitud {
         this.estado = estado;
     }
 
-    public Estudiante getIdEstudiante() {
+    public int getIdEstudiante() {
         return idEstudiante;
     }
 
-    public void setIdEstudiante(Estudiante idEstudiante) {
+    public void setIdEstudiante(int idEstudiante) {
         this.idEstudiante = idEstudiante;
     }
 
-    public Institucion getIdInstitucion() {
+    public int getIdInstitucion() {
         return idInstitucion;
     }
 
-    public void setIdInstitucion(Institucion idInstitucion) {
+    public void setIdInstitucion(int idInstitucion) {
         this.idInstitucion = idInstitucion;
     }
 
-    public Coordinador getIdCoordinador() {
+    public int getIdCoordinador() {
         return idCoordinador;
     }
 
-    public void setIdCoordinador(Coordinador idCoordinador) {
+    public void setIdCoordinador(int idCoordinador) {
         this.idCoordinador = idCoordinador;
     }
+
+    public String getEstadoSolicitud() {
+        return estadoSolicitud;
+    }
+
+    public void setEstadoSolicitud(String estadoSolicitud) {
+        this.estadoSolicitud = estadoSolicitud;
+    }
+
+    
     
 }

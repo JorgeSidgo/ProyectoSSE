@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.vista;
 
 import com.dao.DaoUsuario;
@@ -814,7 +810,8 @@ public class FrmPrincipal extends javax.swing.JFrame
 
     private void menuItSolicitudesMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuItSolicitudesMouseClicked
     {//GEN-HEADEREND:event_menuItSolicitudesMouseClicked
-        // TODO add your handling code here:
+        InternalFrmGestionSolicitud frm = new InternalFrmGestionSolicitud();
+        abrirVentana(frm);
     }//GEN-LAST:event_menuItSolicitudesMouseClicked
 
     private void menuReportesMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuReportesMouseClicked
