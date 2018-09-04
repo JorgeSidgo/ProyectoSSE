@@ -7,6 +7,7 @@ import com.dao.DaoInstitucion;
 import com.dao.DaoSolicitud;
 import com.modelo.Solicitud;
 import java.util.List;
+import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -408,8 +409,9 @@ public class InternalFrmGestionSolicitud extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBtnDltMouseClicked
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        JDesktopPane desktop = new JDesktopPane();
         InternalFrmIngresarSolicitud frm = new InternalFrmIngresarSolicitud();
-        this.add(frm);
+        desktop.add(frm);
         frm.setVisible(true);
     }//GEN-LAST:event_jButton3MouseClicked
 
