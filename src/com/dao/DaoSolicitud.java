@@ -48,14 +48,11 @@ public class DaoSolicitud extends Conexion{
         try 
         {
             this.conectar();
-            String sql = "call editarSolicitud(?,?,?,?,?,?);";
+            String sql = "call editarSolicitud(?,?,?);";
             PreparedStatement pre = this.getCon().prepareCall(sql);
             pre.setInt(1, s.getId());
-            pre.setInt(2, s.getIdEstudiante());
-            pre.setInt(3, s.getIdCoordinador());
-            pre.setInt(4, s.getIdInstitucion());
-            pre.setString(6, s.getFecha());
-            pre.setString(5, s.getComentarios());
+            pre.setString(2, s.getEstadoSolicitud());
+            pre.setString(3, s.getComentarios());
             pre.execute();
             pre.close();
         } 
@@ -91,24 +88,27 @@ public class DaoSolicitud extends Conexion{
                 
     }
     
-    public List supermostrar()
+    public List mostrarSolicitud()
     {
-        List listaS = new ArrayList();
-        Object[] obj = new Object[10];
-        Solicitud s = new Solicitud();
+        List listaS = new ArrayList();      
         
         try 
         {
             this.conectar();
-            String sl = "call showEstudiante()";
+            String sl = "call showSolicitud()";
             PreparedStatement p = this.getCon().prepareCall(sl);
             ResultSet r = p.executeQuery();
             
             while (r.next()) {                
-                
-                obj[0] = (r.getInt("id"));
-                obj[1] = (r.getString("fecha"));
-                obj[2] = (r.getString("comentarios"));
+                Solicitud s = new Solicitud();
+                s.setId(r.getInt("id"));
+                s.setEstadoSolicitud(r.getString("estadoSolicitud"));
+                s.setIdEstudiante(r.getInt("idEstudiante"));
+                s.setIdCoordinador(r.getInt("idCoordinador"));
+                s.setIdInstitucion(r.getInt("idInstitucion"));
+                s.setFecha(r.getString("fecha"));
+                s.setComentarios(r.getString("comentarios"));
+                listaS.add(s);
             }
             r.close();
             p.close();
@@ -117,78 +117,9 @@ public class DaoSolicitud extends Conexion{
         {
             JOptionPane.showMessageDialog(null, "Hay un problema con la Solicitud "+ e.getMessage());
         }
-               
-        try 
-        {
-            
-            String sql = "call solEstudiante(?)";
-            PreparedStatement pre = this.getCon().prepareCall(sql);
-            pre.setInt(1, s.getId());
-            ResultSet res = pre.executeQuery();
-            
-            while (res.next()) {                
-                
-                obj[3]=(res.getInt("id_Estudiante"));
-                obj[4]=(res.getString("nombre_Estudiante"));
-            }
-            res.close();
-            pre.close();
-        } 
-        catch (Exception e) 
-        {
-            JOptionPane.showMessageDialog(null, "Hay un error con mostrar Estudiante " + e.getMessage());
-        }
-        
-        try 
-        {
-            String sql2 = "call solCoordinador(?)";
-            PreparedStatement pre2 = this.getCon().prepareCall(sql2);
-            pre2.setInt(1, s.getId());
-            ResultSet res2 = pre2.executeQuery();
-            
-            while(res2.next())
-            {
-                obj[5] = (res2.getInt("id_Coordinador"));
-                obj[6] = (res2.getString("nombre_Coordinador"));
-            }
-            res2.close();
-            pre2.close();
-        } 
-        catch (Exception e) 
-        {
-            JOptionPane.showMessageDialog(null, "Hay un error con mostrar el Coordinador " + e.getMessage());
-        }
-        
-        try 
-        {
-            String sql3 = "call solInstitucion()";
-            PreparedStatement pre3 = this.getCon().prepareCall(sql3);
-            pre3.setInt(1, s.getId());
-            ResultSet res3 = pre3.executeQuery();
-            
-            while(res3.next())
-            {
-                obj[7] = (res3.getInt("id_Intitucion"));
-                obj[8] = (res3.getString("nombre_Institucion"));
-            }
-            
-            res3.close();
-            pre3.close();
-        }
-        catch (Exception e) 
-        {
-            JOptionPane.showMessageDialog(null, "Hay un error con mostrar la Institución" + e.getMessage());
-        }
         finally
         {
             this.desconectar();
-        }
-        
-            /*Espero que esto sirva*/
-            //s.setId();
-        
-        for (int i = 0; i <= 9; i++) {
-            listaS.add(obj[i]);
         }
         
         return listaS;

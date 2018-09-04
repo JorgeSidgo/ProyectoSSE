@@ -1,4 +1,4 @@
-package com.dao;
+    package com.dao;
 
 import com.conexion.Conexion;
 import com.modelo.Institucion;
@@ -51,5 +51,33 @@ public class DaoInstitucion extends Conexion
             this.desconectar();
         }
         return i;
+    }
+    
+    public String nombreInstitucion(int id)
+    {
+        String nombreI = "";
+        ResultSet res;
+        
+        try 
+        {
+            this.conectar();
+            String sql = "call stringInstitucion(?)";
+            PreparedStatement pre = this.getCon().prepareCall(sql);
+            pre.setInt(1, id);
+            res = pre.executeQuery();
+            
+            while(res.next())
+            {
+                nombreI = (res.getString("Nombre"));
+            }
+        } catch (Exception e) 
+        {
+            JOptionPane.showMessageDialog(null, "No se puede mostrar el nombre de la Institución " + e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
+        return nombreI;
     }
 }

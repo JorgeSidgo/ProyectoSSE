@@ -24,14 +24,12 @@ public class Solicitud {
     private int idEstudiante;
     private int idInstitucion;
     private int idCoordinador;
-    private String nombreEstudiante;
-    private String nombreInstitucion;
-    private String nombreCoordinador;
+    private String estadoSolicitud;
     
     public Solicitud() {
     }
 
-    public Solicitud(int id, String fecha, String comentarios, int estado, int idEstudiante, int idInstitucion, int idCoordinador, String nombreEstudiante, String nombreInstitucion, String nombreCoordinador) {
+    public Solicitud(int id, String fecha, String comentarios, int estado, int idEstudiante, int idInstitucion, int idCoordinador, String estadoSolicitud) {
         this.id = id;
         this.fecha = fecha;
         this.comentarios = comentarios;
@@ -39,9 +37,7 @@ public class Solicitud {
         this.idEstudiante = idEstudiante;
         this.idInstitucion = idInstitucion;
         this.idCoordinador = idCoordinador;
-        this.nombreEstudiante = nombreEstudiante;
-        this.nombreInstitucion = nombreInstitucion;
-        this.nombreCoordinador = nombreCoordinador;
+        this.estadoSolicitud = estadoSolicitud;
     }
 
     public int getId() {
@@ -100,28 +96,12 @@ public class Solicitud {
         this.idCoordinador = idCoordinador;
     }
 
-    public String getNombreEstudiante() {
-        return nombreEstudiante;
+    public String getEstadoSolicitud() {
+        return estadoSolicitud;
     }
 
-    public void setNombreEstudiante(String nombreEstudiante) {
-        this.nombreEstudiante = nombreEstudiante;
-    }
-
-    public String getNombreInstitucion() {
-        return nombreInstitucion;
-    }
-
-    public void setNombreInstitucion(String nombreInstitucion) {
-        this.nombreInstitucion = nombreInstitucion;
-    }
-
-    public String getNombreCoordinador() {
-        return nombreCoordinador;
-    }
-
-    public void setNombreCoordinador(String nombreCoordinador) {
-        this.nombreCoordinador = nombreCoordinador;
+    public void setEstadoSolicitud(String estadoSolicitud) {
+        this.estadoSolicitud = estadoSolicitud;
     }
 
     
