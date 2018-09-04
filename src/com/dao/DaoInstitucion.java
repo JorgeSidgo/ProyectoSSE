@@ -2,6 +2,7 @@ package com.dao;
 
 import com.conexion.Conexion;
 import com.modelo.Institucion;
+import com.modelo.Usuario;
 import com.utilidades.Console;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -98,4 +99,27 @@ public class DaoInstitucion extends Conexion
         
         return registros;
     }
+    
+    public void restaurar(int u)
+    {
+        try
+        {
+            this.conectar();
+            String sql = "call restaurarInstitucion(?)";
+            PreparedStatement pre = this.getCon().prepareStatement(sql);
+
+            pre.setInt(1, u);
+            
+            pre.executeUpdate();
+            pre.close();
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Error Usuario: " + e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
+    }
+    
 }
