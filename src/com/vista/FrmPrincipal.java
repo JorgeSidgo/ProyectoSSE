@@ -847,7 +847,8 @@ public class FrmPrincipal extends javax.swing.JFrame
     }//GEN-LAST:event_keysInstitucionesActionPerformed
 
     private void menuPapeleraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuPapeleraMouseClicked
-        // TODO add your handling code here:
+        InternalFrmPapelera fr= new InternalFrmPapelera();
+        abrirVentana(fr);
     }//GEN-LAST:event_menuPapeleraMouseClicked
 
     private void menuItReporteEstudiantesMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuItReporteEstudiantesMouseClicked

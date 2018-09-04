@@ -142,7 +142,7 @@ public class DaoUsuario extends Conexion
         {
             this.conectar();
             String sql = "{call mostrarIdUsuario(?)}";
-            PreparedStatement pre = this.getCon().prepareStatement(sql);
+            PreparedStatement pre = this.getCon().prepareStatement(sql);        
             pre.setInt(1, id);
             
             ResultSet res = pre.executeQuery();
@@ -393,6 +393,47 @@ public class DaoUsuario extends Conexion
         }
         
         return listaRoles;
+    }
+    
+    public List papelera(){
+        List registros =new ArrayList();
+        ResultSet res;
+        try
+        {
+            this.conectar();
+            String sql="call papeleraUsuario()";
+            PreparedStatement query= this.getCon().prepareCall(sql);
+            res= query.executeQuery();
+            
+            ResultSetMetaData meta= res.getMetaData();
+            int nColumnas= meta.getColumnCount();
+            
+            String[] thead= new String[nColumnas];
+            for (int i = 0; i < nColumnas; i++)
+            {
+                thead[i]=meta.getColumnLabel(i+1);
+            }
+            registros.add(thead);
+            
+            
+            while(res.next()){
+                String[] tBody = new String[nColumnas];
+                for (int i = 0; i < nColumnas; i++)
+                {
+                    tBody[i]=res.getString(i+1);
+                }
+                registros.add(tBody);
+            }
+            
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Error Usuario: " + e.getMessage());
+        }finally{
+            this.desconectar();
+        }
+        
+        
+        return registros;
     }
     
     
