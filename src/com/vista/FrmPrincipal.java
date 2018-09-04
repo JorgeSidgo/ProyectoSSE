@@ -6,6 +6,7 @@
 package com.vista;
 
 import com.dao.DaoUsuario;
+import com.reporte.Reportes;
 import com.utilidades.UITools;
 import static com.vista.FrmPrincipalx.ii;
 import java.awt.Color;
@@ -50,6 +51,8 @@ public class FrmPrincipal extends javax.swing.JFrame
         
     }
     UITools ui = new UITools();
+    Reportes rep = new Reportes();
+    
     private static boolean menArchivo = false;
     private static boolean menSS = false;
     private static boolean menReportes = false;
@@ -849,7 +852,13 @@ public class FrmPrincipal extends javax.swing.JFrame
 
     private void menuItReporteEstudiantesMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuItReporteEstudiantesMouseClicked
     {//GEN-HEADEREND:event_menuItReporteEstudiantesMouseClicked
-        // TODO add your handling code here:
+        try
+        {
+            rep.reporteEstudiantes();
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(this, "Error al mostrar el reporte: " + e.getMessage());
+        }
     }//GEN-LAST:event_menuItReporteEstudiantesMouseClicked
 
     private void borders(int a, int b, int c)
