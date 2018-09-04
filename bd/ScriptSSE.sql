@@ -145,7 +145,19 @@ create table estudiante(
     fechaIngreso date,
     idGrupo int not null,
     estado int default 1,
-    idUsuario int not null
+    idUsuario int not null,
+    idEstadoEstudiante int not null,
+    idEstadoSS int not null
+);
+
+create table estadoEstudiante(
+	id int auto_increment primary key unique,
+    descEstado varchar(50)
+);
+
+create table estadoSS(
+	id int auto_increment primary key unique,
+    descEstado varchar(50)
 );
 
 create table coordinador(
@@ -197,6 +209,8 @@ alter table carrera add constraint fk_carrera_escuela foreign key (idEscuela) re
 alter table usuario add constraint fk_usuario_rol foreign key (idRol) references rol(id);
 alter table estudiante add constraint fk_estudiante_usuario foreign key (idUsuario) references usuario(id);
 alter table estudiante add constraint fk_estudiante_grupo foreign key (idGrupo) references grupo(id);
+alter table estudiante add constraint fk_estudiante_estadoEstudiante foreign key (idEstadoEstudiante) references estadoEstudiante(id);
+alter table estudiante add constraint fk_estudiante_estadoSS foreign key (idEstadoSS) references estadoSS(id);
 alter table coordinador add constraint fk_coordinador_usuario foreign key (idUsuario) references usuario(id);
 alter table coordinador add constraint fk_coordinador_carrera foreign key (idCarrera) references carrera(id);
 alter table horarioAtencion add constraint fk_horarioAtencion_coordinador foreign key (idCoordinador) references coordinador(id);
@@ -923,6 +937,15 @@ call insertarUsuario('Jorge Sidgo', 'tugfa', 1);
 call insertarUsuario('Benja Parker', '123', 1);
 call insertarUsuario('anb', '123', 1);
 call insertarUsuario('Francisco Montoya', '123', 1);
+
+insert into estadoEstudiante values(null, 'No apto para Servicio Social');
+insert into estadoEstudiante values(null, 'Solvente');
+insert into estadoEstudiante values(null, 'Insolvente');
+
+insert into estadoSS values(null, 'No ha Iniciado');
+insert into estadoSS values(null, 'En Ejecucion');
+insert into estadoSS values(null, 'Completado');
+
 
 call buscarIDInstitucion(1);
 insert into tipoinstitucion values(null,"gubernamental");
