@@ -129,6 +129,7 @@ create table tipoInstitucion(
 
 create table solicitud(
     id int auto_increment primary key unique,
+    estadoSolicitud varchar(50),
     idEstudiante int not null,
     idCoordinador int not null,
     idInstitucion int not null,
@@ -456,8 +457,6 @@ begin
 	select * from institucion where id = idI and estado = 1;
 end$
 
-
-
 -- Buscar Institucion por Nombre	
 delimiter $
 create procedure buscarNombreInstitucion(
@@ -501,6 +500,12 @@ begin
 	update institucion set estado = 1 where id = idInstitucion and estado = 0;
 end $
 
+-- Mostrar String institucion --
+delimiter $
+create procedure stringInstitucion(in idI int)
+begin
+	select i.nombreInstitucion as Nombre from institucion i where i.id = idI and i.estado = true; 
+end $
 
 -- ==================================================================================================
 ### Hoja de Servicio Social
@@ -636,32 +641,32 @@ end $
 -- ==================================================================================================
 ### Solicitud
 -- ==================================================================================================
-	
+	drop procedure insertarSolicitud;
 -- Insertar Solicitud
 delimiter $
 create procedure insertarSolicitud(
+    in esta varchar(50),
     in idEs int, 
     in idCo int, 
     in idIn int, 
-    in fecha date    
+    in fecha date,
+    in come text
 )
 begin 
-	insert into solicitud values (null,idEs,idCo,idIn,fecha,'', default);
+	insert into solicitud values (null,esta,idEs,idCo,idIn,fecha,come, default);
 end $
 
+drop procedure editarSolicitud;
 -- Editar Solicitud
 delimiter $
 create procedure editarSolicitud(
 	in idSolicitud int, 
-    in idEs int, 
-    in idCo int, 
-    in idInst int, 
-    in fecha date, 
+    in estado varchar(50),
     in com text
 )
 begin
 	update solicitud 
-    set idEstudiante = idEs, idCoordinador = idCo, idInstitucion = idInst, fecha = fecha, comentarios = com
+    set estadoSolicitud = estado, comentarios = com
     where id = idSolicitud;
 end $
 
@@ -676,11 +681,11 @@ end $
 
 -- Mostrar Solicitud
 delimiter $
-create procedure mostrarSolicitud()
-begin 
-	select * from solicitud;
+create procedure showSolicitud()
+begin
+	select * from solicitud where estado = true;
 end $
-
+call showSolicitud()
 -- ==================================================================================================
 ### Coordinador
 -- ==================================================================================================
@@ -704,7 +709,6 @@ end
 $$
 
 -- Editar Coordinador
-
 create procedure editarCoordinador(
 	in nom varchar(50),
     in ape varchar(50),
@@ -728,7 +732,7 @@ begin
 end
 $$
 
---- Borrado Lógico Coordinador
+-- Borrado Lógico Coordinador --
 delimiter $$
 create procedure borradoLogicoCoordinador(
 	in idCo int
@@ -780,7 +784,6 @@ begin
 end
 $$
 -- Mostrar Coordinador
-
 delimiter $$
 create procedure mostrarCoordinadores()
 begin
@@ -788,10 +791,15 @@ begin
 end
 $$
 
+-- Mostrar Coordinador String
+delimiter $
+create procedure stringCoordinador(in idC int)
+begin
+	select c.nombres as Nombres from coordinador c where c.id = idC and c.estado = true;
+end $
 -- ==================================================================================================
 ### Carrera
 -- ==================================================================================================
-
 
 -- Insertar Carrera --
 delimiter $
@@ -951,6 +959,13 @@ begin
     insert into estudiante values(null, car, nom, ape, corr, fecha, idG, default, idU, 1, 1);
 end $
 
+-- Mostrar string estudiante --
+delimiter $
+create procedure stringEstudiante(in idE int)
+begin
+	select e.nombres as Nombres from estudiante e where e.id = idE and e.estado = true;
+end $
+
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##### VISTAS ######
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1016,3 +1031,6 @@ call insertarCoordinador('Giovanni Ariel', 'Tzec Chavez', 'giovanni.tzec@gmail.c
 
 
 call insertarSolicitud(1,1,1,now());
+call insertarHojaServicio(1,1,1,null,null,100)
+call insertarSolicitud("aprobado",2,2,1,"18-9-3","ejemplo");
+

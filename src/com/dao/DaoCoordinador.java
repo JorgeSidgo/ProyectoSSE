@@ -136,4 +136,32 @@ public class DaoCoordinador extends Conexion
             this.desconectar();
         }
     }
+    
+    public String nombreCoordinador(int id)
+    {
+        String nombreC = "";
+        ResultSet res;
+        
+        try 
+        {
+            this.conectar();
+            String sql = "call stringCoordinador(?)";
+            PreparedStatement pre = this.getCon().prepareCall(sql);
+            pre.setInt(1, id);
+            res = pre.executeQuery();
+            
+            while(res.next())
+            {
+                nombreC = (res.getString("Nombres"));
+            }
+        } catch (Exception e) 
+        {
+            JOptionPane.showMessageDialog(null, "No se puede mostrar el nombre del Coordinador " + e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
+        return nombreC;
+    }
 }

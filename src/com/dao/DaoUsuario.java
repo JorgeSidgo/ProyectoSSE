@@ -438,5 +438,27 @@ public class DaoUsuario extends Conexion
         return registros;
     }
     
+    public void restaurar(int u)
+    {
+        try
+        {
+            this.conectar();
+            String sql = "call restaurarUsuario(?)";
+            PreparedStatement pre = this.getCon().prepareStatement(sql);
+
+            pre.setInt(1, u);
+            
+            pre.executeUpdate();
+            pre.close();
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Error Usuario: " + e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
+    }
+    
     
 }

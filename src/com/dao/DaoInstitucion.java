@@ -1,7 +1,8 @@
-package com.dao;
+    package com.dao;
 
 import com.conexion.Conexion;
 import com.modelo.Institucion;
+import com.modelo.Usuario;
 import com.utilidades.Console;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -97,5 +98,53 @@ public class DaoInstitucion extends Conexion
         }
         
         return registros;
+    }
+    
+    public void restaurar(int u)
+    {
+        try
+        {
+            this.conectar();
+            String sql = "call restaurarInstitucion(?)";
+            PreparedStatement pre = this.getCon().prepareStatement(sql);
+
+            pre.setInt(1, u);
+            
+            pre.executeUpdate();
+            pre.close();
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Error Usuario: " + e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
+
+    }
+    
+
+    public String nombreInstitucion(int id)
+    {
+        String nombreI = "";
+        ResultSet res;
+        
+        try 
+        {
+            this.conectar();
+            String sql = "call stringInstitucion(?)";
+            PreparedStatement pre = this.getCon().prepareCall(sql);
+            pre.setInt(1, id);
+            res = pre.executeQuery();
+            
+            while(res.next())
+            {
+                nombreI = (res.getString("Nombre"));
+            }
+        } catch (Exception e) 
+        {
+            JOptionPane.showMessageDialog(null, "No se puede mostrar el nombre de la Institución " + e.getMessage());
+        }
+        return nombreI;
     }
 }
