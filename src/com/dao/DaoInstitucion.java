@@ -2,8 +2,12 @@ package com.dao;
 
 import com.conexion.Conexion;
 import com.modelo.Institucion;
+import com.utilidades.Console;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -51,5 +55,47 @@ public class DaoInstitucion extends Conexion
             this.desconectar();
         }
         return i;
+    }
+    
+    public List papelera(){
+        List registros= new ArrayList();
+        ResultSet res;
+        Institucion i = new Institucion();
+        try
+        {
+            String sql="call papeleraInstitucion()";
+            this.conectar();
+            PreparedStatement query=this.getCon().prepareCall(sql);
+            res=query.executeQuery();
+            
+            ResultSetMetaData meta= res.getMetaData();
+            int nColumnas=meta.getColumnCount();    //cantidad de columnas
+            
+            String [] thead= new String[nColumnas];
+            
+            for (int j = 0; j < meta.getColumnCount(); j++)
+            {
+                thead[j]=meta.getColumnLabel(j+1);  //cada valor del array sera elnombre de una columna
+            }
+            registros.add(thead);                   //primer item de la lista sera el thead
+            
+            String [] fila= new String[nColumnas];
+            while(res.next()){
+                
+                for (int j = 0; j < nColumnas; j++)
+                {
+                    fila[j]=res.getString(j+1);
+                }
+                registros.add(fila);
+            }
+            
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Ocurrió el siguiente error al buscar en la papelera: "+e.getMessage());
+        }finally{
+            this.desconectar();
+        }
+        
+        return registros;
     }
 }

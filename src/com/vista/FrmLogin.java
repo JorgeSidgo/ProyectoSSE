@@ -37,6 +37,29 @@ public class FrmLogin extends javax.swing.JFrame
 
     private int xx;
     private int xy;
+    
+    private void log(){
+        try
+        {
+            u.setNomUsuario(this.jTxtNombre.getText());
+            u.setPass(String.valueOf(this.jTxtPass.getPassword()).trim());
+            
+            if(dao.login(u))
+            {
+                FrmPrincipal frm = new FrmPrincipal();
+                frm.setLocationRelativeTo(null);
+                frm.setExtendedState(MAXIMIZED_BOTH);
+                frm.setVisible(true);
+                this.dispose();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(this, "Datos Incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (Exception e)
+        {
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -108,7 +131,7 @@ public class FrmLogin extends javax.swing.JFrame
         jPanelTituloLayout.setVerticalGroup(
             jPanelTituloLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelTituloLayout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
+                .addContainerGap(14, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(16, 16, 16))
             .addGroup(jPanelTituloLayout.createSequentialGroup()
@@ -122,10 +145,22 @@ public class FrmLogin extends javax.swing.JFrame
             {
                 jTxtNombreKeyPressed(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt)
+            {
+                jTxtNombreKeyTyped(evt);
+            }
         });
 
         jLabel2.setFont(new java.awt.Font("Nunito", 0, 11)); // NOI18N
         jLabel2.setText("Nombre de Usuario:");
+
+        jTxtPass.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyTyped(java.awt.event.KeyEvent evt)
+            {
+                jTxtPassKeyTyped(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Nunito", 0, 11)); // NOI18N
         jLabel3.setText("Contraseña:");
@@ -229,26 +264,7 @@ public class FrmLogin extends javax.swing.JFrame
 
     private void jBtnLoginActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBtnLoginActionPerformed
     {//GEN-HEADEREND:event_jBtnLoginActionPerformed
-        try
-        {
-            u.setNomUsuario(this.jTxtNombre.getText());
-            u.setPass(String.valueOf(this.jTxtPass.getPassword()).trim());
-            
-            if(dao.login(u))
-            {
-                FrmPrincipal frm = new FrmPrincipal();
-                frm.setLocationRelativeTo(null);
-                frm.setExtendedState(MAXIMIZED_BOTH);
-                frm.setVisible(true);
-                this.dispose();
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(this, "Datos Incorrectos", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (Exception e)
-        {
-        }
+        log();
     }//GEN-LAST:event_jBtnLoginActionPerformed
 
     private void initUi()
@@ -267,6 +283,20 @@ public class FrmLogin extends javax.swing.JFrame
     {//GEN-HEADEREND:event_jTxtNombreKeyPressed
         
     }//GEN-LAST:event_jTxtNombreKeyPressed
+
+    private void jTxtNombreKeyTyped(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jTxtNombreKeyTyped
+    {//GEN-HEADEREND:event_jTxtNombreKeyTyped
+        if(val.isEnter(evt)){
+            log();
+        }
+    }//GEN-LAST:event_jTxtNombreKeyTyped
+
+    private void jTxtPassKeyTyped(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jTxtPassKeyTyped
+    {//GEN-HEADEREND:event_jTxtPassKeyTyped
+        if(val.isEnter(evt)){
+            log();
+        }
+    }//GEN-LAST:event_jTxtPassKeyTyped
 
     private void borders()
     {

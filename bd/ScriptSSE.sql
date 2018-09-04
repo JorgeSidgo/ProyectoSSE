@@ -921,7 +921,7 @@ insert into grupo values (null, 'MEC01-A', 1, 2);
 
 call insertarUsuario('Jorge Sidgo', 'tugfa', 1);
 call insertarUsuario('Benja Parker', '123', 1);
-call insertarUsuario('Abdiel Martinez', '123', 1);
+call insertarUsuario('anb', '123', 1);
 call insertarUsuario('Francisco Montoya', '123', 1);
 
 call buscarIDInstitucion(1);

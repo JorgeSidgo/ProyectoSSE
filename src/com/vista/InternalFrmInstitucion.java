@@ -1,6 +1,7 @@
 package com.vista;
 
 import com.utilidades.UITools;
+import com.utilidades.Validacion;
 
 /**
  *
@@ -10,6 +11,7 @@ public class InternalFrmInstitucion extends javax.swing.JInternalFrame
 {
 
     UITools ui = new UITools();
+    Validacion val = new Validacion();
     
     public InternalFrmInstitucion()
     {
@@ -54,13 +56,19 @@ public class InternalFrmInstitucion extends javax.swing.JInternalFrame
         setTitle("Gestión de Instituciones");
         setFocusCycleRoot(false);
         setFrameIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8-museum-20.png"))); // NOI18N
+        addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyTyped(java.awt.event.KeyEvent evt)
+            {
+                formKeyTyped(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(36, 37, 38));
 
         jLabel1.setFont(new java.awt.Font("Product Sans", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Instituciones");
-        jLabel1.setPreferredSize(new java.awt.Dimension(99, 24));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -68,7 +76,7 @@ public class InternalFrmInstitucion extends javax.swing.JInternalFrame
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -270,6 +278,11 @@ public class InternalFrmInstitucion extends javax.swing.JInternalFrame
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formKeyTyped(java.awt.event.KeyEvent evt)//GEN-FIRST:event_formKeyTyped
+    {//GEN-HEADEREND:event_formKeyTyped
+       
+    }//GEN-LAST:event_formKeyTyped
 
 
     private void initUi()
