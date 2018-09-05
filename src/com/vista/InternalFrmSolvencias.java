@@ -6,11 +6,10 @@
 package com.vista;
 
 import com.dao.DaoCandidato;
+import com.dao.DaoEstudiante;
 import com.dao.DaoInstitucion;
-import com.dao.DaoSolvencia;
 import com.dao.DaoUsuario;
 import com.modelo.Candidato;
-import com.modelo.Solvencia;
 import com.modelo.Usuario;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -32,9 +31,8 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
     Usuario u = new Usuario();
     DaoUsuario daoU = new DaoUsuario();
     DaoCandidato daoC = new DaoCandidato();
-    DaoSolvencia daoS = new DaoSolvencia();
+    DaoEstudiante daoE = new DaoEstudiante();
     DaoInstitucion daI = new DaoInstitucion();
-    Solvencia s = new Solvencia();
     Candidato c = new Candidato();
     
     String[] columnas = {"ID de Estudiante","Carnet","Nombres","Apellidos","Carrera","Grupo","Estado Servicio Social","Horas Realizadas"};
@@ -160,16 +158,19 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
     {
         try 
         {
-            int idEs = Integer.parseInt(this.jTxtIDEstudiante.getText());
-            int idCoo = DaoUsuario.idUsuario;
+            if(!this.jTxtEstadoSS.getText().equals("Completado"))
+            {
+                int idEs = Integer.parseInt(this.jTxtIDEstudiante.getText());
             
-            s.setIdEstudiante(idEs);
-            s.setIdCoordinador(idCoo);
-            
-            daoS.insertarSolvencia(s);
-            JOptionPane.showMessageDialog(null, "Estudiante Solventado en sus horas sociales!!");
-            actualizarCandidatos();
-            limpiarCandidato();
+                daoE.solventar(idEs);
+                JOptionPane.showMessageDialog(null, "Estudiante Solventado en sus horas sociales!!");
+                actualizarCandidatos();
+                limpiarCandidato();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "El Estudiante aun no es apto para una solvencia!!");
+            }
         } 
         catch (Exception e) 
         {

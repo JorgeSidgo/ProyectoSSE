@@ -126,4 +126,25 @@ public class DaoEstudiante extends Conexion
         
         return g;
     }
+    
+    public void solventar(int id)
+    {
+        try 
+        {
+            this.conectar();
+            String sql = "call solventar(?);";
+            PreparedStatement pre = this.getCon().prepareCall(sql);
+            pre.setInt(1,id);
+            pre.executeUpdate();
+            pre.close();
+        } 
+        catch (Exception e) 
+        {
+            JOptionPane.showMessageDialog(null, "No es posible solventar debido al siguiente error: "+e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
+    }
 }
