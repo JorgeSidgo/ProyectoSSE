@@ -385,7 +385,7 @@ public class InternalFrmInstitucion extends javax.swing.JInternalFrame
                 obj[2] = ins.getDireccionIns();
                 obj[3] = ins.getTeleIns();
                 obj[4] = ins.getCorreoIns();
-                obj[5] = ins.getIdTipo();
+                obj[5] = inst.getTipo(ins.getIdTipo()).getDescripcion();
                 
                 tabla.addRow(obj);
             }

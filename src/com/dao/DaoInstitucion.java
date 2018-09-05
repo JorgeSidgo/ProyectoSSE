@@ -273,7 +273,18 @@ public class DaoInstitucion extends Conexion
         
         try
         {
+            this.conectar();
+            String sql = "select * from tipoInstitucion where id = ?";
+            PreparedStatement pre = this.getCon().prepareCall(sql);
             
+            pre.setInt(1, id);
+            ResultSet res = pre.executeQuery();
+            
+            while(res.next())
+            {
+                tp.setIdTipo(res.getInt("id"));
+                tp.setDescripcion(res.getString("descTipoInstitucion"));
+            }
         } catch (Exception e)
         {
         }
