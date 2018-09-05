@@ -128,7 +128,7 @@ public class DaoSolicitud extends Conexion{
     
     public String validarEst(String carnet)
     {
-        String[] nombres = new String[2];
+        String nombres = "";
         
         try 
         {
@@ -139,15 +139,21 @@ public class DaoSolicitud extends Conexion{
             ResultSet res = pre.executeQuery();
             
             while (res.next()) {                
-                
+                nombres += (res.getString("Nombres")) + " ";
+                nombres += (res.getString("Apellidos"));
             }
+            res.close();
+            pre.close();
         } 
         catch (Exception e) 
         {
-            
+            JOptionPane.showMessageDialog(null, "Hay un problema con el estudiante "+ e.getMessage());
         }
-        
-        return ;
+        finally
+        {
+            this.desconectar();
+        }
+        return nombres;
     }
     
     public List papelera(){

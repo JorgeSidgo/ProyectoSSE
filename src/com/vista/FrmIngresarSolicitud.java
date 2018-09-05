@@ -1,6 +1,17 @@
 
 package com.vista;
 
+import com.dao.DaoCoordinador;
+import com.dao.DaoEstudiante;
+import com.dao.DaoInstitucion;
+import com.dao.DaoSolicitud;
+import com.modelo.Coordinador;
+import com.modelo.Institucion;
+import com.modelo.Solicitud;
+import com.utilidades.Console;
+import java.util.List;
+import javax.swing.JOptionPane;
+
 /**
  * Nombre de la clase: FrmIngresarSolicitud
  * Versión: 1.0
@@ -9,11 +20,24 @@ package com.vista;
  * @author Javier Montoya
  */
 public class FrmIngresarSolicitud extends javax.swing.JFrame {
-
+    
+    Solicitud so = new Solicitud();
+    DaoSolicitud daoS = new DaoSolicitud();
+    DaoInstitucion daoI = new DaoInstitucion();
+    DaoEstudiante daoE = new DaoEstudiante();
+    DaoCoordinador daoC = new DaoCoordinador();
+    Console console = new Console();
+    
     public FrmIngresarSolicitud() {
         initComponents();
+        this.jLabelEstudiante.setVisible(false);
+        this.cargarCoordinador();
+        this.cargarInstitucion();
     }
-
+   
+    /*Variables*/
+    private List listaCoordinador;
+    private List listaInsti;
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -21,13 +45,10 @@ public class FrmIngresarSolicitud extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTxtEstado = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jTxtEstudiante = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTxtCoordinador = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTxtInstitucion = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jTxtFecha = new javax.swing.JFormattedTextField();
         jLabel7 = new javax.swing.JLabel();
@@ -36,6 +57,11 @@ public class FrmIngresarSolicitud extends javax.swing.JFrame {
         jBtnIngresar = new javax.swing.JButton();
         jBtnCancelar = new javax.swing.JButton();
         jBtnLimpiar = new javax.swing.JButton();
+        jLabelEstudiante = new javax.swing.JLabel();
+        jComboEstado = new javax.swing.JComboBox<>();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jComboCoordinador = new javax.swing.JComboBox<>();
+        jComboInsti = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registrar Solicitud");
@@ -47,7 +73,7 @@ public class FrmIngresarSolicitud extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jLabel2.setText("Estado ");
 
-        jLabel3.setText("Estudiante");
+        jLabel3.setText("Carnet del Estudiante");
 
         jTxtEstudiante.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -75,6 +101,16 @@ public class FrmIngresarSolicitud extends javax.swing.JFrame {
 
         jBtnLimpiar.setText("Limpiar");
 
+        jLabelEstudiante.setText("jLabel8");
+
+        jComboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Aprobada", "No Aprobada" }));
+
+        jCheckBox1.setText("Observaciones");
+
+        jComboCoordinador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione" }));
+
+        jComboInsti.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -91,29 +127,38 @@ public class FrmIngresarSolicitud extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addComponent(jLabel6))
                         .addGap(48, 48, 48)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTxtInstitucion, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(83, 83, 83)
-                                .addComponent(jBtnIngresar)
-                                .addGap(28, 28, 28)
-                                .addComponent(jBtnCancelar))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jTxtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(70, 70, 70)
+                                        .addComponent(jComboEstado, 0, 138, Short.MAX_VALUE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jCheckBox1)
+                                        .addGap(49, 49, 49)
                                         .addComponent(jLabel7))
-                                    .addComponent(jTxtEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTxtCoordinador, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(jComboCoordinador, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jTxtEstudiante, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabelEstudiante)
+                                        .addGap(0, 0, Short.MAX_VALUE)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTxtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jBtnLimpiar)
-                                .addGap(87, 87, 87)))))
-                .addContainerGap(82, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jComboInsti, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(83, 83, 83)
+                                        .addComponent(jBtnIngresar)
+                                        .addGap(28, 28, 28)
+                                        .addComponent(jBtnCancelar))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jTxtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(183, 183, 183)
+                                        .addComponent(jBtnLimpiar)))
+                                .addGap(6, 6, 6)))))
+                .addGap(53, 53, 53))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,39 +167,40 @@ public class FrmIngresarSolicitud extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(21, 21, 21)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(23, 23, 23)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jTxtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel7))
-                                        .addGap(13, 13, 13)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jLabel3)
-                                            .addComponent(jTxtEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jTxtCoordinador, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel4)))
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jComboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jCheckBox1))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jTxtEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabelEstudiante))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jComboCoordinador, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel5)
-                                    .addComponent(jTxtInstitucion, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jComboInsti, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jBtnIngresar)
                                     .addComponent(jBtnCancelar))
-                                .addGap(26, 26, 26)))
-                        .addGap(23, 23, 23)
+                                .addGap(5, 5, 5)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(jTxtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(36, Short.MAX_VALUE))
+                        .addContainerGap(71, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jBtnLimpiar)
@@ -165,14 +211,65 @@ public class FrmIngresarSolicitud extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTxtEstudianteFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtEstudianteFocusLost
-        validarEstudiante(this.jTxtEstudiante.getText());
+        this.validarEstudiante(this.jTxtEstudiante.getText());
     }//GEN-LAST:event_jTxtEstudianteFocusLost
 
     private void validarEstudiante(String carnet)
     {
+        String nombres = "";
+        
+        try 
+        {
+            nombres = daoS.validarEst(carnet);
+            if (nombres!="") {
+                int opc = JOptionPane.showConfirmDialog(this, "El estudiante seleccionado es : " + nombres, "Confirmar Estudiante", JOptionPane.YES_NO_OPTION );
+                if (opc==0) {
+                    this.jLabelEstudiante.setVisible(true);
+                    this.jLabelEstudiante.setText(nombres);
+                    
+                }else if(opc==1){
+                    //this.jTxtEstudiante.setFocusable(true);
+                    this.jTxtEstudiante.setText("");
+                }
+            }else{
+                this.jLabelEstudiante.setVisible(true);
+                this.jLabelEstudiante.setText("El estudiante no se ha podido encontrar");
+            }
+        } 
+        catch (Exception e) 
+        {
+            JOptionPane.showMessageDialog(null, "No se pudo evaluar si el estudiante existe");
+        }
+    }
+    
+    private void cargarCoordinador()
+    {
+        this.jComboCoordinador.removeAllItems();
+
+        listaCoordinador = daoC.mostrarCoordinadores();
+        Coordinador coordinador;
+
+        for(Object item:listaCoordinador)
+        {
+            coordinador = (Coordinador) item;
+            this.jComboCoordinador.addItem(coordinador.getNombres());
+        }
         
     }
     
+    private void cargarInstitucion()
+    {
+        this.jComboInsti.removeAllItems();
+        
+        listaInsti = daoI.mostrarInstitucion();
+        Institucion insti;
+
+        for(Object item:listaInsti)
+        {
+            insti = (Institucion) item;
+            this.jComboCoordinador.addItem(insti.getNombreIns());
+        }
+    }
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -210,6 +307,10 @@ public class FrmIngresarSolicitud extends javax.swing.JFrame {
     private javax.swing.JButton jBtnCancelar;
     private javax.swing.JButton jBtnIngresar;
     private javax.swing.JButton jBtnLimpiar;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JComboBox<String> jComboCoordinador;
+    private javax.swing.JComboBox<String> jComboEstado;
+    private javax.swing.JComboBox<String> jComboInsti;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -217,12 +318,10 @@ public class FrmIngresarSolicitud extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabelEstudiante;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTxtComentarios;
-    private javax.swing.JTextField jTxtCoordinador;
-    private javax.swing.JTextField jTxtEstado;
     private javax.swing.JTextField jTxtEstudiante;
     private javax.swing.JFormattedTextField jTxtFecha;
-    private javax.swing.JTextField jTxtInstitucion;
     // End of variables declaration//GEN-END:variables
 }
