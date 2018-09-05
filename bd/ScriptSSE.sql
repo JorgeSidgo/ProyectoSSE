@@ -34,7 +34,13 @@ create table carrera(
 	id int auto_increment primary key unique,
     nombreCarrera varchar(50),
     estado int default 1,
-    idEscuela int not null
+    idEscuela int not null,
+    idTipoCarrera int not null
+);
+
+create table tipoCarrera(
+	id int auto_increment primary key unique,
+    descTipoCarrera varchar(50)
 );
 
 create table grupo(
@@ -132,11 +138,6 @@ create table solicitud(
     estado int default 1
 );
 
-create table estadoSolicitud(
-    id int auto_increment primary key unique,
-    descEstado varchar(15)
-);
-
 create table estudiante(
 	id int auto_increment primary key unique,
     carnet varchar(10) not null,
@@ -220,7 +221,6 @@ alter table institucion add constraint fk_institucion_tipoInstitucion foreign ke
 alter table solicitud add constraint fk_solicitud_estudiante foreign key (idEstudiante) references estudiante(id);
 alter table solicitud add constraint fk_solicitud_coordinador foreign key (idCoordinador) references coordinador(id);
 alter table solicitud add constraint fk_solicitud_institucion foreign key (idInstitucion) references institucion(id);
-alter table solicitud add constraint fk_solicitud_estadoSolicitud foreign key (estado) references estadoSolicitud(id);
 alter table materiasEstudiante add constraint fk_materiasEstudiante_materia foreign key (idMateria) references materia(id);
 alter table materiasEstudiante add constraint fk_materiasEstudiante_estudiante foreign key (idEstudiante) references estudiante(id);
 alter table hojaServicioSocial add constraint fk_hojaServicioSocial_estudiante foreign key (idEstudiante) references estudiante(id);
@@ -233,6 +233,16 @@ alter table detalleActividadesServicio add constraint fk_detalleActividadesServi
 alter table correo add constraint fk_correo_coordinador foreign key (idCoordinador) references coordinador (id);
 alter table correo add constraint fk_correo_estudiante foreign key (idEstudiante) references estudiante (id);
 
+
+-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
+##### VISTAS ######
+-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+create view estudiantesPro as (
+	select e.*, u.nomUsuario, c.nombreCarrera, g.nombreGrupo, s.descEstado as estadoSS, ee.descEstado as estadoEstudiante
+    from estudiante e, grupo g, carrera c, estadoSS s, estadoEstudiante ee, usuario u
+    where e.idUsuario = u.id and e.idGrupo = g.id and g.idCarrera = c.id and e.idEstadoEstudiante = ee.id and e.idEstadoSS = s.id
+);
 
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##### PROCEDIMIENTOS ALMACENADOS ######
@@ -284,6 +294,8 @@ begin
 	select * from usuario where id = idUs and pass = sha1(contra) and estado = 1;
 end
 $$
+
+select * from usuario
 
 -- Login
 delimiter $$
@@ -508,15 +520,48 @@ end $
 -- Insertar Hoja de Servicio Social
 delimiter $
 create procedure insertarHojaServicio(	
-    in idEstudiante int, 
-    in idInstitucion int, 
-    in idCoordinador int, 
-    in fechaInicio date, 
-    in fechaFinalizacion date,
+    in idEs int, 
+    in idIns int, 
+    in idCoor int, 
+    in inicio date, 
+    in finalizacion date,
     in horas int
 )
 begin 
-	insert into hojaServicioSocial values (null,idEstudiante,idInstitucion,idCoordinador,fechaInicio,fechaFinalizacion, horas);
+	declare totHoras int;
+    declare tCarrera int;
+	insert into hojaServicioSocial values (null,idEs,idIns, idCoor, inicio, finalizacion, horas);
+    set totHoras = (select sum(nhoras) from hojaServicioSocial where idEstudiante = idEs);
+    set tCarrera = (select c.idTipoCarrera from carrera c, grupo g, estudiante e where e.idGrupo = g.id and g.idCarrera = c.id and e.id = idEs);
+    
+    if (tCarrera = 1) then
+		
+        if (totHoras > 299) then
+			update estudiante
+			set idEstadoSS = 3
+			where id = idEs;
+		
+        elseif (totHoras < 300) then
+			update estudiante
+			set idEstadoSS = 2
+			where id = idEs;
+
+		end if;
+        
+	elseif (tCarrera = 2) then
+		if (totHoras > 499) then
+			update estudiante
+			set idEstadoSS = 3
+			where id = idEs;
+		
+        elseif (totHoras < 500) then
+			update estudiante
+			set idEstadoSS = 2
+			where id = idEs;
+		end if;
+	end if;
+
+    
 end $
 
 call insertarHojaServicio(1,1,1,NOW(),null,100);
@@ -607,14 +652,14 @@ end $
 delimiter $
 create procedure insertarSolicitud(
     in esta varchar(50),
-    in idEs int, 
+    in idEstu int, 
     in idCo int, 
     in idIn int, 
     in fecha date,
     in come text
 )
 begin 
-	insert into solicitud values (null,esta,idEs,idCo,idIn,fecha,come, default);
+	insert into solicitud values (null,esta,idEstu,idCo,idIn,fecha,come, default);
 end $
 
 drop procedure editarSolicitud;
@@ -904,16 +949,20 @@ end $
 -- Insertar Estudiante --
 delimiter $
 create procedure insertarEstudiante(
-	in carnet varchar(10),
-    in nombres varchar(50),
-    in apellidos varchar(50),
-    in correo varchar(50),
-    in fechaIngreso date,
-    in idG int(11),
-    in idU int(11)
+	in nomU varchar(50),
+    in contra varchar(50),
+	in car varchar(10),
+    in nom varchar(50),
+    in ape varchar(50),
+    in corr varchar(50),
+    in fecha date,
+    in idG int(11)
 )
 begin
-	insert into estudiante values(null,carnet,nombres,apellidos,correo,fechaIngreso,idG,default,idU);
+	declare idU int;
+	call insertarUsuario(nomU, contra, 5);
+    set idU = (select max(id) from usuario);
+    insert into estudiante values(null, car, nom, ape, corr, fecha, idG, default, idU, 1, 1);
 end $
 
 -- Mostrar string estudiante --
@@ -923,9 +972,11 @@ begin
 	select e.nombres as Nombres from estudiante e where e.id = idE and e.estado = true;
 end $
 
--- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
-##### VISTAS ######
--- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
+delimiter $
+create procedure estadoServicioSocial(in val varchar(20))
+begin
+	select * from estudiantesPro where estadoSS = val;
+end $
 
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##### DATOS INICIALES ######
@@ -938,11 +989,14 @@ insert into rol values(null, 'Invitado');
 insert into rol values(null, 'Coordinador');
 insert into rol values(null, 'Estudiante');
 
+insert into tipoCarrera values (null, 'Tecnico');
+insert into tipoCarrera values (null, 'Ingenieria');
+
 insert into escuela values (null, 'Escuela de Ingenieria en Computacion', 1);
-insert into carrera values (null, 'Tecnico en Ingenieria de Sistemas', 1, 1);
+insert into carrera values (null, 'Tecnico en Ingenieria de Sistemas', 1, 1, 1);
 
 insert into escuela values (null, 'Escuela de Ingenieria Mecatrónica', 1);
-insert into carrera values (null, 'Ingenieria Mecatronica', 1, 2);
+insert into carrera values (null, 'Ingenieria Mecatronica', 1, 2, 2);
 
 insert into grupo values (null, 'SIS12-A', 1, 1);
 
@@ -961,14 +1015,16 @@ insert into estadoSS values(null, 'No ha Iniciado');
 insert into estadoSS values(null, 'En Ejecucion');
 insert into estadoSS values(null, 'Completado');
 
+-- intituciones son
+	-- Pública
+	-- ONG
+    -- Privada
 
-call buscarIDInstitucion(1);
-insert into tipoinstitucion values(null,"gubernamental");
-call insertarEstudiante("426017","Francisco Javier","Montoya Díaz","javicitoCasanova@gmail.com",now(),1,4); -- no me sirvio el now() :'C --
-call insertarInstitucion("Institucion 1","a la vuelta de la esquina","institucion1@gmail.com","2222-2222",1);
+insert into tipoinstitucion values(null, 'Publica');
+call insertarEstudiante('DonFrancisco', '123', '426017','Francisco Javier','Montoya Díaz','javicitoCasanova@gmail.com','2018-01-01',1); 
+call insertarInstitucion('Institucion 1','a la vuelta de la esquina','institucion1@gmail.com','2222-2222',1);
 call insertarCoordinador('Giovanni Ariel', 'Tzec Chavez', 'giovanni.tzec@gmail.com', 'GiovanniTzec', 'tugfa', 1);
-insert into estadosolicitud values(null,"estado 1");
-call insertarSolicitud(1,1,1,now());
-call insertarHojaServicio(1,1,1,null,null,100)
-call insertarSolicitud("aprobado",2,2,1,"18-9-3","ejemplo");
+call insertarSolicitud('Aprobado',1,1,1,'2018-06-01','Ejemplo');
+call insertarHojaServicio(1,1,1,'2018-01-01','2018-06-01',100)
 
+-- select * from estudiantesPro;

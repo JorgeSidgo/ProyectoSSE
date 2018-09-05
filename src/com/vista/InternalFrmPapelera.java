@@ -48,7 +48,7 @@ public class InternalFrmPapelera extends javax.swing.JInternalFrame
     }
     
  
-    private boolean tabla(List datos)
+    private void tabla(List datos)
     {
         String[]thead= (String[])datos.get(0);
 
@@ -62,7 +62,7 @@ public class InternalFrmPapelera extends javax.swing.JInternalFrame
             table.addRow(fila);
         }
         this.jTable1.setModel(table);
-        return (datos.size()==1)?false:true;
+        
         
     }
     
@@ -75,7 +75,7 @@ public class InternalFrmPapelera extends javax.swing.JInternalFrame
 
         for (int i = 0; i < selected; i++)
         {
-            ids[i]= Integer.parseInt(String.valueOf(this.jTable1.getValueAt(i+1, 0)));
+            ids[i]= Integer.parseInt(String.valueOf(this.jTable1.getValueAt(i, 0)));
         }
         
         return ids;

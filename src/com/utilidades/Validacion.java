@@ -70,4 +70,12 @@ public class Validacion
             return false;
         }
     }
+    
+    public boolean isAlt(KeyEvent evt){
+        if(evt.getKeyChar()==KeyEvent.VK_ALT){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
