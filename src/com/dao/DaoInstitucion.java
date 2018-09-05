@@ -2,6 +2,7 @@
 
 import com.conexion.Conexion;
 import com.modelo.Institucion;
+import com.modelo.TipoInstitucion;
 import com.modelo.Usuario;
 import com.utilidades.Console;
 import java.sql.PreparedStatement;
@@ -27,6 +28,8 @@ import javax.swing.JOptionPane;
 
 public class DaoInstitucion extends Conexion
 {
+    
+    Institucion i = new Institucion();
     public Institucion buscarIDInstitucion(int id)
     {
         Institucion i = new Institucion();
@@ -229,6 +232,68 @@ public class DaoInstitucion extends Conexion
     
     
     
+    public List<Institucion> mostrarInstitucion()
+    {
+        List<Institucion> lista = new ArrayList();
+        
+        try
+        {
+            this.conectar();
+            String sql = "call mostrarInstitucion()";
+            PreparedStatement pre = this.getCon().prepareCall(sql);
+            ResultSet res = pre.executeQuery();
+            
+            while(res.next())
+            {
+                Institucion i = new Institucion();
+                
+                i.setIdIns(res.getInt("id"));
+                i.setNombreIns(res.getString("nombreInstitucion"));
+                i.setDireccionIns(res.getString("direccion"));
+                i.setCorreoIns(res.getString("correo"));
+                i.setTeleIns(res.getString("telefono"));
+                i.setIdTipo(res.getInt("idTipoInstitucion"));
+                        
+                lista.add(i);
+            }
+        } catch (Exception e)
+        {
+        }
+        finally
+        {
+            this.desconectar();
+        }
+        
+        return lista;
+    }
+    
+    public TipoInstitucion getTipo(int id)
+    {
+        TipoInstitucion tp = new TipoInstitucion();
+        
+        try
+        {
+            this.conectar();
+            String sql = "select * from tipoInstitucion where id = ?";
+            PreparedStatement pre = this.getCon().prepareCall(sql);
+            
+            pre.setInt(1, id);
+            ResultSet res = pre.executeQuery();
+            
+            while(res.next())
+            {
+                tp.setIdTipo(res.getInt("id"));
+                tp.setDescripcion(res.getString("descTipoInstitucion"));
+            }
+        } catch (Exception e)
+        {
+        }
+        finally
+        {
+            this.desconectar();
+        }
+        return tp;
+    }
     
     public List mostrar(){
         List registros= new ArrayList();

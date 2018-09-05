@@ -18,14 +18,16 @@ public class Grupo
     
     private int id;
     private String nombreGrupo;
-    Carrera idCarrera;
+    private int idCarrera;
 
     public Grupo() {
     }
 
-    public Grupo(int id, String nombreGrupo) {
+    public Grupo(int id, String nombreGrupo, int idCarrera)
+    {
         this.id = id;
         this.nombreGrupo = nombreGrupo;
+        this.idCarrera = idCarrera;
     }
 
     public int getId() {
@@ -43,5 +45,16 @@ public class Grupo
     public void setNombreGrupo(String nombreGrupo) {
         this.nombreGrupo = nombreGrupo;
     }
+
+    public int getIdCarrera()
+    {
+        return idCarrera;
+    }
+
+    public void setIdCarrera(int idCarrera)
+    {
+        this.idCarrera = idCarrera;
+    }
+    
     
 }

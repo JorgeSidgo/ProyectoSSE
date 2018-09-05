@@ -20,6 +20,8 @@ drop database if exists sse;
 create database if not exists sse;
 use sse;
 
+
+
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##### TABLAS #####
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -196,7 +198,7 @@ create table correo(
 
 create table solvencia(
 	id int auto_increment primary key unique,
-    fecha date,
+    fecha timestamp default current_timestamp,
     idEstudiante int,
     idCoordinador int,
     estado int
@@ -934,21 +936,27 @@ end $
 delimiter $
 create procedure mostrarCandidatos()
 begin
-	select e.id, e.carnet, e.nombres, e.apellidos, i.nombreInstitucion, h.nHoras from estudiante e
-    inner join hojaserviciosocial h on e.id = h.idEstudiante
-    inner join institucion i on h.idInstitucion = i.id;
+	select e.id, e.carnet, e.nombres, e.apellidos, c.nombreCarrera, g.nombreGrupo, s.descEstado as estadoSS, sum(h.nHoras) as numHoras from estudiante e
+	inner join grupo g on e.idGrupo = g.id
+	inner join carrera c on g.idCarrera = c.id
+	inner join estadoSS s on e.idEstadoSS = s.id
+	inner join hojaServicioSocial h on h.idEstudiante = e.id
+    where e.idEstadoEstudiante = 2 and e.idEstadoSS = 2 or e.idEstadoSS;
 end $
 
+select * from estadoSS;
 -- buscar candidatos a solvencia por nombre --
 delimiter $
 create procedure buscarNombreCandidatos(
 	in nom varchar(50)
 )
 begin
-	select e.id, e.carnet, e.nombres, e.apellidos, i.nombreInstitucion, h.nHoras from estudiante e
-    inner join hojaserviciosocial h on e.id = h.idEstudiante
-    inner join institucion i on i.id = h.idInstitucion
-    where e.nombres like concat('%',nom,'%');
+	select e.id, e.carnet, e.nombres, e.apellidos, c.nombreCarrera, g.nombreGrupo, s.descEstado as estadoSS, sum(h.nHoras) as horasSociales from estudiante e
+	inner join grupo g on e.idGrupo = g.id
+	inner join carrera c on g.idCarrera = c.id
+	inner join estadoSS s on e.idEstadoSS = s.id
+	inner join hojaServicioSocial h on h.idEstudiante = e.id
+    where e.nombres like concat('%',nom,'%') and e.idEstadoEstudiante = 2 and e.idEstadoSS = 2;
 end $
 
 -- buscar candidatos a solvencias por carnet --
@@ -957,10 +965,12 @@ create procedure buscarCarnetCandidatos(
 	in car varchar(10)
 )
 begin
-	select e.id, e.carnet, e.nombres, e.apellidos, i.nombreInstitucion, h.nHoras from estudiante e
-    inner join hojaserviciosocial h on e.id = h.idEstudiante
-    inner join institucion i on i.id = h.idInstitucion
-    where e.carnet like concat('%',car,'%');
+	select e.id, e.carnet, e.nombres, e.apellidos, c.nombreCarrera, g.nombreGrupo, s.descEstado as estadoSS, sum(h.nHoras) as horasSociales from estudiante e
+	inner join grupo g on e.idGrupo = g.id
+	inner join carrera c on g.idCarrera = c.id
+	inner join estadoSS s on e.idEstadoSS = s.id
+	inner join hojaServicioSocial h on h.idEstudiante = e.id
+    where e.carnet like concat('%',car,'%') and e.idEstadoEstudiante = 2 and e.idEstadoSS = 2;
 end $
 
 -- ==================================================================================================
@@ -993,12 +1003,36 @@ begin
 	select e.nombres as Nombres from estudiante e where e.id = idE and e.estado = true;
 end $
 
+-- devolver estudiante segun N° de Carnet
+delimiter $$
+create procedure getEstudianteCarnet(
+	in car varchar(20)
+)
+begin
+	select * from estudiante where carnet = car and estado = 1;
+end
+$$
+
 delimiter $
 create procedure estadoServicioSocial(in val varchar(20))
 begin
 	select * from estudiantesPro where estadoSS = val;
 end $
 
+-- Mostrar solicitudes estudiante
+
+delimiter $$
+create procedure solicitudesEstudiante(
+	in car varchar(50)
+)
+begin
+	select e.carnet, e.nombres, e.apellidos, s.fecha, c.nombres, c.apellidos, i.*
+    from solicitud s, estudiante e, coordinador c, institucion i
+    where s.idEstudiante = e.id and s.idCoordinador = c.id and s.idEstudiante = i.id and s.estadoSolicitud = 'Aprobado' and e.idEstadoEstudiante = 2;
+end
+$$
+
+-- call solicitudesEstudiante('426017');
 -- ==================================================================================================
 ### MateriasEstudiante
 -- ==================================================================================================
@@ -1024,6 +1058,20 @@ begin
 
 end
 $$
+
+-- ==================================================================================================
+### Solvencia
+-- ==================================================================================================
+
+-- Insertar Solvencia
+delimiter $
+create procedure insertarSolvencia(
+    in idEs int,
+    in idCoo int
+)
+begin
+	insert into solvencia values(null,default,idEs,idCoo,default);
+end $
 
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##### DATOS INICIALES ######
@@ -1091,5 +1139,5 @@ call inscribirMaterias(1, 1);
 call inscribirMaterias(1, 2);
 call inscribirMaterias(1, 3);
 
-
+call getEstudianteCarnet('426017')
 -- select * from estudiantesPro;
