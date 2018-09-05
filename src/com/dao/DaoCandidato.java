@@ -39,8 +39,10 @@ public class DaoCandidato extends Conexion{
                 can.setCarnet(res.getString("carnet"));
                 can.setNombres(res.getString("nombres"));
                 can.setApellidos(res.getString("apellidos"));
-                can.setNombreInstitucion(res.getString("nombreInstitucion"));
-                can.setnHoras(res.getInt("nHoras"));
+                can.setCarrera(res.getString("nombreCarrera"));
+                can.setGrupo(res.getString("nombreGrupo"));
+                can.setEstadoSS(res.getString("estadoSS"));
+                can.setnHoras(res.getInt("numHoras"));
                 lista.add(can);
             }
         } 
@@ -70,11 +72,13 @@ public class DaoCandidato extends Conexion{
             {
                 Candidato can = new Candidato();
                 can.setId(res.getInt("id"));
+                can.setCarnet(res.getString("carnet"));
                 can.setNombres(res.getString("nombres"));
                 can.setApellidos(res.getString("apellidos"));
-                can.setCarnet(res.getString("carnet"));
-                can.setNombreInstitucion(res.getString("nombreInstitucion"));
-                can.setnHoras(res.getInt("nHoras"));
+                can.setCarrera(res.getString("nombreCarrera"));
+                can.setGrupo(res.getString("nombreGrupo"));
+                can.setEstadoSS(res.getString("estadoSS"));
+                can.setnHoras(res.getInt("numHoras"));
                 lista.add(can);
             }
         } 
@@ -104,11 +108,13 @@ public class DaoCandidato extends Conexion{
             {
                 Candidato can = new Candidato();
                 can.setId(res.getInt("id"));
+                can.setCarnet(res.getString("carnet"));
                 can.setNombres(res.getString("nombres"));
                 can.setApellidos(res.getString("apellidos"));
-                can.setCarnet(res.getString("carnet"));
-                can.setNombreInstitucion(res.getString("nombreInstitucion"));
-                can.setnHoras(res.getInt("nHoras"));
+                can.setCarrera(res.getString("nombreCarrera"));
+                can.setGrupo(res.getString("nombreGrupo"));
+                can.setEstadoSS(res.getString("estadoSS"));
+                can.setnHoras(res.getInt("numHoras"));
                 lista.add(can);
             }
         } 
