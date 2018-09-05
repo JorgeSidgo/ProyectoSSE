@@ -3,13 +3,17 @@ package com.vista;
 
 import com.dao.DaoUsuario;
 import com.reporte.Reportes;
+import com.utilidades.Console;
 import com.utilidades.UITools;
+import com.utilidades.Validacion;
 import static com.vista.FrmPrincipalx.ii;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
@@ -32,7 +36,7 @@ import javax.swing.border.MatteBorder;
  *
  * @author jsidg
  */
-public class FrmPrincipal extends javax.swing.JFrame
+public class FrmPrincipal extends javax.swing.JFrame implements KeyListener
 {
 
     public FrmPrincipal()
@@ -44,10 +48,33 @@ public class FrmPrincipal extends javax.swing.JFrame
         {
             lblUsuario.setText(DaoUsuario.nomUsuario);
         }
-        
+        this.menuBar.setVisible(false);
+        addKeyListener(this);
+    }
+    
+    private void logout(){
+        try
+        {
+            int opcion = JOptionPane.showConfirmDialog(this, "Los cambios sin guardar se perderán", "¿Desea cerrar sesión?", JOptionPane.YES_NO_OPTION);
+            
+            if(opcion == 0)
+            {
+                FrmLogin frm = new FrmLogin();
+                frm.setLocationRelativeTo(null);
+                frm.setVisible(true);
+                this.maximizado = false;
+                this.dispose();
+            }
+            
+        } catch (Exception e)
+        {
+        }
     }
     UITools ui = new UITools();
     Reportes rep = new Reportes();
+    Validacion val = new Validacion();
+    
+    boolean ctrl=false, vki=false, vku=false, vkj=false, vkq=false;
     
     private static boolean menArchivo = false;
     private static boolean menSS = false;
@@ -68,20 +95,7 @@ public class FrmPrincipal extends javax.swing.JFrame
     private void initComponents()
     {
 
-        menuBar = new javax.swing.JMenuBar();
-        fileMenu = new javax.swing.JMenu();
-        keysInstituciones = new javax.swing.JMenuItem();
-        saveMenuItem = new javax.swing.JMenuItem();
-        saveAsMenuItem = new javax.swing.JMenuItem();
-        exitMenuItem = new javax.swing.JMenuItem();
-        editMenu = new javax.swing.JMenu();
-        cutMenuItem = new javax.swing.JMenuItem();
-        copyMenuItem = new javax.swing.JMenuItem();
-        pasteMenuItem = new javax.swing.JMenuItem();
-        deleteMenuItem = new javax.swing.JMenuItem();
-        helpMenu = new javax.swing.JMenu();
-        contentMenuItem = new javax.swing.JMenuItem();
-        aboutMenuItem = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jTitleBar = new javax.swing.JPanel();
         lblMenu = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
@@ -106,84 +120,29 @@ public class FrmPrincipal extends javax.swing.JFrame
         menuPapelera = new javax.swing.JLabel();
         panelReportes = new javax.swing.JPanel();
         menuItReporteEstudiantes = new javax.swing.JLabel();
+        menuBar = new javax.swing.JMenuBar();
+        fileMenu = new javax.swing.JMenu();
+        keysInstituciones = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jSeparator1 = new javax.swing.JPopupMenu.Separator();
+        saveAsMenuItem = new javax.swing.JMenuItem();
+        exitMenuItem = new javax.swing.JMenuItem();
+        editMenu = new javax.swing.JMenu();
+        cutMenuItem = new javax.swing.JMenuItem();
+        copyMenuItem = new javax.swing.JMenuItem();
+        pasteMenuItem = new javax.swing.JMenuItem();
+        deleteMenuItem = new javax.swing.JMenuItem();
+        helpMenu = new javax.swing.JMenu();
+        contentMenuItem = new javax.swing.JMenuItem();
+        aboutMenuItem = new javax.swing.JMenuItem();
 
-        fileMenu.setMnemonic('f');
-        fileMenu.setText("File");
-        fileMenu.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                fileMenuActionPerformed(evt);
-            }
-        });
-
-        keysInstituciones.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
-        keysInstituciones.setMnemonic('o');
-        keysInstituciones.setText("Instituciones");
-        keysInstituciones.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                keysInstitucionesActionPerformed(evt);
-            }
-        });
-        fileMenu.add(keysInstituciones);
-
-        saveMenuItem.setMnemonic('s');
-        saveMenuItem.setText("Save");
-        fileMenu.add(saveMenuItem);
-
-        saveAsMenuItem.setMnemonic('a');
-        saveAsMenuItem.setText("Save As ...");
-        saveAsMenuItem.setDisplayedMnemonicIndex(5);
-        fileMenu.add(saveAsMenuItem);
-
-        exitMenuItem.setMnemonic('x');
-        exitMenuItem.setText("Exit");
-        exitMenuItem.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
-                exitMenuItemActionPerformed(evt);
-            }
-        });
-        fileMenu.add(exitMenuItem);
-
-        menuBar.add(fileMenu);
-
-        editMenu.setMnemonic('e');
-        editMenu.setText("Edit");
-
-        cutMenuItem.setMnemonic('t');
-        cutMenuItem.setText("Cut");
-        editMenu.add(cutMenuItem);
-
-        copyMenuItem.setMnemonic('y');
-        copyMenuItem.setText("Copy");
-        editMenu.add(copyMenuItem);
-
-        pasteMenuItem.setMnemonic('p');
-        pasteMenuItem.setText("Paste");
-        editMenu.add(pasteMenuItem);
-
-        deleteMenuItem.setMnemonic('d');
-        deleteMenuItem.setText("Delete");
-        editMenu.add(deleteMenuItem);
-
-        menuBar.add(editMenu);
-
-        helpMenu.setMnemonic('h');
-        helpMenu.setText("Help");
-
-        contentMenuItem.setMnemonic('c');
-        contentMenuItem.setText("Contents");
-        helpMenu.add(contentMenuItem);
-
-        aboutMenuItem.setMnemonic('a');
-        aboutMenuItem.setText("About");
-        helpMenu.add(aboutMenuItem);
-
-        menuBar.add(helpMenu);
+        jMenuItem4.setText("jMenuItem4");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Control SSE");
@@ -333,7 +292,7 @@ public class FrmPrincipal extends javax.swing.JFrame
         );
         desktopPaneLayout.setVerticalGroup(
             desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblIcon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
+            .addComponent(lblIcon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)
         );
 
         panelMenu.setBackground(new java.awt.Color(36, 37, 38));
@@ -379,6 +338,7 @@ public class FrmPrincipal extends javax.swing.JFrame
         menuLogout.setForeground(new java.awt.Color(255, 255, 255));
         menuLogout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8-shutdown-16 (1).png"))); // NOI18N
         menuLogout.setText("Cerrar Sesión");
+        menuLogout.setToolTipText("Ctrl + Q");
         menuLogout.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0)));
         menuLogout.setIconTextGap(10);
         menuLogout.setOpaque(true);
@@ -534,6 +494,7 @@ public class FrmPrincipal extends javax.swing.JFrame
         menuPapelera.setForeground(new java.awt.Color(255, 255, 255));
         menuPapelera.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8-trash-16.png"))); // NOI18N
         menuPapelera.setText("Papelera");
+        menuPapelera.setToolTipText("Ctrl + J");
         menuPapelera.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 10, 0, 0)));
         menuPapelera.setIconTextGap(10);
         menuPapelera.setOpaque(true);
@@ -614,6 +575,129 @@ public class FrmPrincipal extends javax.swing.JFrame
                 .addComponent(menuLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
+        fileMenu.setMnemonic('f');
+        fileMenu.setText("Archivo");
+        fileMenu.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                fileMenuActionPerformed(evt);
+            }
+        });
+
+        keysInstituciones.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_I, java.awt.event.InputEvent.CTRL_MASK));
+        keysInstituciones.setMnemonic('o');
+        keysInstituciones.setText("Instituciones");
+        keysInstituciones.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                keysInstitucionesActionPerformed(evt);
+            }
+        });
+        fileMenu.add(keysInstituciones);
+
+        jMenu1.setText("Servicio social");
+
+        jMenuItem6.setText("Registrar Servicio social");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem6);
+
+        jMenuItem7.setText("Solvencia");
+        jMenu1.add(jMenuItem7);
+
+        jMenuItem8.setText("Solicitudes");
+        jMenu1.add(jMenuItem8);
+
+        fileMenu.add(jMenu1);
+
+        jMenuItem5.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_U, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem5.setText("Gestion de usuarios");
+        fileMenu.add(jMenuItem5);
+
+        jMenu2.setText("Reportes");
+        fileMenu.add(jMenu2);
+
+        jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_J, java.awt.event.InputEvent.CTRL_MASK));
+        jMenuItem3.setText("Papelera");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        fileMenu.add(jMenuItem3);
+        fileMenu.add(jSeparator1);
+
+        saveAsMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
+        saveAsMenuItem.setMnemonic('a');
+        saveAsMenuItem.setText("Cerrar sesion");
+        saveAsMenuItem.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                saveAsMenuItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(saveAsMenuItem);
+
+        exitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
+        exitMenuItem.setMnemonic('x');
+        exitMenuItem.setText("Salir");
+        exitMenuItem.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                exitMenuItemActionPerformed(evt);
+            }
+        });
+        fileMenu.add(exitMenuItem);
+
+        menuBar.add(fileMenu);
+
+        editMenu.setMnemonic('e');
+        editMenu.setText("Edit");
+
+        cutMenuItem.setMnemonic('t');
+        cutMenuItem.setText("Cut");
+        editMenu.add(cutMenuItem);
+
+        copyMenuItem.setMnemonic('y');
+        copyMenuItem.setText("Copy");
+        editMenu.add(copyMenuItem);
+
+        pasteMenuItem.setMnemonic('p');
+        pasteMenuItem.setText("Paste");
+        editMenu.add(pasteMenuItem);
+
+        deleteMenuItem.setMnemonic('d');
+        deleteMenuItem.setText("Delete");
+        editMenu.add(deleteMenuItem);
+
+        menuBar.add(editMenu);
+
+        helpMenu.setMnemonic('h');
+        helpMenu.setText("Help");
+
+        contentMenuItem.setMnemonic('c');
+        contentMenuItem.setText("Contents");
+        helpMenu.add(contentMenuItem);
+
+        aboutMenuItem.setMnemonic('a');
+        aboutMenuItem.setText("About");
+        helpMenu.add(aboutMenuItem);
+
+        menuBar.add(helpMenu);
+
+        setJMenuBar(menuBar);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -630,7 +714,7 @@ public class FrmPrincipal extends javax.swing.JFrame
                 .addComponent(jTitleBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(desktopPane)
-                    .addComponent(panelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)))
+                    .addComponent(panelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)))
         );
 
         pack();
@@ -707,22 +791,7 @@ public class FrmPrincipal extends javax.swing.JFrame
 
     private void menuLogoutMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuLogoutMouseClicked
     {//GEN-HEADEREND:event_menuLogoutMouseClicked
-        try
-        {
-            int opcion = JOptionPane.showConfirmDialog(this, "Los cambios sin guardar se perderán", "¿Desea cerrar sesión?", JOptionPane.YES_NO_OPTION);
-            
-            if(opcion == 0)
-            {
-                FrmLogin frm = new FrmLogin();
-                frm.setLocationRelativeTo(null);
-                frm.setVisible(true);
-                this.maximizado = false;
-                this.dispose();
-            }
-            
-        } catch (Exception e)
-        {
-        }
+        logout();
     }//GEN-LAST:event_menuLogoutMouseClicked
 
     private void menuArchivoMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuArchivoMouseClicked
@@ -850,14 +919,26 @@ public class FrmPrincipal extends javax.swing.JFrame
 
     private void menuItReporteEstudiantesMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuItReporteEstudiantesMouseClicked
     {//GEN-HEADEREND:event_menuItReporteEstudiantesMouseClicked
-        try
-        {
-            rep.reporteEstudiantes();
-        } catch (Exception e)
-        {
-            JOptionPane.showMessageDialog(this, "Error al mostrar el reporte: " + e.getMessage());
-        }
+      InternalFrmEstudiante est= new InternalFrmEstudiante();
+        abrirVentana(est);
+        
     }//GEN-LAST:event_menuItReporteEstudiantesMouseClicked
+
+    private void saveAsMenuItemActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_saveAsMenuItemActionPerformed
+    {//GEN-HEADEREND:event_saveAsMenuItemActionPerformed
+        logout();
+    }//GEN-LAST:event_saveAsMenuItemActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem6ActionPerformed
+    {//GEN-HEADEREND:event_jMenuItem6ActionPerformed
+        
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jMenuItem3ActionPerformed
+    {//GEN-HEADEREND:event_jMenuItem3ActionPerformed
+        InternalFrmPapelera papeles= new InternalFrmPapelera();
+        abrirVentana(papeles);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void borders(int a, int b, int c)
     {
@@ -1052,6 +1133,15 @@ public class FrmPrincipal extends javax.swing.JFrame
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPanel jTitleBar;
     private javax.swing.JMenuItem keysInstituciones;
     private javax.swing.JLabel lblIcon;
@@ -1079,7 +1169,93 @@ public class FrmPrincipal extends javax.swing.JFrame
     private javax.swing.JPanel panelSS;
     private javax.swing.JMenuItem pasteMenuItem;
     private javax.swing.JMenuItem saveAsMenuItem;
-    private javax.swing.JMenuItem saveMenuItem;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void keyTyped(KeyEvent e)
+    {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e)
+    {
+        int keyCode = e.getKeyCode();
+        switch(keyCode){
+            case KeyEvent.VK_ALT:
+                if(!this.menuBar.isVisible()){
+                    this.menuBar.setVisible(true);
+                }else{
+                    this.menuBar.setVisible(false);
+                }
+                break;
+            case KeyEvent.VK_CONTROL:
+                ctrl=true;
+                break;
+            case KeyEvent.VK_J:
+                vkj=true;
+                break;
+            case KeyEvent.VK_I:
+                vki=true;
+                break;
+            case KeyEvent.VK_U:
+                vku=true;
+                break;
+            case KeyEvent.VK_Q:
+                vkq=true;
+                break;
+        }
+        
+        if(ctrl&&vkq){
+            ctrl=false;
+            vkq=false;
+            logout();
+        }
+        
+        if(ctrl&&vkj){
+            ctrl=false;
+            vkj=false;
+            InternalFrmPapelera fr= new InternalFrmPapelera();
+            abrirVentana(fr);
+        }
+        
+        if(ctrl&&vki){
+            ctrl=false;
+            vki=false;
+            abrirInstituciones();
+        }
+        
+        if(ctrl&&vku){
+            ctrl=false;
+            vku=false;
+            InternalFrmUsuarios frm = new InternalFrmUsuarios();
+            abrirVentana(frm);
+        } 
+        
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e)
+    {
+        int keyCode = e.getKeyCode();
+        switch(keyCode){
+            
+            case KeyEvent.VK_CONTROL:
+                ctrl=false;
+                break;
+            case KeyEvent.VK_J:
+                vkj=false;
+                break;
+            case KeyEvent.VK_I:
+                vki=false;
+                break;
+            case KeyEvent.VK_U:
+                vku=false;
+                break;
+            case KeyEvent.VK_Q:
+                vkq=false;
+                break;
+        }
+    }
 
 }
