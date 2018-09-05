@@ -1003,12 +1003,36 @@ begin
 	select e.nombres as Nombres from estudiante e where e.id = idE and e.estado = true;
 end $
 
+-- devolver estudiante segun N° de Carnet
+delimiter $$
+create procedure getEstudianteCarnet(
+	in car varchar(20)
+)
+begin
+	select * from estudiante where carnet = car and estado = 1;
+end
+$$
+
 delimiter $
 create procedure estadoServicioSocial(in val varchar(20))
 begin
 	select * from estudiantesPro where estadoSS = val;
 end $
 
+-- Mostrar solicitudes estudiante
+
+delimiter $$
+create procedure solicitudesEstudiante(
+	in car varchar(50)
+)
+begin
+	select e.carnet, e.nombres, e.apellidos, s.fecha, c.nombres, c.apellidos, i.*
+    from solicitud s, estudiante e, coordinador c, institucion i
+    where s.idEstudiante = e.id and s.idCoordinador = c.id and s.idEstudiante = i.id and s.estadoSolicitud = 'Aprobado' and e.idEstadoEstudiante = 2;
+end
+$$
+
+-- call solicitudesEstudiante('426017');
 -- ==================================================================================================
 ### MateriasEstudiante
 -- ==================================================================================================
@@ -1114,5 +1138,5 @@ call inscribirMaterias(1, 1);
 call inscribirMaterias(1, 2);
 call inscribirMaterias(1, 3);
 
-
+call getEstudianteCarnet('426017')
 -- select * from estudiantesPro;

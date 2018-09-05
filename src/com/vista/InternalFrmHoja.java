@@ -5,7 +5,10 @@
  */
 package com.vista;
 
+import com.dao.DaoEstudiante;
+import com.modelo.Estudiante;
 import com.utilidades.UITools;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -15,6 +18,9 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
 {
 
     UITools ui = new UITools();
+    Estudiante e = new Estudiante();
+    DaoEstudiante daoE = new DaoEstudiante();
+
     public InternalFrmHoja()
     {
         initComponents();
@@ -36,15 +42,17 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
         jPanel2 = new javax.swing.JPanel();
         jPanelEstudiante = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTxtCarnet = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        jTxtNombre = new javax.swing.JTextField();
+        jTxtApellidos = new javax.swing.JTextField();
+        Apellidos = new javax.swing.JLabel();
+        jTxtGrupo = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jBtnAddEstudiante = new javax.swing.JButton();
+        jBtnChangeEstudiante = new javax.swing.JButton();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 17), new java.awt.Dimension(0, 17), new java.awt.Dimension(32767, 17));
         jPanel5 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jFormattedTextField1 = new javax.swing.JFormattedTextField();
@@ -52,6 +60,10 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jTextField9 = new javax.swing.JTextField();
+        jPanelTabla = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTablaSolicitudes = new javax.swing.JTable();
+        jPanel4 = new javax.swing.JPanel();
 
         setBorder(null);
         setClosable(true);
@@ -87,17 +99,17 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
 
         jLabel3.setText("Carnet:");
 
-        jTextField1.setEnabled(false);
+        jTxtCarnet.setEnabled(false);
 
         jLabel4.setText("Nombre:");
 
-        jTextField2.setEnabled(false);
+        jTxtNombre.setEnabled(false);
 
-        jTextField3.setEnabled(false);
+        jTxtApellidos.setEnabled(false);
 
-        jLabel5.setText("Nombre:");
+        Apellidos.setText("Apellidos");
 
-        jTextField4.setEnabled(false);
+        jTxtGrupo.setEnabled(false);
 
         jLabel6.setText("Grupo:");
 
@@ -109,20 +121,20 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
                 .addContainerGap()
                 .addGroup(jPanelEstudianteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTxtCarnet, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelEstudianteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelEstudianteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Apellidos)
+                    .addComponent(jTxtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelEstudianteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                    .addComponent(jTxtGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         jPanelEstudianteLayout.setVerticalGroup(
             jPanelEstudianteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,20 +143,20 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
                 .addGroup(jPanelEstudianteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanelEstudianteLayout.createSequentialGroup()
                         .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                        .addComponent(jTxtGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelEstudianteLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
+                        .addComponent(Apellidos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTxtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelEstudianteLayout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jTxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanelEstudianteLayout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTxtCarnet, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -165,16 +177,37 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
             }
         });
 
+        jBtnChangeEstudiante.setBackground(new java.awt.Color(46, 204, 113));
+        jBtnChangeEstudiante.setForeground(new java.awt.Color(255, 255, 255));
+        jBtnChangeEstudiante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8_Change_User_16px_1.png"))); // NOI18N
+        jBtnChangeEstudiante.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jBtnChangeEstudiante.setIconTextGap(0);
+        jBtnChangeEstudiante.setPreferredSize(new java.awt.Dimension(73, 20));
+        jBtnChangeEstudiante.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jBtnChangeEstudianteActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(jBtnAddEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 317, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jBtnAddEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jBtnChangeEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(134, 134, 134)
+                        .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 282, Short.MAX_VALUE)
                 .addComponent(jPanelEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -183,8 +216,10 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
                 .addGap(17, 17, 17)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jBtnAddEstudiante, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jBtnChangeEstudiante, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addComponent(jPanelEstudiante, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -192,7 +227,7 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
 
         jLabel11.setText("Fecha de Inicio:");
 
-        jLabel12.setText("Fecha de Inicio:");
+        jLabel12.setText("Fecha de Finalización:");
 
         jLabel13.setText("Total de Horas:");
 
@@ -201,7 +236,7 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(32, 32, 32)
+                .addGap(22, 22, 22)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11)
                     .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -239,6 +274,53 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
+        jPanelTabla.setBackground(new java.awt.Color(250, 250, 250));
+
+        jTablaSolicitudes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][]
+            {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String []
+            {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTablaSolicitudes);
+
+        javax.swing.GroupLayout jPanelTablaLayout = new javax.swing.GroupLayout(jPanelTabla);
+        jPanelTabla.setLayout(jPanelTablaLayout);
+        jPanelTablaLayout.setHorizontalGroup(
+            jPanelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTablaLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(jScrollPane1)
+                .addGap(22, 22, 22))
+        );
+        jPanelTablaLayout.setVerticalGroup(
+            jPanelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelTablaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jPanel4.setBackground(new java.awt.Color(250, 250, 250));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 219, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -246,6 +328,8 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanelTabla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,8 +338,11 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanelTabla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 392, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -263,15 +350,50 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
 
     private void jBtnAddEstudianteActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBtnAddEstudianteActionPerformed
     {//GEN-HEADEREND:event_jBtnAddEstudianteActionPerformed
-
+        llenarDatosEstudiante();
     }//GEN-LAST:event_jBtnAddEstudianteActionPerformed
 
-    private void initUi() {
+    private void jBtnChangeEstudianteActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBtnChangeEstudianteActionPerformed
+    {//GEN-HEADEREND:event_jBtnChangeEstudianteActionPerformed
+        llenarDatosEstudiante();
+    }//GEN-LAST:event_jBtnChangeEstudianteActionPerformed
+
+    private void llenarDatosEstudiante()
+    {
+        try
+        {
+            String carnet = JOptionPane.showInputDialog("Ingrese el N° de Carnet del Estudiante").trim();
+            
+            e = daoE.getEstudianteCarnet(carnet);
+            
+           JOptionPane.showMessageDialog(this,e.getNombres());
+           jTxtNombre.setText(e.getNombres());
+           jTxtApellidos.setText(e.getApellidos());
+           jTxtCarnet.setText(e.getCarnet());
+           jTxtGrupo.setText(daoE.getGrupo(e.getIdGrupo()).getNombreGrupo());
+           jPanelEstudiante.setVisible(true);
+           jBtnAddEstudiante.setVisible(false);
+           jBtnChangeEstudiante.setVisible(true);
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "tugfa");
+        }
+    }
+
+    private void initUi()
+    {
+        jPanelTabla.setVisible(false);
+        jPanelEstudiante.setVisible(false);
         ui.flatButton(jBtnAddEstudiante, "#2ECC71", "#28B463", "#58D68D");
-    }   
-    
+        ui.flatButton(jBtnChangeEstudiante, "#3498DB", "#2E86C1", "#5DADE2");
+        jBtnChangeEstudiante.setVisible(false);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Apellidos;
+    private javax.swing.Box.Filler filler1;
     private javax.swing.JButton jBtnAddEstudiante;
+    private javax.swing.JButton jBtnChangeEstudiante;
     private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JFormattedTextField jFormattedTextField2;
     private javax.swing.JLabel jLabel1;
@@ -281,16 +403,19 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanelEstudiante;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JPanel jPanelTabla;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTablaSolicitudes;
     private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextField jTxtApellidos;
+    private javax.swing.JTextField jTxtCarnet;
+    private javax.swing.JTextField jTxtGrupo;
+    private javax.swing.JTextField jTxtNombre;
     // End of variables declaration//GEN-END:variables
 }
