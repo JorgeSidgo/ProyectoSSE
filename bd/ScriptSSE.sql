@@ -662,7 +662,6 @@ begin
 	insert into solicitud values (null,esta,idEstu,idCo,idIn,fecha,come, default);
 end $
 
-drop procedure editarSolicitud;
 -- Editar Solicitud
 delimiter $
 create procedure editarSolicitud(
@@ -676,7 +675,7 @@ begin
     where id = idSolicitud;
 end $
 
--- Eliminar Solicitud
+-- Eliminar Fisico Solicitud
 delimiter $
 create procedure eliminarSolicitud(
 	in idSolicitud int
@@ -685,13 +684,24 @@ begin
 	delete from solicitud where id = idSolicitud;
 end $
 
+-- Eliminar Logico Solicitud
+delimiter $
+create procedure ocultarSolicitud(
+	in idSol int
+)
+begin 
+	update solicitud set
+    estado = false
+    where id = idSol;
+end $
+
 -- Mostrar Solicitud
 delimiter $
 create procedure showSolicitud()
 begin
 	select * from solicitud where estado = true;
 end $
-call showSolicitud()
+
 -- ==================================================================================================
 ### Coordinador
 -- ==================================================================================================
@@ -977,6 +987,12 @@ create procedure estadoServicioSocial(in val varchar(20))
 begin
 	select * from estudiantesPro where estadoSS = val;
 end $
+
+create view estudiantesPro as (
+	select e.*, u.nomUsuario, c.nombreCarrera, g.nombreGrupo, s.descEstado as estadoSS, ee.descEstado as estadoEstudiante
+    from estudiante e, grupo g, carrera c, estadoSS s, estadoEstudiante ee, usuario u
+    where e.idUsuario = u.id and e.idGrupo = g.id and g.idCarrera = c.id and e.idEstadoEstudiante = ee.id and e.idEstadoSS = s.id
+);
 
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##### DATOS INICIALES ######
