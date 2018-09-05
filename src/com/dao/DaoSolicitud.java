@@ -71,7 +71,7 @@ public class DaoSolicitud extends Conexion{
         try
         {
             this.conectar();
-            String sql = "call eliminarSolicitud(?)";
+            String sql = "call ocultarSolicitud(?)";
             PreparedStatement pre = this.getCon().prepareCall(sql);
             pre.setInt(1, idSolicitud);
             pre.execute();

@@ -662,7 +662,6 @@ begin
 	insert into solicitud values (null,esta,idEstu,idCo,idIn,fecha,come, default);
 end $
 
-drop procedure editarSolicitud;
 -- Editar Solicitud
 delimiter $
 create procedure editarSolicitud(
@@ -676,7 +675,7 @@ begin
     where id = idSolicitud;
 end $
 
--- Eliminar Solicitud
+-- Eliminar Fisico Solicitud
 delimiter $
 create procedure eliminarSolicitud(
 	in idSolicitud int
@@ -685,13 +684,30 @@ begin
 	delete from solicitud where id = idSolicitud;
 end $
 
+-- Eliminar Logico Solicitud
+delimiter $
+create procedure ocultarSolicitud(
+	in idSol int
+)
+begin 
+	update solicitud set
+    estado = false
+    where id = idSol;
+end $
+
 -- Mostrar Solicitud
 delimiter $
 create procedure showSolicitud()
 begin
 	select * from solicitud where estado = true;
 end $
-call showSolicitud()
+
+delimiter $
+create procedure repoSolicitud(in val varchar(20))
+begin
+	select concat(e.nombres,' ',e.apellidos) as nombre, i.nombreInstitucion,s.fecha, s.comentarios from solicitud s inner join estudiante e on s.idEstudiante=e.id inner join institucion i on i.id=s.idInstitucion where s.estado = true and s.estadoSolicitud=val;
+end $
+
 -- ==================================================================================================
 ### Coordinador
 -- ==================================================================================================
@@ -1053,8 +1069,11 @@ insert into estadoSS values(null, 'Completado');
     -- Privada
 cual
 insert into tipoinstitucion values(null, 'Publica');
+insert into tipoinstitucion values(null, 'Privada');
+insert into tipoinstitucion values(null, 'ONG');
 call insertarEstudiante('DonFrancisco', '123', '426017','Francisco Javier','Montoya Díaz','javicitoCasanova@gmail.com','2018-01-01',1); 
 call insertarInstitucion('Institucion 1','a la vuelta de la esquina','institucion1@gmail.com','2222-2222',1);
+call insertarInstitucion('Institucion 2','Santa rosa','iburgues@gmail.com','2222-2222',1);
 call insertarCoordinador('Giovanni Ariel', 'Tzec Chavez', 'giovanni.tzec@gmail.com', 'GiovanniTzec', 'tugfa', 1);
 call insertarSolicitud('Aprobado',1,1,1,'2018-06-01','Ejemplo');
 call insertarHojaServicio(1,1,1,'2018-01-01','2018-06-01',100)

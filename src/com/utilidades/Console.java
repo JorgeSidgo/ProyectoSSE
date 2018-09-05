@@ -4,7 +4,10 @@ package com.utilidades;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 
 /**
@@ -45,5 +48,21 @@ public class Console
         }
 	 return resultado;
     }   
+    
+    public static void tabla(List datos, JTable jTable1)
+    {
+        String[]thead= (String[])datos.get(0);
+
+        DefaultTableModel table=new DefaultTableModel(null,thead);
+        String[]fila;
+        for (int i = 1; i < datos.size(); i++)
+        {
+            fila= (String[])datos.get(i);
+            table.addRow(fila);
+        }
+        jTable1.setModel(table);
+        
+        
+    }
 
 }
