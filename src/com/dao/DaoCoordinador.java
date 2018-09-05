@@ -23,6 +23,21 @@ import javax.swing.JOptionPane;
  */
 public class DaoCoordinador extends Conexion
 {
+    
+    public static int idCoord;
+
+    public static int getIdCoord()
+    {
+        return idCoord;
+    }
+
+    public static void setIdCoord(int idCoord)
+    {
+        DaoCoordinador.idCoord = idCoord;
+    }
+    
+    
+    
     public List<Coordinador> mostrarCoordinadores()
     {
         List<Coordinador> listaCoordinador = new ArrayList();

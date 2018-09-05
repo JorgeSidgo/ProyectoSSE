@@ -1,6 +1,8 @@
 package com.dao;
 
 import com.conexion.Conexion;
+import com.modelo.Estudiante;
+import com.modelo.Grupo;
 import java.sql.*;
 import javax.swing.JOptionPane;
 
@@ -20,6 +22,53 @@ import javax.swing.JOptionPane;
 
 public class DaoEstudiante extends Conexion
 {
+    public Object[] getEstudianteCarnet(String carnet)
+    {
+        Object [] respuesta = new Object[2];
+        
+        Estudiante e = new Estudiante();
+        
+        try
+        {
+            this.conectar();
+            String sql = "{call getEstudianteCarnet(?)}";
+            PreparedStatement pre = this.getCon().prepareStatement(sql);
+            pre.setString(1, carnet);
+            
+            ResultSet res = pre.executeQuery();
+            
+            res.last();
+            int filas = res.getRow();
+            
+            if(filas == 1)
+            {
+                e.setId(res.getInt("id"));
+                e.setCarnet(res.getString("carnet"));
+                e.setNombres(res.getString("nombres"));
+                e.setApellidos(res.getString("apellidos"));
+                e.setIdGrupo(res.getInt("idGrupo"));
+                
+                respuesta[0] = "Datos";
+                respuesta[1] = e;
+            }
+            else
+            {
+                respuesta[0] = "Nel";
+                respuesta[1] = e;
+            }
+            
+            
+        } catch (Exception ex)
+        {
+        }
+        finally
+        {
+            this.desconectar();
+        }
+        
+        return respuesta;
+    }
+    
     public String nombreEstudiante(int id)
     {
         String nombreE = "";
@@ -47,5 +96,55 @@ public class DaoEstudiante extends Conexion
             this.desconectar();
         }
         return nombreE;
+    }
+    
+    public Grupo getGrupo(int id)
+    {
+        Grupo g = new Grupo();
+        
+        try
+        {
+            this.conectar();
+            String sql = "select * from grupo where id = ? and estado = 1";
+            PreparedStatement pre = this.getCon().prepareCall(sql);
+            pre.setInt(1, id);
+            ResultSet res = pre.executeQuery();
+            
+            while(res.next())
+            {
+                g.setId(res.getInt("id"));
+                g.setNombreGrupo(res.getString("nombreGrupo"));
+                g.setIdCarrera(res.getInt("idCarrera"));
+            }
+        } catch (Exception e)
+        {
+        }
+        finally
+        {
+            this.desconectar();
+        }
+        
+        return g;
+    }
+    
+    public void solventar(int id)
+    {
+        try 
+        {
+            this.conectar();
+            String sql = "call solventar(?);";
+            PreparedStatement pre = this.getCon().prepareCall(sql);
+            pre.setInt(1,id);
+            pre.executeUpdate();
+            pre.close();
+        } 
+        catch (Exception e) 
+        {
+            JOptionPane.showMessageDialog(null, "No es posible solventar debido al siguiente error: "+e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
     }
 }

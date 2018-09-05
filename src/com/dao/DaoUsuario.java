@@ -307,9 +307,9 @@ public class DaoUsuario extends Conexion
             
             if(filas == 1)
             {
-                this.idUsuario = res.getInt("id");
-                this.nomUsuario = res.getString("nomUsuario");
-                this.codRol = res.getInt("idRol");
+                DaoUsuario.idUsuario = res.getInt("id");
+                DaoUsuario.nomUsuario = res.getString("nomUsuario");
+                DaoUsuario.codRol = res.getInt("idRol");
                 respuesta = true;
             }
             else

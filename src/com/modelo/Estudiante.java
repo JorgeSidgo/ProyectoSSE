@@ -21,13 +21,14 @@ public class Estudiante
     private String nombres;
     private String apellidos;
     private String correo;
-    Grupo idGrupo;
-    Usuario idUsuario;
+    private int idGrupo;
+    private int idUsuario;
 
     public Estudiante() {
     }
 
-    public Estudiante(int id, String carnet, String nombres, String apellidos, String correo, Grupo idGrupo, Usuario idUsuario) {
+    public Estudiante(int id, String carnet, String nombres, String apellidos, String correo, int idGrupo, int idUsuario)
+    {
         this.id = id;
         this.carnet = carnet;
         this.nombres = nombres;
@@ -37,6 +38,7 @@ public class Estudiante
         this.idUsuario = idUsuario;
     }
 
+    
     public int getId() {
         return id;
     }
@@ -77,20 +79,26 @@ public class Estudiante
         this.correo = correo;
     }
 
-    public Grupo getIdGrupo() {
+    public int getIdGrupo()
+    {
         return idGrupo;
     }
 
-    public void setIdGrupo(Grupo idGrupo) {
+    public void setIdGrupo(int idGrupo)
+    {
         this.idGrupo = idGrupo;
     }
 
-    public Usuario getIdUsuario() {
+    public int getIdUsuario()
+    {
         return idUsuario;
     }
 
-    public void setIdUsuario(Usuario idUsuario) {
+    public void setIdUsuario(int idUsuario)
+    {
         this.idUsuario = idUsuario;
     }
+
+    
     
 }
