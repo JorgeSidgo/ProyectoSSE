@@ -49,6 +49,7 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
         Apellidos = new javax.swing.JLabel();
         jTxtGrupo = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
+        jTxtId = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jBtnAddEstudiante = new javax.swing.JButton();
         jBtnChangeEstudiante = new javax.swing.JButton();
@@ -132,9 +133,14 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
                     .addComponent(jTxtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelEstudianteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(jTxtGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                    .addGroup(jPanelEstudianteLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanelEstudianteLayout.createSequentialGroup()
+                        .addComponent(jTxtGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTxtId, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(39, 39, 39))))
         );
         jPanelEstudianteLayout.setVerticalGroup(
             jPanelEstudianteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,7 +150,9 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
                     .addGroup(jPanelEstudianteLayout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                        .addComponent(jTxtGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanelEstudianteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTxtGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTxtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanelEstudianteLayout.createSequentialGroup()
                         .addComponent(Apellidos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -166,6 +174,7 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
         jBtnAddEstudiante.setBackground(new java.awt.Color(46, 204, 113));
         jBtnAddEstudiante.setForeground(new java.awt.Color(255, 255, 255));
         jBtnAddEstudiante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8_Sum_16px.png"))); // NOI18N
+        jBtnAddEstudiante.setToolTipText("Agregar Estudiante");
         jBtnAddEstudiante.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jBtnAddEstudiante.setIconTextGap(0);
         jBtnAddEstudiante.setPreferredSize(new java.awt.Dimension(73, 20));
@@ -180,6 +189,7 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
         jBtnChangeEstudiante.setBackground(new java.awt.Color(46, 204, 113));
         jBtnChangeEstudiante.setForeground(new java.awt.Color(255, 255, 255));
         jBtnChangeEstudiante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8_Change_User_16px_1.png"))); // NOI18N
+        jBtnChangeEstudiante.setToolTipText("Cambiar Estudiante");
         jBtnChangeEstudiante.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jBtnChangeEstudiante.setIconTextGap(0);
         jBtnChangeEstudiante.setPreferredSize(new java.awt.Dimension(73, 20));
@@ -207,7 +217,7 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(134, 134, 134)
                         .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 282, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 203, Short.MAX_VALUE)
                 .addComponent(jPanelEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -360,21 +370,29 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
 
     private void llenarDatosEstudiante()
     {
+        Object[] cosa = new Object[2];
+        
         try
         {
             String carnet = JOptionPane.showInputDialog("Ingrese el N° de Carnet del Estudiante").trim();
+
             
-            e = daoE.getEstudianteCarnet(carnet);
+            cosa = daoE.getEstudianteCarnet(carnet);
             
-           
             
-           jTxtNombre.setText(e.getNombres());
-           jTxtApellidos.setText(e.getApellidos());
-           jTxtCarnet.setText(e.getCarnet());
-           jTxtGrupo.setText(daoE.getGrupo(e.getIdGrupo()).getNombreGrupo());
-           jPanelEstudiante.setVisible(true);
-           jBtnAddEstudiante.setVisible(false);
-           jBtnChangeEstudiante.setVisible(true);
+            if(cosa[0].equals("Datos"))
+            {
+                
+            }
+
+            jTxtId.setText(String.valueOf(e.getId()));
+            jTxtNombre.setText(e.getNombres());
+            jTxtApellidos.setText(e.getApellidos());
+            jTxtCarnet.setText(e.getCarnet());
+            jTxtGrupo.setText(daoE.getGrupo(e.getIdGrupo()).getNombreGrupo());
+            jPanelEstudiante.setVisible(true);
+            jBtnAddEstudiante.setVisible(false);
+            jBtnChangeEstudiante.setVisible(true);
         } catch (Exception e)
         {
             //JOptionPane.showMessageDialog(null, "tugfa");
@@ -417,6 +435,7 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
     private javax.swing.JTextField jTxtApellidos;
     private javax.swing.JTextField jTxtCarnet;
     private javax.swing.JTextField jTxtGrupo;
+    private javax.swing.JTextField jTxtId;
     private javax.swing.JTextField jTxtNombre;
     // End of variables declaration//GEN-END:variables
 }

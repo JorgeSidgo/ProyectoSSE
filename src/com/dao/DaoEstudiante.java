@@ -22,8 +22,10 @@ import javax.swing.JOptionPane;
 
 public class DaoEstudiante extends Conexion
 {
-    public Estudiante getEstudianteCarnet(String carnet)
+    public Object[] getEstudianteCarnet(String carnet)
     {
+        Object [] respuesta = new Object[2];
+        
         Estudiante e = new Estudiante();
         
         try
@@ -36,16 +38,26 @@ public class DaoEstudiante extends Conexion
             ResultSet res = pre.executeQuery();
             
             res.last();
+            int filas = res.getRow();
             
-            
-            while(res.next())
+            if(filas == 1)
             {
+                e.setId(res.getInt("id"));
                 e.setCarnet(res.getString("carnet"));
                 e.setNombres(res.getString("nombres"));
                 e.setApellidos(res.getString("apellidos"));
                 e.setIdGrupo(res.getInt("idGrupo"));
                 
+                respuesta[0] = "Datos";
+                respuesta[1] = e;
             }
+            else
+            {
+                respuesta[0] = "Nel";
+                respuesta[1] = e;
+            }
+            
+            
         } catch (Exception ex)
         {
         }
@@ -54,7 +66,7 @@ public class DaoEstudiante extends Conexion
             this.desconectar();
         }
         
-        return e;
+        return respuesta;
     }
     
     public String nombreEstudiante(int id)
