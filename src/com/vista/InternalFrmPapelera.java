@@ -6,6 +6,7 @@
 package com.vista;
 
 import com.dao.DaoInstitucion;
+import com.dao.DaoSolicitud;
 import com.dao.DaoUsuario;
 import com.modelo.Institucion;
 import com.modelo.Usuario;
@@ -24,6 +25,7 @@ public class InternalFrmPapelera extends javax.swing.JInternalFrame
 
     DaoInstitucion inst =new DaoInstitucion();
     DaoUsuario user = new DaoUsuario();
+    DaoSolicitud soli = new DaoSolicitud();
     
     public InternalFrmPapelera()
     {
@@ -43,6 +45,9 @@ public class InternalFrmPapelera extends javax.swing.JInternalFrame
                 
             case 1: //Usuario
                 tabla(user.papelera());
+                break;
+            case 2: //Usuario
+                tabla(soli.papelera());
                 break;
         }
     }
@@ -200,7 +205,7 @@ public class InternalFrmPapelera extends javax.swing.JInternalFrame
 
         jLabel1.setText("Registros");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Instituciones", "Usuarios" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Instituciones", "Usuarios", "Solicitudes" }));
         jComboBox1.addItemListener(new java.awt.event.ItemListener()
         {
             public void itemStateChanged(java.awt.event.ItemEvent evt)
