@@ -871,7 +871,8 @@ public class FrmPrincipal extends javax.swing.JFrame implements KeyListener
 
     private void menuItServicioMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuItServicioMouseClicked
     {//GEN-HEADEREND:event_menuItServicioMouseClicked
-        // TODO add your handling code here:
+        InternalFrmHoja frm = new InternalFrmHoja();
+        abrirVentana(frm);
     }//GEN-LAST:event_menuItServicioMouseClicked
 
     private void menuItSolvenciaMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuItSolvenciaMouseClicked

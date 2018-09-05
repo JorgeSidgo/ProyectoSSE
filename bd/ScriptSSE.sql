@@ -978,6 +978,32 @@ begin
 	select * from estudiantesPro where estadoSS = val;
 end $
 
+-- ==================================================================================================
+### MateriasEstudiante
+-- ==================================================================================================
+
+-- Inscribir Materias
+
+delimiter $$
+create procedure inscribirMaterias(
+    in idEst int,
+    in idMat int
+)
+begin
+    declare nMaterias int;
+    insert into materiasEstudiante values(null, idEst, idMat);    
+
+    set nMaterias = (select count(idMateria) from materiasEstudiante where idEstudiante = idEst);
+
+    if nMaterias > 0 then
+        update estudiante
+        set idEstadoEstudiante = 2
+        where id = idEst;
+    end if;
+
+end
+$$
+
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##### DATOS INICIALES ######
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -988,6 +1014,12 @@ insert into rol values(null, 'Administrador');
 insert into rol values(null, 'Invitado');
 insert into rol values(null, 'Coordinador');
 insert into rol values(null, 'Estudiante');
+
+insert into materia values(null, 'Desarrollo de Aplicaciones para la Web', 1, 'DAW-101');
+insert into materia values(null, 'Desarrollo de Aplicaciones Utilizando Tecnologías Emergentes', 1, 'DAUTE-101');
+insert into materia values(null, 'Fisica 1', 1, 'FIS-1');
+insert into materia values(null, 'Fisica 2', 1, 'FIS-2');
+insert into materia values(null, 'Prevencion de Accidentes y Enfermedades Ocupacionales', 1, 'PAEO-101');
 
 insert into tipoCarrera values (null, 'Tecnico');
 insert into tipoCarrera values (null, 'Ingenieria');
@@ -1008,10 +1040,10 @@ call insertarUsuario('anb', '123', 1);
 call insertarUsuario('Francisco Montoya', '123', 1);
 
 insert into estadoEstudiante values(null, 'No apto para Servicio Social');
-insert into estadoEstudiante values(null, 'Solvente');
 insert into estadoEstudiante values(null, 'Insolvente');
+insert into estadoEstudiante values(null, 'Solvente');
 
-insert into estadoSS values(null, 'No ha Iniciado');
+insert into estadoSS values(null, 'No Iniciado');
 insert into estadoSS values(null, 'En Ejecucion');
 insert into estadoSS values(null, 'Completado');
 
@@ -1019,7 +1051,7 @@ insert into estadoSS values(null, 'Completado');
 	-- Pública
 	-- ONG
     -- Privada
-
+cual
 insert into tipoinstitucion values(null, 'Publica');
 call insertarEstudiante('DonFrancisco', '123', '426017','Francisco Javier','Montoya Díaz','javicitoCasanova@gmail.com','2018-01-01',1); 
 call insertarInstitucion('Institucion 1','a la vuelta de la esquina','institucion1@gmail.com','2222-2222',1);
