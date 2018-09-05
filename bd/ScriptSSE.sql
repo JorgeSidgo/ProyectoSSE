@@ -235,6 +235,16 @@ alter table correo add constraint fk_correo_estudiante foreign key (idEstudiante
 
 
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
+##### VISTAS ######
+-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+create view estudiantesPro as (
+	select e.*, u.nomUsuario, c.nombreCarrera, g.nombreGrupo, s.descEstado as estadoSS, ee.descEstado as estadoEstudiante
+    from estudiante e, grupo g, carrera c, estadoSS s, estadoEstudiante ee, usuario u
+    where e.idUsuario = u.id and e.idGrupo = g.id and g.idCarrera = c.id and e.idEstadoEstudiante = ee.id and e.idEstadoSS = s.id
+);
+
+-- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##### PROCEDIMIENTOS ALMACENADOS ######
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 -- ==================================================================================================
@@ -284,6 +294,8 @@ begin
 	select * from usuario where id = idUs and pass = sha1(contra) and estado = 1;
 end
 $$
+
+select * from usuario
 
 -- Login
 delimiter $$
@@ -960,15 +972,11 @@ begin
 	select e.nombres as Nombres from estudiante e where e.id = idE and e.estado = true;
 end $
 
--- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
-##### VISTAS ######
--- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-create view estudiantesPro as (
-	select e.*, u.nomUsuario, c.nombreCarrera, g.nombreGrupo, s.descEstado as estadoSS, ee.descEstado as estadoEstudiante
-    from estudiante e, grupo g, carrera c, estadoSS s, estadoEstudiante ee, usuario u
-    where e.idUsuario = u.id and e.idGrupo = g.id and g.idCarrera = c.id and e.idEstadoEstudiante = ee.id and e.idEstadoSS = s.id
-);
+delimiter $
+create procedure estadoServicioSocial(in val varchar(20))
+begin
+	select * from estudiantesPro where estadoSS = val;
+end $
 
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##### DATOS INICIALES ######
