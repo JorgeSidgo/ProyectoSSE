@@ -158,19 +158,12 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
     {
         try 
         {
-            if(!this.jTxtEstadoSS.getText().equals("Completado"))
-            {
-                int idEs = Integer.parseInt(this.jTxtIDEstudiante.getText());
-            
-                daoE.solventar(idEs);
-                JOptionPane.showMessageDialog(null, "Estudiante Solventado en sus horas sociales!!");
-                actualizarCandidatos();
-                limpiarCandidato();
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(null, "El Estudiante aun no es apto para una solvencia!!");
-            }
+            int idEs = Integer.parseInt(this.jTxtIDEstudiante.getText());
+        
+            daoE.solventar(idEs);
+            JOptionPane.showMessageDialog(null, "Estudiante Solventado en sus horas sociales!!");
+            actualizarCandidatos();
+            limpiarCandidato();
         } 
         catch (Exception e) 
         {
@@ -538,7 +531,7 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
             }
         });
         
-        //trs = new TableRowSorter(tabla);
+        trs = new TableRowSorter(tabla);
         jTablaCandidatos.setRowSorter(trs);
     }//GEN-LAST:event_jTxtNombreEstudianteKeyTyped
 
@@ -556,10 +549,12 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
 
     private void jRbBuscarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRbBuscarNombreActionPerformed
         this.jTxtNombreEstudiante.setEnabled(true);
+        this.jTxtCarnetEstudiante.setText("");
         this.jTxtCarnetEstudiante.setEnabled(false);
     }//GEN-LAST:event_jRbBuscarNombreActionPerformed
 
     private void jRbBuscarIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRbBuscarIDActionPerformed
+        this.jTxtNombreEstudiante.setText("");
         this.jTxtNombreEstudiante.setEnabled(false);
         this.jTxtCarnetEstudiante.setEnabled(true);
     }//GEN-LAST:event_jRbBuscarIDActionPerformed
@@ -572,7 +567,7 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
             }
         });
         
-        //trs = new TableRowSorter(tabla);
+        trs = new TableRowSorter(tabla);
         jTablaCandidatos.setRowSorter(trs);
     }//GEN-LAST:event_jTxtCarnetEstudianteKeyTyped
 

@@ -933,10 +933,16 @@ begin
 	inner join grupo g on e.idGrupo = g.id
 	inner join carrera c on g.idCarrera = c.id
 	inner join estadoSS s on e.idEstadoSS = s.id
-	inner join hojaServicioSocial h on h.idEstudiante = e.id
-    where e.idEstadoEstudiante = 2 and e.idEstadoSS = 2 or e.idEstadoSS = 1;
+	inner join hojaServicioSocial h on e.id = h.idEstudiante
+    where e.idEstadoEstudiante = 2 and e.idEstadoSS = 2 or e.idEstadoSS = 1 group by e.id;
 end $
-call mostrarCandidatos();
+
+-- select e.id, e.carnet, e.nombres, e.apellidos, sum(h.nHoras) as numHoras from estudiante e
+-- inner join hojaServicioSocial h on e.id = h.idEstudiante
+-- group by e.id;
+
+-- select * from estudiante;
+-- select * from hojaserviciosocial;
 -- buscar candidatos a solvencia por nombre --
 delimiter $
 create procedure buscarNombreCandidatos(
@@ -1120,11 +1126,11 @@ insert into tipoinstitucion values(null, 'ONG');
 call insertarEstudiante('DonFrancisco', '123', '426017','Francisco Javier','Montoya Díaz','javicitoCasanova@gmail.com','2018-01-01',1); 
 call insertarEstudiante('BenitínSinEneas', '123', '890617','Benito Carmelo','Guerra Solorzano','benitoKrmelo@gmail.com','2018-01-01',1); 
 call insertarEstudiante('AquilesVoy', '123', '890617','Aquiles','Baesa','benitoKrmelo@gmail.com','2018-01-01',1); 
-call insertarEstudiante('AquilesCorto', '123', '890617','Aquiles','Castro','benitoKrmelo@gmail.com','2018-01-01',1); 
-call insertarEstudiante('BrisaPrrona', '123', '890617','Brisa Marina','de Guerra','benitoKrmelo@gmail.com','2018-01-01',1); 
-call insertarEstudiante('NitalesJo', '123', '890617','Jorge','Nitales','benitoKrmelo@gmail.com','2018-01-01',1);
-call insertarEstudiante('Shipiz', '123', '890617','Chepe','Trompo','benitoKrmelo@gmail.com','2018-01-01',1); 
-call insertarEstudiante('Abdi', '123', '426017','ANtoni martinez','Montoya Díaz','javicitoCasanova@gmail.com','2018-01-01',1); 
+call insertarEstudiante('AquilesCorto', '123', '689917','Aquiles','Castro','benitoKrmelo@gmail.com','2018-01-01',1); 
+call insertarEstudiante('BrisaPrrona', '123', '111117','Brisa Marina','de Guerra','benitoKrmelo@gmail.com','2018-01-01',1); 
+call insertarEstudiante('NitalesJo', '123', '908017','Jorge','Nitales','benitoKrmelo@gmail.com','2018-01-01',1);
+call insertarEstudiante('Shipiz', '123', '789117','Chepe','Trompo','benitoKrmelo@gmail.com','2018-01-01',1); 
+call insertarEstudiante('Abdi', '123', '222217','ANtoni martinez','Montoya Díaz','javicitoCasanova@gmail.com','2018-01-01',1); 
 call insertarInstitucion('Institucion 1','a la vuelta de la esquina','institucion1@gmail.com','2222-2222',1);
 call insertarInstitucion('Institucion 2','Santa rosa','iburgues@gmail.com','2222-2222',1);
 call insertarCoordinador('Giovanni Ariel', 'Tzec Chavez', 'giovanni.tzec@gmail.com', 'GiovanniTzec', 'tugfa', 1);
@@ -1143,5 +1149,3 @@ call inscribirMaterias(1, 3);
 call getEstudianteCarnet('426017');
 -- select * from estudiantesPro;
 update estudiante set idEstadoEstudiante = 2, idEstadoSS = 2 where id>2;
-select * from estudiante;
-select*from hojaserviciosocial;
