@@ -5,6 +5,9 @@ import com.modelo.Institucion;
 import com.utilidades.Console;
 import com.utilidades.UITools;
 import com.utilidades.Validacion;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -21,7 +24,7 @@ public class InternalFrmInstitucion extends javax.swing.JInternalFrame
     {
         initComponents();
         initUi();
-        Console.tabla(inst.mostrar(),this.jTable1);
+        //Console.tabla(inst.mostrar(),this.jTable1);
 //        jTxtId.setVisible(false);
     }
 
@@ -339,24 +342,63 @@ public class InternalFrmInstitucion extends javax.swing.JInternalFrame
     private void jBtnRegistrarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBtnRegistrarActionPerformed
     {//GEN-HEADEREND:event_jBtnRegistrarActionPerformed
         inst.insertar(capturar());
-        Console.tabla(inst.mostrar(),this.jTable1);
+        llenarTabla();
+        //Console.tabla(inst.mostrar(),this.jTable1);
     }//GEN-LAST:event_jBtnRegistrarActionPerformed
 
     private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBtnEditarActionPerformed
     {//GEN-HEADEREND:event_jBtnEditarActionPerformed
         inst.actualizar(capturar());
-        Console.tabla(inst.mostrar(),this.jTable1);
+        llenarTabla();
+        //Console.tabla(inst.mostrar(),this.jTable1);
     }//GEN-LAST:event_jBtnEditarActionPerformed
 
     private void jBtnEliminarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBtnEliminarActionPerformed
     {//GEN-HEADEREND:event_jBtnEliminarActionPerformed
         inst.eliminar(Integer.parseInt(this.jTxtId.getText()));
-        Console.tabla(inst.mostrar(),this.jTable1);
+        llenarTabla();
+        //Console.tabla(inst.mostrar(),this.jTable1);
     }//GEN-LAST:event_jBtnEliminarActionPerformed
 
 
+    private void llenarTabla()
+    {
+        List<Institucion> lista = new ArrayList();
+        
+        lista = inst.mostrarInstitucion();
+        
+        try
+        {
+            String[] columnas = {"N°", "Nombre", "Dirección", "Teléfono", "Correo", "Tipo de Institución"};
+            Object[] obj = new Object[6];
+            DefaultTableModel tabla = new DefaultTableModel(null, columnas);
+            
+            
+            for (int i = 0; i < lista.size(); i++)
+            {
+                Institucion ins = new Institucion();
+                
+                ins = (Institucion) lista.get(i);
+                
+                obj[0] = ins.getIdIns();
+                obj[1] = ins.getNombreIns();
+                obj[2] = ins.getDireccionIns();
+                obj[3] = ins.getTeleIns();
+                obj[4] = ins.getCorreoIns();
+                obj[5] = ins.getIdTipo();
+                
+                tabla.addRow(obj);
+            }
+            jTable1.setModel(tabla);
+            
+        } catch (Exception e)
+        {
+        }
+    }
+    
     private void initUi()
     {
+        llenarTabla();
         ui.flatButton(jBtnRegistrar, "#2ECC71", "#28B463", "#58D68D");
         ui.flatButton(jBtnEditar, "#3498DB", "#2E86C1", "#5DADE2");
         ui.flatButton(jBtnEliminar, "#E74C3C", "#CB4335", "#EC7063");
