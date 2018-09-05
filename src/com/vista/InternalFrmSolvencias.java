@@ -8,8 +8,10 @@ package com.vista;
 import com.dao.DaoCandidato;
 import com.dao.DaoInstitucion;
 import com.dao.DaoSolvencia;
+import com.dao.DaoUsuario;
 import com.modelo.Candidato;
 import com.modelo.Solvencia;
+import com.modelo.Usuario;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -27,6 +29,8 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
     /**
      * Creates new form InternalFrmSolvencias
      */
+    Usuario u = new Usuario();
+    DaoUsuario daoU = new DaoUsuario();
     DaoCandidato daoC = new DaoCandidato();
     DaoSolvencia daoS = new DaoSolvencia();
     DaoInstitucion daI = new DaoInstitucion();
@@ -114,6 +118,27 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
         this.jTxtCarrera.setText("");
         this.jTxtGrupo.setText("");
         this.jBtnSolventar.setEnabled(false);
+    }
+    
+    private void insertarSolvencia()
+    {
+        try 
+        {
+            int idEs = Integer.parseInt(this.jTxtIDEstudiante.getText());
+            int idCoo = DaoUsuario.idUsuario;
+            
+            s.setIdEstudiante(idEs);
+            s.setIdCoordinador(idCoo);
+            
+            daoS.insertarSolvencia(s);
+            JOptionPane.showMessageDialog(null, "Estudiante Solventado en sus horas sociales!!");
+            mostrarCandidatos();
+            limpiarCandidato();
+        } 
+        catch (Exception e) 
+        {
+            JOptionPane.showMessageDialog(null, "Error al solventar estudiante");
+        }
     }
 
     /**
@@ -320,43 +345,40 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
         jPanelCandidatoLayout.setHorizontalGroup(
             jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCandidatoLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(46, 46, 46)
                 .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel5)
                     .addComponent(jLabel12)
                     .addComponent(jLabel13)
-                    .addComponent(jTxtIDEstudiante, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                    .addComponent(jTxtNombres))
+                    .addComponent(jTxtIDEstudiante)
+                    .addComponent(jTxtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel6)
                     .addComponent(jLabel10)
-                    .addComponent(jTxtCarnet, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                    .addComponent(jTxtApellidos))
+                    .addComponent(jTxtCarnet)
+                    .addComponent(jTxtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelCandidatoLayout.createSequentialGroup()
-                        .addGap(78, 78, 78)
-                        .addComponent(jLabel9))
-                    .addGroup(jPanelCandidatoLayout.createSequentialGroup()
+                        .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTxtGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelCandidatoLayout.createSequentialGroup()
-                                .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTxtGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel11))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel15)
-                                    .addComponent(jTxtHorasRealizadas, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanelCandidatoLayout.createSequentialGroup()
-                                .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTxtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jTxtEstadoSS, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 198, Short.MAX_VALUE)
+                            .addComponent(jLabel15)
+                            .addComponent(jTxtHorasRealizadas, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanelCandidatoLayout.createSequentialGroup()
+                        .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTxtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jTxtEstadoSS, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
                 .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jBtnSolventar, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
                     .addComponent(jBtnLimpiarCandidato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -367,13 +389,18 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
             .addGroup(jPanelCandidatoLayout.createSequentialGroup()
                 .addGap(104, 104, 104)
                 .addComponent(jLabel9)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCandidatoLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-                .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addContainerGap(81, Short.MAX_VALUE))
+            .addGroup(jPanelCandidatoLayout.createSequentialGroup()
+                .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCandidatoLayout.createSequentialGroup()
+                        .addContainerGap(87, Short.MAX_VALUE)
+                        .addComponent(jBtnLimpiarCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(jBtnSolventar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanelCandidatoLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                         .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(jLabel6)
@@ -385,14 +412,7 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
                             .addComponent(jTxtCarnet, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTxtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTxtEstadoSS, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(4, 4, 4))
-                    .addComponent(jBtnLimpiarCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelCandidatoLayout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jBtnSolventar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCandidatoLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                         .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel12)
                             .addComponent(jLabel10)
@@ -403,8 +423,7 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
                             .addComponent(jTxtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTxtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTxtGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTxtHorasRealizadas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(6, 6, 6)))
+                            .addComponent(jTxtHorasRealizadas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
 
@@ -443,7 +462,7 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel14))
-                        .addGap(0, 701, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -459,16 +478,16 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 225, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 196, Short.MAX_VALUE)
                 .addComponent(jLabel14)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(208, 208, 208)
                     .addComponent(jPanelCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(317, Short.MAX_VALUE)))
+                    .addContainerGap(316, Short.MAX_VALUE)))
         );
 
         pack();
@@ -482,7 +501,7 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
             }
         });
         
-        trs = new TableRowSorter(tabla);
+        //trs = new TableRowSorter(tabla);
         jTablaCandidatos.setRowSorter(trs);
     }//GEN-LAST:event_jTxtNombreEstudianteKeyTyped
 
@@ -516,12 +535,12 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
             }
         });
         
-        trs = new TableRowSorter(tabla);
+        //trs = new TableRowSorter(tabla);
         jTablaCandidatos.setRowSorter(trs);
     }//GEN-LAST:event_jTxtCarnetEstudianteKeyTyped
 
     private void jBtnSolventarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSolventarActionPerformed
-        
+        insertarSolvencia();
     }//GEN-LAST:event_jBtnSolventarActionPerformed
 
 
