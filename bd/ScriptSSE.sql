@@ -237,6 +237,8 @@ create view estudiantesPro as (
     where e.idUsuario = u.id and e.idGrupo = g.id and g.idCarrera = c.id and e.idEstadoEstudiante = ee.id and e.idEstadoSS = s.id
 );
 
+select * from estudiantesPro;
+
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##### PROCEDIMIENTOS ALMACENADOS ######
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -934,7 +936,7 @@ begin
 	inner join hojaServicioSocial h on h.idEstudiante = e.id
     where e.idEstadoEstudiante = 2 and e.idEstadoSS = 2 or e.idEstadoSS = 1;
 end $
-
+call mostrarCandidatos();
 -- buscar candidatos a solvencia por nombre --
 delimiter $
 create procedure buscarNombreCandidatos(
@@ -966,7 +968,7 @@ end $
 -- ==================================================================================================
 ### Estudiante
 -- ==================================================================================================
-
+call mostrarCandidatos();
 -- Insertar Estudiante --
 delimiter $
 create procedure insertarEstudiante(

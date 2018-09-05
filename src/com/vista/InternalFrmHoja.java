@@ -352,7 +352,7 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -379,20 +379,24 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
             
             cosa = daoE.getEstudianteCarnet(carnet);
             
+            JOptionPane.showMessageDialog(null, cosa[0]);
             
             if(cosa[0].equals("Datos"))
             {
-                
+                jTxtId.setText(String.valueOf(e.getId()));
+                jTxtNombre.setText(e.getNombres());
+                jTxtApellidos.setText(e.getApellidos());
+                jTxtCarnet.setText(e.getCarnet());
+                jTxtGrupo.setText(daoE.getGrupo(e.getIdGrupo()).getNombreGrupo());
+                jPanelEstudiante.setVisible(true);
+                jBtnAddEstudiante.setVisible(false);
+                jBtnChangeEstudiante.setVisible(true);
             }
-
-            jTxtId.setText(String.valueOf(e.getId()));
-            jTxtNombre.setText(e.getNombres());
-            jTxtApellidos.setText(e.getApellidos());
-            jTxtCarnet.setText(e.getCarnet());
-            jTxtGrupo.setText(daoE.getGrupo(e.getIdGrupo()).getNombreGrupo());
-            jPanelEstudiante.setVisible(true);
-            jBtnAddEstudiante.setVisible(false);
-            jBtnChangeEstudiante.setVisible(true);
+            else
+            {
+                JOptionPane.showMessageDialog(this, "No se encontró registro para este estudiante", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            
         } catch (Exception e)
         {
             //JOptionPane.showMessageDialog(null, "tugfa");
