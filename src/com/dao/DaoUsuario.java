@@ -22,8 +22,9 @@ import javax.swing.JOptionPane;
  */
 public class DaoUsuario extends Conexion
 {
-    public static int codRol;
+    public static int idUsuario;
     public static String nomUsuario;
+    public static int codRol;
     
     Usuario u = new Usuario();
 
@@ -306,8 +307,9 @@ public class DaoUsuario extends Conexion
             
             if(filas == 1)
             {
-                this.codRol = res.getInt("idRol");
+                this.idUsuario = res.getInt("id");
                 this.nomUsuario = res.getString("nomUsuario");
+                this.codRol = res.getInt("idRol");
                 respuesta = true;
             }
             else
@@ -434,6 +436,28 @@ public class DaoUsuario extends Conexion
         
         
         return registros;
+    }
+    
+    public void restaurar(int u)
+    {
+        try
+        {
+            this.conectar();
+            String sql = "call restaurarUsuario(?)";
+            PreparedStatement pre = this.getCon().prepareStatement(sql);
+
+            pre.setInt(1, u);
+            
+            pre.executeUpdate();
+            pre.close();
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Error Usuario: " + e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
     }
     
     

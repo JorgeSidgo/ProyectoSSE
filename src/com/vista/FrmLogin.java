@@ -12,6 +12,7 @@ import java.awt.Color;
 import com.utilidades.UITools;
 import com.utilidades.Validacion;
 import static java.awt.Frame.NORMAL;
+import java.awt.peer.DesktopPeer;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.border.MatteBorder;
@@ -68,8 +69,7 @@ public class FrmLogin extends javax.swing.JFrame
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         jPanelTitulo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -87,17 +87,13 @@ public class FrmLogin extends javax.swing.JFrame
 
         jPanelTitulo.setBackground(new java.awt.Color(204, 204, 204));
         jPanelTitulo.setPreferredSize(new java.awt.Dimension(400, 30));
-        jPanelTitulo.addMouseMotionListener(new java.awt.event.MouseMotionAdapter()
-        {
-            public void mouseDragged(java.awt.event.MouseEvent evt)
-            {
+        jPanelTitulo.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
                 jPanelTituloMouseDragged(evt);
             }
         });
-        jPanelTitulo.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mousePressed(java.awt.event.MouseEvent evt)
-            {
+        jPanelTitulo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
                 jPanelTituloMousePressed(evt);
             }
         });
@@ -110,10 +106,8 @@ public class FrmLogin extends javax.swing.JFrame
         lblX.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblX.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/vista/x.png"))); // NOI18N
         lblX.setOpaque(true);
-        lblX.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        lblX.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblXMouseClicked(evt);
             }
         });
@@ -139,10 +133,8 @@ public class FrmLogin extends javax.swing.JFrame
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jTxtNombre.addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyPressed(java.awt.event.KeyEvent evt)
-            {
+        jTxtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTxtNombreKeyPressed(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt)
@@ -169,21 +161,16 @@ public class FrmLogin extends javax.swing.JFrame
         jBtnLogin.setFont(new java.awt.Font("Nunito", 0, 12)); // NOI18N
         jBtnLogin.setForeground(new java.awt.Color(255, 255, 255));
         jBtnLogin.setText("Ingresar");
-        jBtnLogin.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mousePressed(java.awt.event.MouseEvent evt)
-            {
+        jBtnLogin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
                 jBtnLoginMousePressed(evt);
             }
-            public void mouseReleased(java.awt.event.MouseEvent evt)
-            {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
                 jBtnLoginMouseReleased(evt);
             }
         });
-        jBtnLogin.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jBtnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnLoginActionPerformed(evt);
             }
         });
@@ -201,7 +188,7 @@ public class FrmLogin extends javax.swing.JFrame
                         .addComponent(jTxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTxtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jBtnLogin))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

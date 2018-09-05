@@ -117,7 +117,8 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
+    private void initComponents()
+    {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
@@ -154,6 +155,7 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
 
         setBorder(null);
         setClosable(true);
+        setTitle("Gestión de Solvencia");
 
         jPanel1.setBackground(new java.awt.Color(36, 37, 38));
 
@@ -201,8 +203,10 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
             }
         });
 
-        jTxtNombreEstudiante.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
+        jTxtNombreEstudiante.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyTyped(java.awt.event.KeyEvent evt)
+            {
                 jTxtNombreEstudianteKeyTyped(evt);
             }
         });
@@ -391,18 +395,22 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
         jLabel14.setText("Seleccione entre los resultados el candidato que desea solventar:");
 
         jTablaCandidatos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+            new Object [][]
+            {
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null}
             },
-            new String [] {
+            new String []
+            {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTablaCandidatos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
+        jTablaCandidatos.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
                 jTablaCandidatosMouseClicked(evt);
             }
         });
