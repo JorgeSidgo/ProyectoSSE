@@ -120,6 +120,8 @@ public class FrmPrincipal extends javax.swing.JFrame implements KeyListener
         menuPapelera = new javax.swing.JLabel();
         panelReportes = new javax.swing.JPanel();
         menuItReporteEstudiantes = new javax.swing.JLabel();
+        menuItReporteSoliAprobadas = new javax.swing.JLabel();
+        menuItReporteSoliDenegadas = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         keysInstituciones = new javax.swing.JMenuItem();
@@ -292,7 +294,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements KeyListener
         );
         desktopPaneLayout.setVerticalGroup(
             desktopPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblIcon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)
+            .addComponent(lblIcon, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         panelMenu.setBackground(new java.awt.Color(36, 37, 38));
@@ -525,17 +527,57 @@ public class FrmPrincipal extends javax.swing.JFrame implements KeyListener
             }
         });
 
+        menuItReporteSoliAprobadas.setBackground(new java.awt.Color(54, 56, 57));
+        menuItReporteSoliAprobadas.setDisplayedMnemonic('n');
+        menuItReporteSoliAprobadas.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        menuItReporteSoliAprobadas.setForeground(new java.awt.Color(255, 255, 255));
+        menuItReporteSoliAprobadas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8_Check_File_16px.png"))); // NOI18N
+        menuItReporteSoliAprobadas.setText("Solicitudes Aprobadas");
+        menuItReporteSoliAprobadas.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 20, 0, 0)));
+        menuItReporteSoliAprobadas.setIconTextGap(10);
+        menuItReporteSoliAprobadas.setOpaque(true);
+        menuItReporteSoliAprobadas.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                menuItReporteSoliAprobadasMouseClicked(evt);
+            }
+        });
+
+        menuItReporteSoliDenegadas.setBackground(new java.awt.Color(54, 56, 57));
+        menuItReporteSoliDenegadas.setDisplayedMnemonic('n');
+        menuItReporteSoliDenegadas.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
+        menuItReporteSoliDenegadas.setForeground(new java.awt.Color(255, 255, 255));
+        menuItReporteSoliDenegadas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8_Delete_File_16px.png"))); // NOI18N
+        menuItReporteSoliDenegadas.setText("Solicitudes Negadas");
+        menuItReporteSoliDenegadas.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 20, 0, 0)));
+        menuItReporteSoliDenegadas.setIconTextGap(10);
+        menuItReporteSoliDenegadas.setOpaque(true);
+        menuItReporteSoliDenegadas.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                menuItReporteSoliDenegadasMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelReportesLayout = new javax.swing.GroupLayout(panelReportes);
         panelReportes.setLayout(panelReportesLayout);
         panelReportesLayout.setHorizontalGroup(
             panelReportesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(menuItReporteEstudiantes, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+            .addComponent(menuItReporteSoliAprobadas, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+            .addComponent(menuItReporteSoliDenegadas, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
         );
         panelReportesLayout.setVerticalGroup(
             panelReportesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelReportesLayout.createSequentialGroup()
                 .addComponent(menuItReporteEstudiantes, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 61, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addComponent(menuItReporteSoliAprobadas, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(menuItReporteSoliDenegadas, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0))
         );
 
         javax.swing.GroupLayout panelMenuLayout = new javax.swing.GroupLayout(panelMenu);
@@ -569,7 +611,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements KeyListener
                 .addComponent(menuReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(panelReportes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addComponent(menuPapelera, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(menuLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -714,7 +756,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements KeyListener
                 .addComponent(jTitleBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(desktopPane)
-                    .addComponent(panelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)))
+                    .addComponent(panelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 587, Short.MAX_VALUE)))
         );
 
         pack();
@@ -941,6 +983,16 @@ public class FrmPrincipal extends javax.swing.JFrame implements KeyListener
         abrirVentana(papeles);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
+    private void menuItReporteSoliAprobadasMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuItReporteSoliAprobadasMouseClicked
+    {//GEN-HEADEREND:event_menuItReporteSoliAprobadasMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuItReporteSoliAprobadasMouseClicked
+
+    private void menuItReporteSoliDenegadasMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuItReporteSoliDenegadasMouseClicked
+    {//GEN-HEADEREND:event_menuItReporteSoliDenegadasMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuItReporteSoliDenegadasMouseClicked
+
     private void borders(int a, int b, int c)
     {
         desktopPane.setBorder(new MatteBorder(0, c, b, b, Color.decode("#E74C3C")));
@@ -1156,6 +1208,8 @@ public class FrmPrincipal extends javax.swing.JFrame implements KeyListener
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JLabel menuItInstituciones;
     private javax.swing.JLabel menuItReporteEstudiantes;
+    private javax.swing.JLabel menuItReporteSoliAprobadas;
+    private javax.swing.JLabel menuItReporteSoliDenegadas;
     private javax.swing.JLabel menuItServicio;
     private javax.swing.JLabel menuItSolicitudes;
     private javax.swing.JLabel menuItSolvencia;
