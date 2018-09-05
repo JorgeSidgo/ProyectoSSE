@@ -198,7 +198,7 @@ create table correo(
 
 create table solvencia(
 	id int auto_increment primary key unique,
-    fecha date,
+    fecha timestamp default current_timestamp,
     idEstudiante int,
     idCoordinador int,
     estado int
@@ -936,21 +936,27 @@ end $
 delimiter $
 create procedure mostrarCandidatos()
 begin
-	select e.id, e.carnet, e.nombres, e.apellidos, i.nombreInstitucion, h.nHoras from estudiante e
-    inner join hojaserviciosocial h on e.id = h.idEstudiante
-    inner join institucion i on h.idInstitucion = i.id;
+	select e.id, e.carnet, e.nombres, e.apellidos, c.nombreCarrera, g.nombreGrupo, s.descEstado as estadoSS, sum(h.nHoras) as numHoras from estudiante e
+	inner join grupo g on e.idGrupo = g.id
+	inner join carrera c on g.idCarrera = c.id
+	inner join estadoSS s on e.idEstadoSS = s.id
+	inner join hojaServicioSocial h on h.idEstudiante = e.id
+    where e.idEstadoEstudiante = 2 and e.idEstadoSS = 2 or e.idEstadoSS;
 end $
 
+select * from estadoSS;
 -- buscar candidatos a solvencia por nombre --
 delimiter $
 create procedure buscarNombreCandidatos(
 	in nom varchar(50)
 )
 begin
-	select e.id, e.carnet, e.nombres, e.apellidos, i.nombreInstitucion, h.nHoras from estudiante e
-    inner join hojaserviciosocial h on e.id = h.idEstudiante
-    inner join institucion i on i.id = h.idInstitucion
-    where e.nombres like concat('%',nom,'%');
+	select e.id, e.carnet, e.nombres, e.apellidos, c.nombreCarrera, g.nombreGrupo, s.descEstado as estadoSS, sum(h.nHoras) as horasSociales from estudiante e
+	inner join grupo g on e.idGrupo = g.id
+	inner join carrera c on g.idCarrera = c.id
+	inner join estadoSS s on e.idEstadoSS = s.id
+	inner join hojaServicioSocial h on h.idEstudiante = e.id
+    where e.nombres like concat('%',nom,'%') and e.idEstadoEstudiante = 2 and e.idEstadoSS = 2;
 end $
 
 -- buscar candidatos a solvencias por carnet --
@@ -959,10 +965,12 @@ create procedure buscarCarnetCandidatos(
 	in car varchar(10)
 )
 begin
-	select e.id, e.carnet, e.nombres, e.apellidos, i.nombreInstitucion, h.nHoras from estudiante e
-    inner join hojaserviciosocial h on e.id = h.idEstudiante
-    inner join institucion i on i.id = h.idInstitucion
-    where e.carnet like concat('%',car,'%');
+	select e.id, e.carnet, e.nombres, e.apellidos, c.nombreCarrera, g.nombreGrupo, s.descEstado as estadoSS, sum(h.nHoras) as horasSociales from estudiante e
+	inner join grupo g on e.idGrupo = g.id
+	inner join carrera c on g.idCarrera = c.id
+	inner join estadoSS s on e.idEstadoSS = s.id
+	inner join hojaServicioSocial h on h.idEstudiante = e.id
+    where e.carnet like concat('%',car,'%') and e.idEstadoEstudiante = 2 and e.idEstadoSS = 2;
 end $
 
 -- ==================================================================================================
@@ -1026,6 +1034,20 @@ begin
 
 end
 $$
+
+-- ==================================================================================================
+### Solvencia
+-- ==================================================================================================
+
+-- Insertar Solvencia
+delimiter $
+create procedure insertarSolvencia(
+    in idEs int,
+    in idCoo int
+)
+begin
+	insert into solvencia values(null,default,idEs,idCoo,default);
+end $
 
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##### DATOS INICIALES ######
