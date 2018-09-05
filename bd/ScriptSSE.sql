@@ -364,7 +364,7 @@ end $
 delimiter $
 create procedure papeleraUsuario()
 begin
-	select * from usuario where estado = 0;
+	select u.id as N, u.nomUsuario as 'Nombre Usuario', r.descRol as Rol from usuario u inner join rol r on r.id=u.idRol where estado = 0;
 end $
 
 -- Buscar en papelera de Usuario por id
