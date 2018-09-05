@@ -364,7 +364,7 @@ end $
 delimiter $
 create procedure papeleraUsuario()
 begin
-	select * from usuario where estado = 0;
+	select u.id as N, u.nomUsuario as 'Nombre Usuario', r.descRol as Rol from usuario u inner join rol r on r.id=u.idRol where estado = 0;
 end $
 
 -- Buscar en papelera de Usuario por id
@@ -708,6 +708,11 @@ begin
 	select concat(e.nombres,' ',e.apellidos) as nombre, i.nombreInstitucion,s.fecha, s.comentarios from solicitud s inner join estudiante e on s.idEstudiante=e.id inner join institucion i on i.id=s.idInstitucion where s.estado = true and s.estadoSolicitud=val;
 end $
 
+delimiter $
+create procedure papeleraSolicitud()
+begin
+	select s.id, concat(e.nombres,' ',e.apellidos) as nombre, i.nombreInstitucion,s.fecha, s.comentarios from solicitud s inner join estudiante e on s.idEstudiante=e.id inner join institucion i on i.id=s.idInstitucion where s.estado = true;
+end $
 -- ==================================================================================================
 ### Coordinador
 -- ==================================================================================================
@@ -1076,10 +1081,14 @@ call insertarInstitucion('Institucion 1','a la vuelta de la esquina','institucio
 call insertarInstitucion('Institucion 2','Santa rosa','iburgues@gmail.com','2222-2222',1);
 call insertarCoordinador('Giovanni Ariel', 'Tzec Chavez', 'giovanni.tzec@gmail.com', 'GiovanniTzec', 'tugfa', 1);
 call insertarSolicitud('Aprobado',1,1,1,'2018-06-01','Ejemplo');
+
+call insertarSolicitud('Negado',1,1,1,'2018-06-01','Ejemplo');
+call insertarHojaServicio(1,1,1,'2018-01-01','2018-06-01',100);
 call insertarHojaServicio(1,1,1,'2018-01-01','2018-06-01',100);
 
 call inscribirMaterias(1, 1);
 call inscribirMaterias(1, 2);
 call inscribirMaterias(1, 3);
+
 
 -- select * from estudiantesPro;

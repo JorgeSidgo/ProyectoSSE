@@ -1,6 +1,7 @@
 
 package com.vista;
 
+import com.dao.DaoEstudiante;
 import com.dao.DaoUsuario;
 import com.reporte.Reportes;
 import com.utilidades.Console;
@@ -17,6 +18,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyVetoException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Box;
@@ -31,6 +34,11 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -50,6 +58,34 @@ public class FrmPrincipal extends javax.swing.JFrame implements KeyListener
         }
         this.menuBar.setVisible(false);
         addKeyListener(this);
+    }
+    
+    DaoEstudiante estu= new DaoEstudiante();
+    
+    private void reporteParametrizado(String estado){
+        
+        Map parametro = new HashMap();
+        parametro.put("estado", estado);
+        
+        JasperReport reporte;
+        
+        try
+        {
+            estu.conectar();
+            reporte = JasperCompileManager.compileReport("src/com/reporte/ReporteSolicitud.jrxml");
+            JasperPrint jp = JasperFillManager.fillReport(reporte, parametro, estu.getCon());
+            JasperViewer.viewReport(jp, false);
+            
+        } catch (Exception e)
+        {
+            Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, "Error papu: " + e.getMessage());
+        }
+        finally
+        {
+            estu.desconectar();
+        }
+        
     }
     
     private void logout(){
@@ -985,12 +1021,12 @@ public class FrmPrincipal extends javax.swing.JFrame implements KeyListener
 
     private void menuItReporteSoliAprobadasMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuItReporteSoliAprobadasMouseClicked
     {//GEN-HEADEREND:event_menuItReporteSoliAprobadasMouseClicked
-        // TODO add your handling code here:
+        reporteParametrizado("Aprobado");
     }//GEN-LAST:event_menuItReporteSoliAprobadasMouseClicked
 
     private void menuItReporteSoliDenegadasMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuItReporteSoliDenegadasMouseClicked
     {//GEN-HEADEREND:event_menuItReporteSoliDenegadasMouseClicked
-        // TODO add your handling code here:
+        reporteParametrizado("Negado");
     }//GEN-LAST:event_menuItReporteSoliDenegadasMouseClicked
 
     private void borders(int a, int b, int c)

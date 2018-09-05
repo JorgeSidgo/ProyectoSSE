@@ -5,6 +5,7 @@ import com.conexion.Conexion;
 import com.modelo.Solicitud;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -123,5 +124,46 @@ public class DaoSolicitud extends Conexion{
         }
         
         return listaS;
+    }
+    
+    public List papelera(){
+        List registros =new ArrayList();
+        ResultSet res;
+        try
+        {
+            this.conectar();
+            String sql="call papeleraSolicitud()()";
+            PreparedStatement query= this.getCon().prepareCall(sql);
+            res= query.executeQuery();
+            
+            ResultSetMetaData meta= res.getMetaData();
+            int nColumnas= meta.getColumnCount();
+            
+            String[] thead= new String[nColumnas];
+            for (int i = 0; i < nColumnas; i++)
+            {
+                thead[i]=meta.getColumnLabel(i+1);
+            }
+            registros.add(thead);
+            
+            
+            while(res.next()){
+                String[] tBody = new String[nColumnas];
+                for (int i = 0; i < nColumnas; i++)
+                {
+                    tBody[i]=res.getString(i+1);
+                }
+                registros.add(tBody);
+            }
+            
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Error Usuario: " + e.getMessage());
+        }finally{
+            this.desconectar();
+        }
+        
+        
+        return registros;
     }
 }
