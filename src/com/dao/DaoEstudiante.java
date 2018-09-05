@@ -35,6 +35,9 @@ public class DaoEstudiante extends Conexion
             
             ResultSet res = pre.executeQuery();
             
+            res.last();
+            
+            
             while(res.next())
             {
                 e.setCarnet(res.getString("carnet"));
