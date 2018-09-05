@@ -478,7 +478,7 @@ end $
 delimiter $
 create procedure papeleraInstitucion()
 begin
-	select * from institucion where estado = 0;
+	select i.id as ID, i.nombreInstitucion as Nombre, i.direccion, i.correo as Correo, i.telefono as telefono, t.descTipoInstitucion as Tipo from institucion i inner join tipoInstitucion t on i.idTipoInstitucion=t.id where estado = 0;
 end $
 
 -- Buscar Institucion en papelera por id
@@ -1125,12 +1125,13 @@ insert into tipoinstitucion values(null, 'Publica');
 insert into tipoinstitucion values(null, 'Privada');
 insert into tipoinstitucion values(null, 'ONG');
 call insertarEstudiante('DonFrancisco', '123', '426017','Francisco Javier','Montoya Díaz','javicitoCasanova@gmail.com','2018-01-01',1); 
+call insertarEstudiante('Abdi', '123', '426017','ANtoni martinez','Montoya Díaz','javicitoCasanova@gmail.com','2018-01-01',1); 
 call insertarInstitucion('Institucion 1','a la vuelta de la esquina','institucion1@gmail.com','2222-2222',1);
 call insertarInstitucion('Institucion 2','Santa rosa','iburgues@gmail.com','2222-2222',1);
 call insertarCoordinador('Giovanni Ariel', 'Tzec Chavez', 'giovanni.tzec@gmail.com', 'GiovanniTzec', 'tugfa', 1);
 call insertarSolicitud('Aprobado',1,1,1,'2018-06-01','Ejemplo');
 
-call insertarSolicitud('Negado',1,1,1,'2018-06-01','Ejemplo');
+call insertarSolicitud('Negado',2,1,1,'2018-06-01','Ejemplo');
 call insertarHojaServicio(1,1,1,'2018-01-01','2018-06-01',100);
 call insertarHojaServicio(1,1,1,'2018-01-01','2018-06-01',100);
 

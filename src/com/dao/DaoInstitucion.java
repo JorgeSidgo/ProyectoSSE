@@ -108,9 +108,9 @@ public class DaoInstitucion extends Conexion
             }
             registros.add(thead);                   //primer item de la lista sera el thead
             
-            String [] fila= new String[nColumnas];
+            
             while(res.next()){
-                
+                String [] fila= new String[nColumnas];
                 for (int j = 0; j < nColumnas; j++)
                 {
                     fila[j]=res.getString(j+1);
