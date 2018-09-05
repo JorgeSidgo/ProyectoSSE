@@ -126,6 +126,30 @@ public class DaoSolicitud extends Conexion{
         return listaS;
     }
     
+    public String validarEst(String carnet)
+    {
+        String[] nombres = new String[2];
+        
+        try 
+        {
+            this.conectar();
+            String sql = "call validarEstudiante(?)";
+            PreparedStatement pre = this.getCon().prepareCall(sql);
+            pre.setString(1, carnet);
+            ResultSet res = pre.executeQuery();
+            
+            while (res.next()) {                
+                
+            }
+        } 
+        catch (Exception e) 
+        {
+            
+        }
+        
+        return ;
+    }
+    
     public List papelera(){
         List registros =new ArrayList();
         ResultSet res;

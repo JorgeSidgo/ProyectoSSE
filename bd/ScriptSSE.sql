@@ -243,7 +243,7 @@ create view estudiantesPro as (
     from estudiante e, grupo g, carrera c, estadoSS s, estadoEstudiante ee, usuario u
     where e.idUsuario = u.id and e.idGrupo = g.id and g.idCarrera = c.id and e.idEstadoEstudiante = ee.id and e.idEstadoSS = s.id
 );
-
+ 
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##### PROCEDIMIENTOS ALMACENADOS ######
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -700,6 +700,14 @@ delimiter $
 create procedure showSolicitud()
 begin
 	select * from solicitud where estado = true;
+end $
+
+-- Validar Estudiante --
+delimiter $
+create procedure validarEstudiante(
+in c varchar(40))
+begin
+	select e.nombres as Nombres, e.apellidos as Apellidos from estudiantesPro e where e.carnet = c and idEstadoEstudiante = 2;
 end $
 
 delimiter $
