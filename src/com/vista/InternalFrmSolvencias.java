@@ -538,7 +538,7 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
             }
         });
         
-        //trs = new TableRowSorter(tabla);
+        trs = new TableRowSorter(tabla);
         jTablaCandidatos.setRowSorter(trs);
     }//GEN-LAST:event_jTxtNombreEstudianteKeyTyped
 
@@ -556,10 +556,12 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
 
     private void jRbBuscarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRbBuscarNombreActionPerformed
         this.jTxtNombreEstudiante.setEnabled(true);
+        this.jTxtCarnetEstudiante.setText("");
         this.jTxtCarnetEstudiante.setEnabled(false);
     }//GEN-LAST:event_jRbBuscarNombreActionPerformed
 
     private void jRbBuscarIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRbBuscarIDActionPerformed
+        this.jTxtNombreEstudiante.setText("");
         this.jTxtNombreEstudiante.setEnabled(false);
         this.jTxtCarnetEstudiante.setEnabled(true);
     }//GEN-LAST:event_jRbBuscarIDActionPerformed
@@ -572,7 +574,7 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
             }
         });
         
-        //trs = new TableRowSorter(tabla);
+        trs = new TableRowSorter(tabla);
         jTablaCandidatos.setRowSorter(trs);
     }//GEN-LAST:event_jTxtCarnetEstudianteKeyTyped
 
