@@ -75,7 +75,41 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
                 obj[5] = c.getGrupo();
                 obj[6] = c.getEstadoSS();
                 obj[7] = c.getnHoras();
-                tabla.addRow(obj);
+                if (c.getId() != 0) {
+                    tabla.addRow(obj);
+                }
+            }
+            this.jTablaCandidatos.setModel(tabla);
+        }
+        catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Error al mostrar en tabla!!","Carga Fallida!! "+e.getMessage(),JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void actualizarCandidatos()
+    {
+        String[] columnas = {"ID de Estudiante","Carnet","Nombres","Apellidos","Carrera","Grupo","Estado Servicio Social","Horas Realizadas"};
+        DefaultTableModel tabla = new DefaultTableModel(null, columnas);
+        Object[] obj = new Object[8];
+        List lista;
+        try
+        {
+            lista = daoC.mostrarCandidatos();
+            for (int i = 0; i < lista.size(); i++) 
+            {
+                c = (Candidato) lista.get(i);
+                obj[0] = c.getId();
+                obj[1] = c.getCarnet();
+                obj[2] = c.getNombres();
+                obj[3] = c.getApellidos();
+                obj[4] = c.getCarrera();
+                obj[5] = c.getGrupo();
+                obj[6] = c.getEstadoSS();
+                obj[7] = c.getnHoras();
+                if (c.getId() != 0) {
+                    tabla.addRow(obj);
+                }
             }
             this.jTablaCandidatos.setModel(tabla);
         }
@@ -117,6 +151,8 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
         this.jTxtApellidos.setText("");
         this.jTxtCarrera.setText("");
         this.jTxtGrupo.setText("");
+        this.jTxtEstadoSS.setText("");
+        this.jTxtHorasRealizadas.setText("");
         this.jBtnSolventar.setEnabled(false);
     }
     
@@ -132,7 +168,7 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
             
             daoS.insertarSolvencia(s);
             JOptionPane.showMessageDialog(null, "Estudiante Solventado en sus horas sociales!!");
-            mostrarCandidatos();
+            actualizarCandidatos();
             limpiarCandidato();
         } 
         catch (Exception e) 

@@ -201,7 +201,7 @@ create table solvencia(
     fecha timestamp default current_timestamp,
     idEstudiante int,
     idCoordinador int,
-    estado int
+    estado int default 1
 );
 
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -478,7 +478,7 @@ end $
 delimiter $
 create procedure papeleraInstitucion()
 begin
-	select * from institucion where estado = 0;
+	select i.id as ID, i.nombreInstitucion as Nombre, i.direccion, i.correo as Correo, i.telefono as telefono, t.descTipoInstitucion as Tipo from institucion i inner join tipoInstitucion t on i.idTipoInstitucion=t.id where estado = 0;
 end $
 
 -- Buscar Institucion en papelera por id
@@ -941,10 +941,10 @@ begin
 	inner join carrera c on g.idCarrera = c.id
 	inner join estadoSS s on e.idEstadoSS = s.id
 	inner join hojaServicioSocial h on h.idEstudiante = e.id
-    where e.idEstadoEstudiante = 2 and e.idEstadoSS = 2 or e.idEstadoSS;
+    where e.idEstadoEstudiante = 2 and e.idEstadoSS = 2 or e.idEstadoSS = 1;
 end $
+select* from estudiante;
 
-select * from estadoSS;
 -- buscar candidatos a solvencia por nombre --
 delimiter $
 create procedure buscarNombreCandidatos(
@@ -1026,8 +1026,7 @@ create procedure solicitudesEstudiante(
 	in car varchar(50)
 )
 begin
-	select e.carnet, e.nombres, e.apellidos, s.fecha, c.nombres, c.apellidos, i.*
-    from solicitud s, estudiante e, coordinador c, institucion i
+	select e.carnet, e.nombres, e.apellidos, s.fecha, c.nombres, c.apellidos, i.* from solicitud s, estudiante e, coordinador c, institucion i
     where s.idEstudiante = e.id and s.idCoordinador = c.id and s.idEstudiante = i.id and s.estadoSolicitud = 'Aprobado' and e.idEstadoEstudiante = 2;
 end
 $$
@@ -1071,6 +1070,7 @@ create procedure insertarSolvencia(
 )
 begin
 	insert into solvencia values(null,default,idEs,idCoo,default);
+    update estudiante set idEstadoEstudiante = 3;
 end $
 
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1125,12 +1125,13 @@ insert into tipoinstitucion values(null, 'Publica');
 insert into tipoinstitucion values(null, 'Privada');
 insert into tipoinstitucion values(null, 'ONG');
 call insertarEstudiante('DonFrancisco', '123', '426017','Francisco Javier','Montoya Díaz','javicitoCasanova@gmail.com','2018-01-01',1); 
+call insertarEstudiante('Abdi', '123', '426017','ANtoni martinez','Montoya Díaz','javicitoCasanova@gmail.com','2018-01-01',1); 
 call insertarInstitucion('Institucion 1','a la vuelta de la esquina','institucion1@gmail.com','2222-2222',1);
 call insertarInstitucion('Institucion 2','Santa rosa','iburgues@gmail.com','2222-2222',1);
 call insertarCoordinador('Giovanni Ariel', 'Tzec Chavez', 'giovanni.tzec@gmail.com', 'GiovanniTzec', 'tugfa', 1);
 call insertarSolicitud('Aprobado',1,1,1,'2018-06-01','Ejemplo');
 
-call insertarSolicitud('Negado',1,1,1,'2018-06-01','Ejemplo');
+call insertarSolicitud('Negado',2,1,1,'2018-06-01','Ejemplo');
 call insertarHojaServicio(1,1,1,'2018-01-01','2018-06-01',100);
 call insertarHojaServicio(1,1,1,'2018-01-01','2018-06-01',100);
 
