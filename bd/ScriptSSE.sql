@@ -196,14 +196,6 @@ create table correo(
     idEstudiante int
 );
 
-create table solvencia(
-	id int auto_increment primary key unique,
-    fecha timestamp default current_timestamp,
-    idEstudiante int,
-    idCoordinador int,
-    estado int default 1
-);
-
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##### LLAVES FORANEAS ######
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -234,7 +226,6 @@ alter table detalleHorarioServicio add constraint fk_detalleHorarioServicio_hora
 alter table detalleActividadesServicio add constraint fk_detalleActividadesServicio_horarioServicio foreign key (idActividadesServicio) references actividadesServicio (id);
 alter table correo add constraint fk_correo_coordinador foreign key (idCoordinador) references coordinador (id);
 alter table correo add constraint fk_correo_estudiante foreign key (idEstudiante) references estudiante (id);
-
 
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##### VISTAS ######
@@ -943,7 +934,6 @@ begin
 	inner join hojaServicioSocial h on h.idEstudiante = e.id
     where e.idEstadoEstudiante = 2 and e.idEstadoSS = 2 or e.idEstadoSS = 1;
 end $
-select* from estudiante;
 
 -- buscar candidatos a solvencia por nombre --
 delimiter $
@@ -1064,14 +1054,15 @@ $$
 
 -- Insertar Solvencia
 delimiter $
-create procedure insertarSolvencia(
-    in idEs int,
-    in idCoo int
+create procedure solventar(
+    in idEs int
 )
 begin
-	insert into solvencia values(null,default,idEs,idCoo,default);
-    update estudiante set idEstadoEstudiante = 3;
+    update estudiante set idEstadoEstudiante = 3 where id = idEs;
 end $
+
+-- call insertarSolvencia(1,1);
+-- select*from solvencia;
 
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##### DATOS INICIALES ######
@@ -1125,6 +1116,12 @@ insert into tipoinstitucion values(null, 'Publica');
 insert into tipoinstitucion values(null, 'Privada');
 insert into tipoinstitucion values(null, 'ONG');
 call insertarEstudiante('DonFrancisco', '123', '426017','Francisco Javier','Montoya Díaz','javicitoCasanova@gmail.com','2018-01-01',1); 
+call insertarEstudiante('BenitínSinEneas', '123', '890617','Benito Carmelo','Guerra Solorzano','benitoKrmelo@gmail.com','2018-01-01',1); 
+call insertarEstudiante('AquilesVoy', '123', '890617','Aquiles','Baesa','benitoKrmelo@gmail.com','2018-01-01',1); 
+call insertarEstudiante('AquilesCorto', '123', '890617','Aquiles','Castro','benitoKrmelo@gmail.com','2018-01-01',1); 
+call insertarEstudiante('BrisaPrrona', '123', '890617','Brisa Marina','de Guerra','benitoKrmelo@gmail.com','2018-01-01',1); 
+call insertarEstudiante('NitalesJo', '123', '890617','Jorge','Nitales','benitoKrmelo@gmail.com','2018-01-01',1);
+call insertarEstudiante('Shipiz', '123', '890617','Chepe','Trompo','benitoKrmelo@gmail.com','2018-01-01',1); 
 call insertarEstudiante('Abdi', '123', '426017','ANtoni martinez','Montoya Díaz','javicitoCasanova@gmail.com','2018-01-01',1); 
 call insertarInstitucion('Institucion 1','a la vuelta de la esquina','institucion1@gmail.com','2222-2222',1);
 call insertarInstitucion('Institucion 2','Santa rosa','iburgues@gmail.com','2222-2222',1);
@@ -1134,10 +1131,15 @@ call insertarSolicitud('Aprobado',1,1,1,'2018-06-01','Ejemplo');
 call insertarSolicitud('Negado',2,1,1,'2018-06-01','Ejemplo');
 call insertarHojaServicio(1,1,1,'2018-01-01','2018-06-01',100);
 call insertarHojaServicio(1,1,1,'2018-01-01','2018-06-01',100);
+call insertarHojaServicio(3,1,1,'2018-01-01','2018-06-01',100);
+call insertarHojaServicio(3,1,1,'2018-01-01','2018-06-01',100);
 
 call inscribirMaterias(1, 1);
 call inscribirMaterias(1, 2);
 call inscribirMaterias(1, 3);
 
-call getEstudianteCarnet('426017')
+call getEstudianteCarnet('426017');
 -- select * from estudiantesPro;
+update estudiante set idEstadoEstudiante = 2, idEstadoSS = 2 where id>2;
+select * from estudiante;
+select*from hojaserviciosocial;
