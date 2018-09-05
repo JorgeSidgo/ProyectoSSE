@@ -308,7 +308,12 @@ public class InternalFrmGestionSolicitud extends javax.swing.JInternalFrame {
                 jButton3MouseClicked(evt);
             }
         });
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(371, 140, -1, 34));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 140, -1, 34));
 
         idSolicitud.setText("idSolicitud");
         getContentPane().add(idSolicitud, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 70, -1, -1));
@@ -409,11 +414,14 @@ public class InternalFrmGestionSolicitud extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jBtnDltMouseClicked
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
-        JDesktopPane desktop = new JDesktopPane();
-        InternalFrmIngresarSolicitud frm = new InternalFrmIngresarSolicitud();
-        desktop.add(frm);
-        frm.setVisible(true);
+        
     }//GEN-LAST:event_jButton3MouseClicked
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        FrmIngresarSolicitud frm = new FrmIngresarSolicitud();
+        frm.setLocationRelativeTo(this);
+        frm.setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
