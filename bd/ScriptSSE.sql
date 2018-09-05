@@ -702,6 +702,12 @@ begin
 	select * from solicitud where estado = true;
 end $
 
+delimiter $
+create procedure repoSolicitud(in val varchar(20))
+begin
+	select concat(e.nombres,' ',e.apellidos) as nombre, i.nombreInstitucion,s.fecha, s.comentarios from solicitud s inner join estudiante e on s.idEstudiante=e.id inner join institucion i on i.id=s.idInstitucion where s.estado = true and s.estadoSolicitud=val;
+end $
+
 -- ==================================================================================================
 ### Coordinador
 -- ==================================================================================================
@@ -987,12 +993,6 @@ create procedure estadoServicioSocial(in val varchar(20))
 begin
 	select * from estudiantesPro where estadoSS = val;
 end $
-
-create view estudiantesPro as (
-	select e.*, u.nomUsuario, c.nombreCarrera, g.nombreGrupo, s.descEstado as estadoSS, ee.descEstado as estadoEstudiante
-    from estudiante e, grupo g, carrera c, estadoSS s, estadoEstudiante ee, usuario u
-    where e.idUsuario = u.id and e.idGrupo = g.id and g.idCarrera = c.id and e.idEstadoEstudiante = ee.id and e.idEstadoSS = s.id
-);
 
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##### DATOS INICIALES ######
