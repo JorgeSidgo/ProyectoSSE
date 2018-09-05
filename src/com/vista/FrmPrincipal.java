@@ -606,14 +606,14 @@ public class FrmPrincipal extends javax.swing.JFrame implements KeyListener
                 .addGap(0, 0, 0)
                 .addComponent(panelSS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(menuUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
                 .addComponent(menuReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(panelReportes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
+                .addComponent(menuUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
                 .addComponent(menuPapelera, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(0, 0, 0)
                 .addComponent(menuLogout, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -756,7 +756,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements KeyListener
                 .addComponent(jTitleBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(desktopPane)
-                    .addComponent(panelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 587, Short.MAX_VALUE)))
+                    .addComponent(panelMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)))
         );
 
         pack();
@@ -1086,9 +1086,13 @@ public class FrmPrincipal extends javax.swing.JFrame implements KeyListener
         ui.flatLabel(menuReportes,"#242526", "#2D2E2F", "#111111");
         ui.menuClass(menuReportes,dropReportes, 2);
         ui.flatLabel(menuPapelera,"#242526", "#2D2E2F", "#111111");
-        ui.menusitos(menuPapelera, 2, 10, false);
+        ui.menusitos(menuPapelera, 1, 10, false);
         ui.flatLabel(menuItReporteEstudiantes, "#363839", "#111111", "#2c3e50");
         ui.menusitos(menuItReporteEstudiantes, 2, 20, true);
+        ui.flatLabel(menuItReporteSoliAprobadas, "#363839", "#111111", "#2c3e50");
+        ui.menusitos(menuItReporteSoliAprobadas, 2, 20, true);
+        ui.flatLabel(menuItReporteSoliDenegadas, "#363839", "#111111", "#2c3e50");
+        ui.menusitos(menuItReporteSoliDenegadas, 2, 20, true);
         /*if((DaoUsuario.codRol != 1) || (DaoUsuario.codRol != 2))
         {
         menuUsuarios.setVisible(false);

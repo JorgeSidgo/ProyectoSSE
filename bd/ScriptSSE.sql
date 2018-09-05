@@ -88,7 +88,7 @@ create table hojaServicioSocial(
 
 create table horarioServicio(
 	id int auto_increment primary key unique,
-    idHojaServicioSocial int
+    idSolicitud int
 );
 
 create table detalleHorarioServicio(
@@ -100,7 +100,7 @@ create table detalleHorarioServicio(
 
 create table actividadesServicio(
     id int auto_increment primary key unique,
-    idHojaServicioSocial int
+    idSolicitud int
 );
 
 create table detalleActividadesServicio(
@@ -226,8 +226,8 @@ alter table materiasEstudiante add constraint fk_materiasEstudiante_estudiante f
 alter table hojaServicioSocial add constraint fk_hojaServicioSocial_estudiante foreign key (idEstudiante) references estudiante(id);
 alter table hojaServicioSocial add constraint fk_hojaServicioSocial_institucion foreign key (idInstitucion) references institucion(id);
 alter table hojaServicioSocial add constraint fk_hojaServicioSocial_coordinador foreign key (idCoordinador) references coordinador(id);
-alter table horarioServicio add constraint fk_horarioServicio_hojaServicioSocial foreign key (idHojaServicioSocial) references hojaServicioSocial(id);
-alter table actividadesServicio add constraint fk_actividadesServicio_hojaServicioSocial foreign key (idHojaServicioSocial) references hojaServicioSocial(id);
+alter table horarioServicio add constraint fk_horarioServicio_Solicitud foreign key (idSolicitud) references solicitud(id);
+alter table actividadesServicio add constraint fk_actividadesServicio_Solicitud foreign key (idSolicitud) references solicitud(id);
 alter table detalleHorarioServicio add constraint fk_detalleHorarioServicio_horarioServicio foreign key (idHorarioServicio) references horarioServicio (id);
 alter table detalleActividadesServicio add constraint fk_detalleActividadesServicio_horarioServicio foreign key (idActividadesServicio) references actividadesServicio (id);
 alter table correo add constraint fk_correo_coordinador foreign key (idCoordinador) references coordinador (id);
@@ -1067,7 +1067,7 @@ insert into estadoSS values(null, 'Completado');
 	-- Pública
 	-- ONG
     -- Privada
-cual
+
 insert into tipoinstitucion values(null, 'Publica');
 insert into tipoinstitucion values(null, 'Privada');
 insert into tipoinstitucion values(null, 'ONG');
@@ -1076,6 +1076,10 @@ call insertarInstitucion('Institucion 1','a la vuelta de la esquina','institucio
 call insertarInstitucion('Institucion 2','Santa rosa','iburgues@gmail.com','2222-2222',1);
 call insertarCoordinador('Giovanni Ariel', 'Tzec Chavez', 'giovanni.tzec@gmail.com', 'GiovanniTzec', 'tugfa', 1);
 call insertarSolicitud('Aprobado',1,1,1,'2018-06-01','Ejemplo');
-call insertarHojaServicio(1,1,1,'2018-01-01','2018-06-01',100)
+call insertarHojaServicio(1,1,1,'2018-01-01','2018-06-01',100);
+
+call inscribirMaterias(1, 1);
+call inscribirMaterias(1, 2);
+call inscribirMaterias(1, 3);
 
 -- select * from estudiantesPro;
