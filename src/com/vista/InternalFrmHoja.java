@@ -304,7 +304,7 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
             jPanelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelTablaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -366,7 +366,8 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
             
             e = daoE.getEstudianteCarnet(carnet);
             
-           JOptionPane.showMessageDialog(this,e.getNombres());
+           
+            
            jTxtNombre.setText(e.getNombres());
            jTxtApellidos.setText(e.getApellidos());
            jTxtCarnet.setText(e.getCarnet());
@@ -376,7 +377,7 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
            jBtnChangeEstudiante.setVisible(true);
         } catch (Exception e)
         {
-            JOptionPane.showMessageDialog(null, "tugfa");
+            //JOptionPane.showMessageDialog(null, "tugfa");
         }
     }
 
