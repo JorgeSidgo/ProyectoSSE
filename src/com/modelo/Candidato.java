@@ -23,18 +23,22 @@ public class Candidato {
     private String carnet;
     private String nombres;
     private String apellidos;
-    private String nombreInstitucion;
+    private String carrera;
+    private String grupo;
+    private String estadoSS;
     private int nHoras;
 
     public Candidato() {
     }
 
-    public Candidato(int id, String carnet, String nombres, String apellidos, String nombreInstitucion, int nHoras) {
+    public Candidato(int id, String carnet, String nombres, String apellidos, String carrera, String grupo, String estadoSS, int nHoras) {
         this.id = id;
         this.carnet = carnet;
         this.nombres = nombres;
         this.apellidos = apellidos;
-        this.nombreInstitucion = nombreInstitucion;
+        this.carrera = carrera;
+        this.grupo = grupo;
+        this.estadoSS = estadoSS;
         this.nHoras = nHoras;
     }
 
@@ -70,12 +74,28 @@ public class Candidato {
         this.apellidos = apellidos;
     }
 
-    public String getNombreInstitucion() {
-        return nombreInstitucion;
+    public String getCarrera() {
+        return carrera;
     }
 
-    public void setNombreInstitucion(String nombreInstitucion) {
-        this.nombreInstitucion = nombreInstitucion;
+    public void setCarrera(String carrera) {
+        this.carrera = carrera;
+    }
+
+    public String getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(String grupo) {
+        this.grupo = grupo;
+    }
+
+    public String getEstadoSS() {
+        return estadoSS;
+    }
+
+    public void setEstadoSS(String estadoSS) {
+        this.estadoSS = estadoSS;
     }
 
     public int getnHoras() {

@@ -8,8 +8,10 @@ package com.vista;
 import com.dao.DaoCandidato;
 import com.dao.DaoInstitucion;
 import com.dao.DaoSolvencia;
+import com.dao.DaoUsuario;
 import com.modelo.Candidato;
 import com.modelo.Solvencia;
+import com.modelo.Usuario;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -27,13 +29,15 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
     /**
      * Creates new form InternalFrmSolvencias
      */
+    Usuario u = new Usuario();
+    DaoUsuario daoU = new DaoUsuario();
     DaoCandidato daoC = new DaoCandidato();
     DaoSolvencia daoS = new DaoSolvencia();
     DaoInstitucion daI = new DaoInstitucion();
     Solvencia s = new Solvencia();
     Candidato c = new Candidato();
     
-    String[] columnas = {"ID de Estudiante","Carnet","Nombres","Apellidos","Institucion Supervisora","Horas Realizadas"};
+    String[] columnas = {"ID de Estudiante","Carnet","Nombres","Apellidos","Carrera","Grupo","Estado Servicio Social","Horas Realizadas"};
     DefaultTableModel tabla = new DefaultTableModel(null, columnas);
     TableRowSorter trs;
     
@@ -45,15 +49,17 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
         this.jTxtCarnet.setEnabled(false);
         this.jTxtNombres.setEnabled(false);
         this.jTxtApellidos.setEnabled(false);
-        this.jTxtInstitucionS.setEnabled(false);
-        this.jTxtNHoras.setEnabled(false);
+        this.jTxtCarrera.setEnabled(false);
+        this.jTxtGrupo.setEnabled(false);
         this.jTxtNombreEstudiante.setEnabled(false);
         this.jTxtCarnetEstudiante.setEnabled(false);
+        this.jTxtEstadoSS.setEnabled(false);
+        this.jTxtHorasRealizadas.setEnabled(false);
     }
     
     public void mostrarCandidatos()
     {
-        Object[] obj = new Object[6];
+        Object[] obj = new Object[8];
         List lista;
         try
         {
@@ -65,8 +71,10 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
                 obj[1] = c.getCarnet();
                 obj[2] = c.getNombres();
                 obj[3] = c.getApellidos();
-                obj[4] = c.getNombreInstitucion();
-                obj[5] = c.getnHoras();
+                obj[4] = c.getCarrera();
+                obj[5] = c.getGrupo();
+                obj[6] = c.getEstadoSS();
+                obj[7] = c.getnHoras();
                 tabla.addRow(obj);
             }
             this.jTablaCandidatos.setModel(tabla);
@@ -88,8 +96,10 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
             this.jTxtCarnet.setText(String.valueOf(this.jTablaCandidatos.getValueAt(index, 1)));
             this.jTxtNombres.setText(String.valueOf(this.jTablaCandidatos.getValueAt(index, 2)));
             this.jTxtApellidos.setText(String.valueOf(this.jTablaCandidatos.getValueAt(index, 3)));
-            this.jTxtInstitucionS.setText(String.valueOf(this.jTablaCandidatos.getValueAt(index, 4)));
-            this.jTxtNHoras.setText(String.valueOf(this.jTablaCandidatos.getValueAt(index, 5)));
+            this.jTxtCarrera.setText(String.valueOf(this.jTablaCandidatos.getValueAt(index, 4)));
+            this.jTxtGrupo.setText(String.valueOf(this.jTablaCandidatos.getValueAt(index, 5)));
+            this.jTxtEstadoSS.setText(String.valueOf(this.jTablaCandidatos.getValueAt(index, 6)));
+            this.jTxtHorasRealizadas.setText(String.valueOf(this.jTablaCandidatos.getValueAt(index, 7)));
         }
     }
     
@@ -105,9 +115,30 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
         this.jTxtCarnet.setText("");
         this.jTxtNombres.setText("");
         this.jTxtApellidos.setText("");
-        this.jTxtInstitucionS.setText("");
-        this.jTxtNHoras.setText("");
+        this.jTxtCarrera.setText("");
+        this.jTxtGrupo.setText("");
         this.jBtnSolventar.setEnabled(false);
+    }
+    
+    private void insertarSolvencia()
+    {
+        try 
+        {
+            int idEs = Integer.parseInt(this.jTxtIDEstudiante.getText());
+            int idCoo = DaoUsuario.idUsuario;
+            
+            s.setIdEstudiante(idEs);
+            s.setIdCoordinador(idCoo);
+            
+            daoS.insertarSolvencia(s);
+            JOptionPane.showMessageDialog(null, "Estudiante Solventado en sus horas sociales!!");
+            mostrarCandidatos();
+            limpiarCandidato();
+        } 
+        catch (Exception e) 
+        {
+            JOptionPane.showMessageDialog(null, "Error al solventar estudiante");
+        }
     }
 
     /**
@@ -117,8 +148,7 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
@@ -138,17 +168,21 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
         jTxtCarnet = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jTxtInstitucionS = new javax.swing.JTextField();
+        jTxtCarrera = new javax.swing.JTextField();
         jTxtNombres = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jTxtApellidos = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jTxtNHoras = new javax.swing.JTextField();
+        jTxtGrupo = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jBtnLimpiarCandidato = new javax.swing.JButton();
         jBtnSolventar = new javax.swing.JButton();
+        jTxtHorasRealizadas = new javax.swing.JTextField();
+        jTxtEstadoSS = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTablaCandidatos = new javax.swing.JTable();
@@ -171,7 +205,7 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(29, 29, 29)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(852, Short.MAX_VALUE))
+                .addContainerGap(986, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,10 +237,8 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
             }
         });
 
-        jTxtNombreEstudiante.addKeyListener(new java.awt.event.KeyAdapter()
-        {
-            public void keyTyped(java.awt.event.KeyEvent evt)
-            {
+        jTxtNombreEstudiante.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTxtNombreEstudianteKeyTyped(evt);
             }
         });
@@ -275,11 +307,11 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
 
         jLabel6.setText("Carnet: ");
 
-        jLabel7.setText("Institución Supervisora:");
+        jLabel7.setText("Carrera:");
 
         jLabel10.setText("Apellidos:");
 
-        jLabel11.setText("Horas Realizadas:");
+        jLabel11.setText("Grupo:");
 
         jLabel12.setText("Nombres:");
 
@@ -304,48 +336,52 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
             }
         });
 
+        jLabel8.setText("Estado Servicio Social");
+
+        jLabel15.setText("Horas Realizadas:");
+
         javax.swing.GroupLayout jPanelCandidatoLayout = new javax.swing.GroupLayout(jPanelCandidato);
         jPanelCandidato.setLayout(jPanelCandidatoLayout);
         jPanelCandidatoLayout.setHorizontalGroup(
             jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelCandidatoLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(46, 46, 46)
+                .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel13)
+                    .addComponent(jTxtIDEstudiante)
+                    .addComponent(jTxtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel10)
+                    .addComponent(jTxtCarnet)
+                    .addComponent(jTxtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelCandidatoLayout.createSequentialGroup()
                         .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanelCandidatoLayout.createSequentialGroup()
-                                .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jTxtIDEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jTxtCarnet, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jTxtInstitucionS, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanelCandidatoLayout.createSequentialGroup()
-                                .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTxtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel12))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTxtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel10))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jTxtNHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                        .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jBtnSolventar, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
-                            .addComponent(jBtnLimpiarCandidato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(jTxtGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel15)
+                            .addComponent(jTxtHorasRealizadas, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanelCandidatoLayout.createSequentialGroup()
-                        .addComponent(jLabel13)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTxtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(jTxtEstadoSS, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel9)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
+                .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jBtnSolventar, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                    .addComponent(jBtnLimpiarCandidato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanelCandidatoLayout.setVerticalGroup(
@@ -353,64 +389,60 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
             .addGroup(jPanelCandidatoLayout.createSequentialGroup()
                 .addGap(104, 104, 104)
                 .addComponent(jLabel9)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCandidatoLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel13)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-                .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanelCandidatoLayout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTxtCarnet, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelCandidatoLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTxtIDEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelCandidatoLayout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTxtInstitucionS)
-                            .addComponent(jBtnLimpiarCandidato, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))))
+                .addContainerGap(81, Short.MAX_VALUE))
+            .addGroup(jPanelCandidatoLayout.createSequentialGroup()
                 .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelCandidatoLayout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jBtnSolventar, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCandidatoLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(87, Short.MAX_VALUE)
+                        .addComponent(jBtnLimpiarCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(jBtnSolventar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanelCandidatoLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel13)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                        .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTxtIDEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTxtCarnet, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTxtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTxtEstadoSS, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                         .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel12)
                             .addComponent(jLabel10)
-                            .addComponent(jLabel11))
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel15))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTxtNombres, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                            .addComponent(jTxtApellidos)
-                            .addComponent(jTxtNHoras))))
-                .addGap(36, 36, 36))
+                        .addGroup(jPanelCandidatoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTxtNombres, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTxtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTxtGrupo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTxtHorasRealizadas, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
         );
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel14.setText("Seleccione entre los resultados el candidato que desea solventar:");
 
         jTablaCandidatos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][]
-            {
+            new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null}
             },
-            new String []
-            {
+            new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTablaCandidatos.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        jTablaCandidatos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTablaCandidatosMouseClicked(evt);
             }
         });
@@ -430,7 +462,7 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel14))
-                        .addGap(0, 567, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
@@ -446,16 +478,16 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelBusqueda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 225, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 196, Short.MAX_VALUE)
                 .addComponent(jLabel14)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(208, 208, 208)
                     .addComponent(jPanelCandidato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(302, Short.MAX_VALUE)))
+                    .addContainerGap(316, Short.MAX_VALUE)))
         );
 
         pack();
@@ -469,7 +501,7 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
             }
         });
         
-        trs = new TableRowSorter(tabla);
+        //trs = new TableRowSorter(tabla);
         jTablaCandidatos.setRowSorter(trs);
     }//GEN-LAST:event_jTxtNombreEstudianteKeyTyped
 
@@ -503,12 +535,12 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
             }
         });
         
-        trs = new TableRowSorter(tabla);
+        //trs = new TableRowSorter(tabla);
         jTablaCandidatos.setRowSorter(trs);
     }//GEN-LAST:event_jTxtCarnetEstudianteKeyTyped
 
     private void jBtnSolventarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSolventarActionPerformed
-        
+        insertarSolvencia();
     }//GEN-LAST:event_jBtnSolventarActionPerformed
 
 
@@ -523,12 +555,14 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelBusqueda;
@@ -540,9 +574,11 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTxtApellidos;
     private javax.swing.JTextField jTxtCarnet;
     private javax.swing.JTextField jTxtCarnetEstudiante;
+    private javax.swing.JTextField jTxtCarrera;
+    private javax.swing.JTextField jTxtEstadoSS;
+    private javax.swing.JTextField jTxtGrupo;
+    private javax.swing.JTextField jTxtHorasRealizadas;
     private javax.swing.JTextField jTxtIDEstudiante;
-    private javax.swing.JTextField jTxtInstitucionS;
-    private javax.swing.JTextField jTxtNHoras;
     private javax.swing.JTextField jTxtNombreEstudiante;
     private javax.swing.JTextField jTxtNombres;
     // End of variables declaration//GEN-END:variables
