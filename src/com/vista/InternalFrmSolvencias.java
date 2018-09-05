@@ -47,6 +47,8 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
         this.jTxtApellidos.setEnabled(false);
         this.jTxtInstitucionS.setEnabled(false);
         this.jTxtNHoras.setEnabled(false);
+        this.jTxtNombreEstudiante.setEnabled(false);
+        this.jTxtCarnetEstudiante.setEnabled(false);
     }
     
     public void mostrarCandidatos()
@@ -77,6 +79,7 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
     
     public void llenarForm()
     {
+        limpiar();
         this.jBtnSolventar.setEnabled(true);
         int index = this.jTablaCandidatos.getSelectedRow();
         
@@ -88,6 +91,23 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
             this.jTxtInstitucionS.setText(String.valueOf(this.jTablaCandidatos.getValueAt(index, 4)));
             this.jTxtNHoras.setText(String.valueOf(this.jTablaCandidatos.getValueAt(index, 5)));
         }
+    }
+    
+    public void limpiar()
+    {
+        this.jTxtCarnetEstudiante.setText("");
+        this.jTxtNombreEstudiante.setText("");
+    }
+    
+    public void limpiarCandidato()
+    {
+        this.jTxtIDEstudiante.setText("");
+        this.jTxtCarnet.setText("");
+        this.jTxtNombres.setText("");
+        this.jTxtApellidos.setText("");
+        this.jTxtInstitucionS.setText("");
+        this.jTxtNHoras.setText("");
+        this.jBtnSolventar.setEnabled(false);
     }
 
     /**
@@ -111,7 +131,6 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jRbBuscarNombre = new javax.swing.JRadioButton();
         jRbBuscarID = new javax.swing.JRadioButton();
-        jBtnBuscar = new javax.swing.JButton();
         jPanelCandidato = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jTxtIDEstudiante = new javax.swing.JTextField();
@@ -167,9 +186,20 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Carnet del Estudiante");
 
+        jTxtCarnetEstudiante.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTxtCarnetEstudianteKeyTyped(evt);
+            }
+        });
+
         jBtnLimpiar.setBackground(new java.awt.Color(127, 140, 141));
         jBtnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/EraseTool_203.png"))); // NOI18N
         jBtnLimpiar.setText("Limpiar");
+        jBtnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnLimpiarActionPerformed(evt);
+            }
+        });
 
         jTxtNombreEstudiante.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -181,13 +211,19 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
 
         buttonGroup1.add(jRbBuscarNombre);
         jRbBuscarNombre.setText("Buscar por Nombre");
+        jRbBuscarNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRbBuscarNombreActionPerformed(evt);
+            }
+        });
 
         buttonGroup1.add(jRbBuscarID);
         jRbBuscarID.setText("Buscar por Carnet");
-
-        jBtnBuscar.setBackground(new java.awt.Color(102, 102, 255));
-        jBtnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/search-icon.png"))); // NOI18N
-        jBtnBuscar.setText("Buscar");
+        jRbBuscarID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRbBuscarIDActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelBusquedaLayout = new javax.swing.GroupLayout(jPanelBusqueda);
         jPanelBusqueda.setLayout(jPanelBusquedaLayout);
@@ -202,35 +238,29 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
                 .addGap(113, 113, 113)
                 .addGroup(jPanelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addComponent(jTxtCarnetEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelBusquedaLayout.createSequentialGroup()
+                        .addComponent(jTxtCarnetEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jBtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jRbBuscarID))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
-                .addGroup(jPanelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jBtnLimpiar, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
-                    .addComponent(jBtnBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanelBusquedaLayout.setVerticalGroup(
             jPanelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBusquedaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelBusquedaLayout.createSequentialGroup()
-                        .addGroup(jPanelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTxtNombreEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTxtCarnetEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jRbBuscarNombre)
-                            .addComponent(jRbBuscarID)))
-                    .addGroup(jPanelBusquedaLayout.createSequentialGroup()
-                        .addComponent(jBtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)
-                        .addComponent(jBtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTxtNombreEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTxtCarnetEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRbBuscarNombre)
+                    .addComponent(jRbBuscarID))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
@@ -255,10 +285,20 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
         jBtnLimpiarCandidato.setBackground(new java.awt.Color(127, 140, 141));
         jBtnLimpiarCandidato.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/EraseTool_203.png"))); // NOI18N
         jBtnLimpiarCandidato.setText("Limpiar");
+        jBtnLimpiarCandidato.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnLimpiarCandidatoActionPerformed(evt);
+            }
+        });
 
         jBtnSolventar.setBackground(new java.awt.Color(255, 0, 0));
         jBtnSolventar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/yes-icon.png"))); // NOI18N
         jBtnSolventar.setText("Solventar");
+        jBtnSolventar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnSolventarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelCandidatoLayout = new javax.swing.GroupLayout(jPanelCandidato);
         jPanelCandidato.setLayout(jPanelCandidatoLayout);
@@ -414,8 +454,6 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTxtNombreEstudianteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtNombreEstudianteKeyTyped
-        
-        
         jTxtNombreEstudiante.addKeyListener(new KeyAdapter(){
             @Override
             public void keyReleased(KeyEvent ke){
@@ -431,10 +469,43 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
         llenarForm();
     }//GEN-LAST:event_jTablaCandidatosMouseClicked
 
+    private void jBtnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLimpiarActionPerformed
+        limpiar();
+    }//GEN-LAST:event_jBtnLimpiarActionPerformed
+
+    private void jBtnLimpiarCandidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLimpiarCandidatoActionPerformed
+        limpiarCandidato();
+    }//GEN-LAST:event_jBtnLimpiarCandidatoActionPerformed
+
+    private void jRbBuscarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRbBuscarNombreActionPerformed
+        this.jTxtNombreEstudiante.setEnabled(true);
+        this.jTxtCarnetEstudiante.setEnabled(false);
+    }//GEN-LAST:event_jRbBuscarNombreActionPerformed
+
+    private void jRbBuscarIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRbBuscarIDActionPerformed
+        this.jTxtNombreEstudiante.setEnabled(false);
+        this.jTxtCarnetEstudiante.setEnabled(true);
+    }//GEN-LAST:event_jRbBuscarIDActionPerformed
+
+    private void jTxtCarnetEstudianteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtCarnetEstudianteKeyTyped
+        jTxtCarnetEstudiante.addKeyListener(new KeyAdapter(){
+            @Override
+            public void keyReleased(KeyEvent ke){
+                trs.setRowFilter(RowFilter.regexFilter("(?i)"+jTxtCarnetEstudiante.getText(), 1));
+            }
+        });
+        
+        trs = new TableRowSorter(tabla);
+        jTablaCandidatos.setRowSorter(trs);
+    }//GEN-LAST:event_jTxtCarnetEstudianteKeyTyped
+
+    private void jBtnSolventarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSolventarActionPerformed
+        
+    }//GEN-LAST:event_jBtnSolventarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jBtnBuscar;
     private javax.swing.JButton jBtnLimpiar;
     private javax.swing.JButton jBtnLimpiarCandidato;
     private javax.swing.JButton jBtnSolventar;
