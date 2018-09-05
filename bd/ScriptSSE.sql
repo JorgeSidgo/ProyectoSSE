@@ -1003,6 +1003,16 @@ begin
 	select e.nombres as Nombres from estudiante e where e.id = idE and e.estado = true;
 end $
 
+-- devolver estudiante segun N° de Carnet
+delimiter $$
+create procedure getEstudianteCarnet(
+	in car varchar(20)
+)
+begin
+	select * from estudiante where carnet = car and estado = 1;
+end
+$$
+
 delimiter $
 create procedure estadoServicioSocial(in val varchar(20))
 begin
@@ -1128,5 +1138,5 @@ call inscribirMaterias(1, 1);
 call inscribirMaterias(1, 2);
 call inscribirMaterias(1, 3);
 
-
+call getEstudianteCarnet('426017')
 -- select * from estudiantesPro;

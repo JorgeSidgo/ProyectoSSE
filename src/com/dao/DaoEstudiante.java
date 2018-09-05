@@ -1,6 +1,8 @@
 package com.dao;
 
 import com.conexion.Conexion;
+import com.modelo.Estudiante;
+import com.modelo.Grupo;
 import java.sql.*;
 import javax.swing.JOptionPane;
 
@@ -20,6 +22,38 @@ import javax.swing.JOptionPane;
 
 public class DaoEstudiante extends Conexion
 {
+    public Estudiante getEstudianteCarnet(String carnet)
+    {
+        Estudiante e = new Estudiante();
+        
+        try
+        {
+            this.conectar();
+            String sql = "{call getEstudianteCarnet(?)}";
+            PreparedStatement pre = this.getCon().prepareStatement(sql);
+            pre.setString(1, carnet);
+            
+            ResultSet res = pre.executeQuery();
+            
+            while(res.next())
+            {
+                e.setCarnet(res.getString("carnet"));
+                e.setNombres(res.getString("nombres"));
+                e.setApellidos(res.getString("apellidos"));
+                e.setIdGrupo(res.getInt("idGrupo"));
+                
+            }
+        } catch (Exception ex)
+        {
+        }
+        finally
+        {
+            this.desconectar();
+        }
+        
+        return e;
+    }
+    
     public String nombreEstudiante(int id)
     {
         String nombreE = "";
@@ -47,5 +81,34 @@ public class DaoEstudiante extends Conexion
             this.desconectar();
         }
         return nombreE;
+    }
+    
+    public Grupo getGrupo(int id)
+    {
+        Grupo g = new Grupo();
+        
+        try
+        {
+            this.conectar();
+            String sql = "select * from grupo where id = ? and estado = 1";
+            PreparedStatement pre = this.getCon().prepareCall(sql);
+            pre.setInt(1, id);
+            ResultSet res = pre.executeQuery();
+            
+            while(res.next())
+            {
+                g.setId(res.getInt("id"));
+                g.setNombreGrupo(res.getString("nombreGrupo"));
+                g.setIdCarrera(res.getInt("idCarrera"));
+            }
+        } catch (Exception e)
+        {
+        }
+        finally
+        {
+            this.desconectar();
+        }
+        
+        return g;
     }
 }
