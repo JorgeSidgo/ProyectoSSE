@@ -663,7 +663,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame
             {
                 contra = pswd.getText();
 
-                u.setIdUsuario(Integer.parseInt(jTxtId.getText()));
+                u.setIdUsuario(DaoUsuario.idUsuario);
                 u.setPass(contra);
 
                 res = daoU.compContra(u);
@@ -825,7 +825,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame
             {
                 if (confirmar("¿Desea guardar los cambios hechos a este registro?"))
                 {
-                    if (compContra("Ingrese la contraseña actual para confirmar los cambios el registro"))
+                    if (compContra("Ingrese su contraseña para confirmar los cambios el registro"))
                     {
                         u.setIdUsuario(Integer.parseInt(this.jTxtId.getText()));
                         u.setNomUsuario(this.jTxtNombreUsuario.getText().trim());
@@ -851,7 +851,7 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame
 
             if (confirmar("¿Desea eliminar este registro?"))
             {
-                if (compContra("Ingrese la contraseña actual para eliminar el registro"))
+                if (compContra("Ingrese su contraseña para eliminar el registro"))
                 {
                     u.setIdUsuario(Integer.parseInt(this.jTxtId.getText()));
 

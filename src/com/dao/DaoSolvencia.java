@@ -14,5 +14,5 @@ package com.dao;
  *      Javier Montoya
  */
 public class DaoSolvencia {
-    
+    //public void
 }
