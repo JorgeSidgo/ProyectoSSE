@@ -1009,20 +1009,6 @@ begin
 	select * from estudiantesPro where estadoSS = val;
 end $
 
--- Mostrar solicitudes estudiante
-
-delimiter $$
-create procedure solicitudesEstudiante(
-	in car varchar(50)
-)
-begin
-	select e.carnet, e.nombres, e.apellidos, s.fecha, c.nombres, c.apellidos i.*
-    from solicitud s, estudiante e, coordinador c, institucion i
-    where s.idEstudiante = e.id and s.idCoordinador = c.id and s.idEstudiante = i.id and s.estadoSolicitud = 'Aprobado' and e.idEstadoEstudiante = 2;
-end
-$$
-
--- call solicitudesEstudiante('426017');
 -- ==================================================================================================
 ### MateriasEstudiante
 -- ==================================================================================================
