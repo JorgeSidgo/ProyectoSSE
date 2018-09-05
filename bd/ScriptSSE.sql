@@ -201,7 +201,7 @@ create table solvencia(
     fecha timestamp default current_timestamp,
     idEstudiante int,
     idCoordinador int,
-    estado int
+    estado int default 1
 );
 
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -941,10 +941,10 @@ begin
 	inner join carrera c on g.idCarrera = c.id
 	inner join estadoSS s on e.idEstadoSS = s.id
 	inner join hojaServicioSocial h on h.idEstudiante = e.id
-    where e.idEstadoEstudiante = 2 and e.idEstadoSS = 2 or e.idEstadoSS;
+    where e.idEstadoEstudiante = 2 and e.idEstadoSS = 2 or e.idEstadoSS = 1;
 end $
+select* from estudiante;
 
-select * from estadoSS;
 -- buscar candidatos a solvencia por nombre --
 delimiter $
 create procedure buscarNombreCandidatos(
@@ -1026,8 +1026,7 @@ create procedure solicitudesEstudiante(
 	in car varchar(50)
 )
 begin
-	select e.carnet, e.nombres, e.apellidos, s.fecha, c.nombres, c.apellidos, i.*
-    from solicitud s, estudiante e, coordinador c, institucion i
+	select e.carnet, e.nombres, e.apellidos, s.fecha, c.nombres, c.apellidos, i.* from solicitud s, estudiante e, coordinador c, institucion i
     where s.idEstudiante = e.id and s.idCoordinador = c.id and s.idEstudiante = i.id and s.estadoSolicitud = 'Aprobado' and e.idEstadoEstudiante = 2;
 end
 $$
@@ -1071,6 +1070,7 @@ create procedure insertarSolvencia(
 )
 begin
 	insert into solvencia values(null,default,idEs,idCoo,default);
+    update estudiante set idEstadoEstudiante = 3;
 end $
 
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
