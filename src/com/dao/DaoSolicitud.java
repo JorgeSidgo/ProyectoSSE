@@ -25,12 +25,14 @@ public class DaoSolicitud extends Conexion{
         try 
         {
             this.conectar();
-            String sql = "call insertarSolicitud(?,?,?,?)";
+            String sql = "call insertarSolicitud(?,?,?,?,?,?)";
             PreparedStatement pre = this.getCon().prepareCall(sql);
-            pre.setInt(1, s.getIdEstudiante());
-            pre.setInt(2, s.getIdCoordinador());
-            pre.setInt(3, s.getIdInstitucion());
-            pre.setString(4, s.getFecha());
+            pre.setString(1, s.getEstadoSolicitud());
+            pre.setInt(2, s.getIdEstudiante());
+            pre.setInt(3, s.getIdCoordinador());
+            pre.setInt(4, s.getIdInstitucion());
+            pre.setString(5, s.getFecha());
+            pre.setString(6, s.getComentarios());
             pre.execute();
             pre.close();
         } 
@@ -124,6 +126,37 @@ public class DaoSolicitud extends Conexion{
         }
         
         return listaS;
+    }
+    
+    public int idEstudiante(String carnet)
+    {
+        int id = 0;
+        
+        try 
+        {
+            this.conectar();
+            String sql = "call getEstudianteCarnet(?)";
+            PreparedStatement pre = this.getCon().prepareCall(sql);
+            pre.setString(1, carnet);
+            ResultSet res = pre.executeQuery();
+            
+            while(res.next())
+            {
+                id = (res.getInt("id"));
+            }
+            res.close();
+            pre.close();
+        } 
+        catch (Exception e) 
+        {
+            JOptionPane.showMessageDialog(null, "No se pudo obtener el ID del estudiante");
+        }
+        finally
+        {
+            this.desconectar();
+        }
+        
+        return id;
     }
     
     public String validarEst(String carnet)

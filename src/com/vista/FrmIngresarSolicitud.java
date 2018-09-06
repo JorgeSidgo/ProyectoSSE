@@ -9,6 +9,7 @@ import com.modelo.Coordinador;
 import com.modelo.Institucion;
 import com.modelo.Solicitud;
 import com.utilidades.Console;
+import com.utilidades.Validacion;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -27,12 +28,16 @@ public class FrmIngresarSolicitud extends javax.swing.JFrame {
     DaoEstudiante daoE = new DaoEstudiante();
     DaoCoordinador daoC = new DaoCoordinador();
     Console console = new Console();
+    Validacion v = new Validacion();
+    
     
     public FrmIngresarSolicitud() {
         initComponents();
         this.jLabelEstudiante.setVisible(false);
         this.cargarCoordinador();
         this.cargarInstitucion();
+        this.jlabelCom.setVisible(false);
+        this.jTxtComentarios.setVisible(false);
     }
    
     /*Variables*/
@@ -51,7 +56,7 @@ public class FrmIngresarSolicitud extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jTxtFecha = new javax.swing.JFormattedTextField();
-        jLabel7 = new javax.swing.JLabel();
+        jlabelCom = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTxtComentarios = new javax.swing.JTextArea();
         jBtnIngresar = new javax.swing.JButton();
@@ -59,7 +64,7 @@ public class FrmIngresarSolicitud extends javax.swing.JFrame {
         jBtnLimpiar = new javax.swing.JButton();
         jLabelEstudiante = new javax.swing.JLabel();
         jComboEstado = new javax.swing.JComboBox<>();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        jChkObser = new javax.swing.JCheckBox();
         jComboCoordinador = new javax.swing.JComboBox<>();
         jComboInsti = new javax.swing.JComboBox<>();
 
@@ -87,15 +92,21 @@ public class FrmIngresarSolicitud extends javax.swing.JFrame {
 
         jLabel6.setText("Fecha");
 
-        jTxtFecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter()));
+        jTxtFecha.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("####-##-##"))));
+        jTxtFecha.setText("2018-09-05");
 
-        jLabel7.setText("Comentarios");
+        jlabelCom.setText("Comentarios");
 
         jTxtComentarios.setColumns(20);
         jTxtComentarios.setRows(5);
         jScrollPane1.setViewportView(jTxtComentarios);
 
         jBtnIngresar.setText("Ingresar Solicitud");
+        jBtnIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnIngresarActionPerformed(evt);
+            }
+        });
 
         jBtnCancelar.setText("Cancelar");
 
@@ -103,9 +114,14 @@ public class FrmIngresarSolicitud extends javax.swing.JFrame {
 
         jLabelEstudiante.setText("jLabel8");
 
-        jComboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Aprobada", "No Aprobada" }));
+        jComboEstado.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Aprobada", "No Aprobada" }));
 
-        jCheckBox1.setText("Observaciones");
+        jChkObser.setText("Observaciones");
+        jChkObser.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jChkObserStateChanged(evt);
+            }
+        });
 
         jComboCoordinador.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione" }));
 
@@ -118,7 +134,6 @@ public class FrmIngresarSolicitud extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
@@ -131,23 +146,6 @@ public class FrmIngresarSolicitud extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jComboEstado, 0, 138, Short.MAX_VALUE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jCheckBox1)
-                                        .addGap(49, 49, 49)
-                                        .addComponent(jLabel7))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addComponent(jComboCoordinador, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jTxtEstudiante, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabelEstudiante)
-                                        .addGap(0, 0, Short.MAX_VALUE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
                                         .addComponent(jComboInsti, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(83, 83, 83)
                                         .addComponent(jBtnIngresar)
@@ -157,54 +155,72 @@ public class FrmIngresarSolicitud extends javax.swing.JFrame {
                                         .addComponent(jTxtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(183, 183, 183)
                                         .addComponent(jBtnLimpiar)))
-                                .addGap(6, 6, 6)))))
-                .addGap(53, 53, 53))
+                                .addGap(59, 59, 59))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jComboEstado, 0, 138, Short.MAX_VALUE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jChkObser)
+                                        .addGap(60, 60, 60))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(jComboCoordinador, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jTxtEstudiante, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 135, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabelEstudiante)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jlabelCom)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(112, 112, 112))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(53, 53, 53))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(51, 51, 51)
                 .addComponent(jLabel1)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jBtnLimpiar)
+                .addGap(61, 61, 61))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jComboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jCheckBox1))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jTxtEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabelEstudiante))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jComboCoordinador, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jComboInsti, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jBtnIngresar)
-                                    .addComponent(jBtnCancelar))
-                                .addGap(5, 5, 5)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(jTxtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(71, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jBtnLimpiar)
-                        .addGap(61, 61, 61))))
+                            .addComponent(jLabel2)
+                            .addComponent(jComboEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jChkObser))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jTxtEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelEstudiante))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(jComboCoordinador, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(jComboInsti, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jlabelCom)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jBtnIngresar)
+                            .addComponent(jBtnCancelar))
+                        .addGap(5, 5, 5)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(jTxtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         pack();
@@ -214,6 +230,93 @@ public class FrmIngresarSolicitud extends javax.swing.JFrame {
         this.validarEstudiante(this.jTxtEstudiante.getText());
     }//GEN-LAST:event_jTxtEstudianteFocusLost
 
+    private void jChkObserStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jChkObserStateChanged
+        
+        if (jChkObser.isSelected()) {
+            this.jlabelCom.setVisible(true);
+            this.jTxtComentarios.setVisible(true);
+        }else{
+            this.jTxtComentarios.setVisible(false);
+            this.jlabelCom.setVisible(false);
+        }
+    }//GEN-LAST:event_jChkObserStateChanged
+
+    private void jBtnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnIngresarActionPerformed
+       int c = this.camposVacios();
+       if(c==0)
+       {
+           this.insertarSolicitud();
+       }else if(c!=0)
+       {
+           JOptionPane.showMessageDialog(null, "Debe completar todos los campos requeridos");
+       }
+    }//GEN-LAST:event_jBtnIngresarActionPerformed
+    
+    private void insertarSolicitud()
+    {
+        try 
+        {
+            daoS.insSolicitud(this.capturar());
+            //JOptionPane.showMessageDialog(null, "Se ha insertado la solicitud", "Resultado de la Inserción", JOptionPane.INFORMATION_MESSAGE);
+        } 
+        catch (Exception e) 
+        {
+            //JOptionPane.showMessageDialog(null, "No se ha insertado la solicitud", "Resultado de la Inserción", JOptionPane.WARNING_MESSAGE);
+        }
+        
+    }
+    
+    private Solicitud capturar()
+    {
+       int estado = this.jComboEstado.getSelectedIndex();
+       
+       int id = daoS.idEstudiante(this.jTxtEstudiante.getText());
+       so.setIdEstudiante(id);
+       
+       if(estado==0)
+       {
+          so.setEstadoSolicitud("aprobada");
+       }else if(estado==1)
+       {
+          so.setEstadoSolicitud("no aprobada");
+       }
+       
+       Coordinador coordinador = (Coordinador)this.listaCoordinador.get(this.jComboCoordinador.getSelectedIndex());
+       Institucion institucion = (Institucion)this.listaInsti.get(this.jComboInsti.getSelectedIndex());
+       so.setIdCoordinador(coordinador.getIdCarrera());
+       so.setIdInstitucion(institucion.getIdIns());
+       so.setFecha(this.jTxtFecha.getText());
+       so.setComentarios(this.jTxtComentarios.getText());
+       return so;
+    }
+    
+    private int camposVacios()
+    {
+        int contador = 0;
+        
+        try 
+        {
+            if (v.IsNullOrEmpty(jTxtEstudiante.getText().trim()))
+            {
+                contador++;
+            }
+            if (v.IsNullOrEmpty(jTxtFecha.getText().trim()))
+            {
+                contador++;
+            }
+            /*if(contador > 0)
+            {
+                JOptionPane.showMessageDialog(this, "Complete los campos", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+            }*/
+        } 
+        catch (Exception e) 
+        {
+            
+        }
+        
+        return contador;
+    }
+    
     private void validarEstudiante(String carnet)
     {
         String nombres = "";
@@ -227,7 +330,7 @@ public class FrmIngresarSolicitud extends javax.swing.JFrame {
                     this.jLabelEstudiante.setVisible(true);
                     this.jLabelEstudiante.setText(nombres);
                     
-                }else if(opc==1){
+                }else if(opc!=0){
                     //this.jTxtEstudiante.setFocusable(true);
                     this.jTxtEstudiante.setText("");
                 }
@@ -267,7 +370,7 @@ public class FrmIngresarSolicitud extends javax.swing.JFrame {
         for(Object item:listaInsti)
         {
             insti = (Institucion) item;
-            this.jComboCoordinador.addItem(insti.getNombreIns());
+            this.jComboInsti.addItem(insti.getNombreIns());
         }
     }
     
@@ -307,7 +410,7 @@ public class FrmIngresarSolicitud extends javax.swing.JFrame {
     private javax.swing.JButton jBtnCancelar;
     private javax.swing.JButton jBtnIngresar;
     private javax.swing.JButton jBtnLimpiar;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JCheckBox jChkObser;
     private javax.swing.JComboBox<String> jComboCoordinador;
     private javax.swing.JComboBox<String> jComboEstado;
     private javax.swing.JComboBox<String> jComboInsti;
@@ -317,11 +420,11 @@ public class FrmIngresarSolicitud extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabelEstudiante;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTxtComentarios;
     private javax.swing.JTextField jTxtEstudiante;
     private javax.swing.JFormattedTextField jTxtFecha;
+    private javax.swing.JLabel jlabelCom;
     // End of variables declaration//GEN-END:variables
 }
