@@ -240,8 +240,6 @@ create view estudiantesPro as (
     where e.idUsuario = u.id and e.idGrupo = g.id and g.idCarrera = c.id and e.idEstadoEstudiante = ee.id and e.idEstadoSS = s.id
 );
 
-select * from estudiantesPro;
-
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ##### PROCEDIMIENTOS ALMACENADOS ######
 -- --------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -293,7 +291,7 @@ begin
 end
 $$
 
-select * from usuario
+
 
 -- Login
 delimiter $$
@@ -347,7 +345,7 @@ begin
 	select * from usuario where estado = 1;
 end $
 
-drop procedure mostrarUsuario;
+
 
 -- Buscar Usuario por Nombre
 delimiter $
@@ -521,6 +519,13 @@ end $
 -- ==================================================================================================
 
 -- Insertar Hoja de Servicio Social
+delimiter $
+create procedure mostrarHojaServicioParametro(in est int)
+begin 
+	select i.nombreInstitucion as Institucion, h.encargardo as Encargado, h.fechaInicio as Inicio, h.fechaFinalizacion as Finalizacion, h.nHoras as horas from hojaServicioSocial h inner join institucion i on i.id=h.idInstitucion where idEstudiante=est;
+end $
+
+
 delimiter $
 create procedure insertarHojaServicio(	
     in idEs int, 
@@ -1155,23 +1160,21 @@ call insertarSolicitud('Aprobado',6,1,1,'2018-06-01','Ejemplo');
 
 call insertarSolicitud('Negado',2,1,1,'2018-06-01','Ejemplo');
 call insertarHojaServicio(1,1,1,'Juan Perez','2018-01-01','2018-06-01',100);
-call insertarHojaServicio(1,1,1,'Juan Perez','2018-01-01','2018-06-01',100);
-call insertarHojaServicio(3,1,1,'Juan Perez','2018-01-01','2018-06-01',100);
-call insertarHojaServicio(3,1,1,'Juan Perez','2018-01-01','2018-06-01',100);
-call insertarHojaServicio(3,1,1,'Juan Perez','2018-01-01','2018-06-01',100);
-call insertarHojaServicio(2,1,1,'Juan Perez','2018-01-01','2018-06-01',300);
-call insertarHojaServicio(3,1,1,'Juan Perez','2018-01-01','2018-06-01',300);
-call insertarHojaServicio(4,1,1,'Juan Perez','2018-01-01','2018-06-01',300);
-call insertarHojaServicio(5,1,1,'Juan Perez','2018-01-01','2018-06-01',300);
-call insertarHojaServicio(6,1,1,'Juan Perez','2018-01-01','2018-06-01',300);
-call insertarHojaServicio(7,1,1,'Juan Perez','2018-01-01','2018-06-01',300);
-call insertarHojaServicio(8,1,1,'Juan Perez','2018-01-01','2018-06-01',300);
+call insertarHojaServicio(1,1,1,'Juan Perez','2018-01-01','2018-06-02',100);
+call insertarHojaServicio(3,1,1,'Juan Perez','2018-01-01','2018-06-03',100);
+call insertarHojaServicio(3,1,1,'Juan Perez','2018-01-01','2018-06-04',100);
+call insertarHojaServicio(3,1,1,'Juan Perez','2018-01-01','2018-06-05',100);
+call insertarHojaServicio(2,1,1,'Juan Perez','2018-01-01','2018-06-06',300);
+call insertarHojaServicio(3,1,1,'Juan Perez','2018-01-01','2018-06-07',300);
+call insertarHojaServicio(4,1,1,'Juan Perez','2018-01-01','2018-06-08',300);
+call insertarHojaServicio(5,1,1,'Juan Perez','2018-01-01','2018-06-09',300);
+call insertarHojaServicio(6,1,1,'Juan Perez','2018-01-01','2018-06-11',300);
+call insertarHojaServicio(7,1,1,'Juan Perez','2018-01-01','2018-06-12',300);
+call insertarHojaServicio(8,1,1,'Juan Perez','2018-01-01','2018-07-01',300);
 
 call inscribirMaterias(1, 1);
 call inscribirMaterias(1, 2);
 call inscribirMaterias(1, 3);
-
-call getEstudianteCarnet('426017');
 -- select * from estudiantesPro;
 update estudiante set idEstadoEstudiante = 2 where id>2;
 -- select * from estudiante;
