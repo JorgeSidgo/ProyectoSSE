@@ -52,7 +52,7 @@ public class DaoInstitucion extends Conexion
         } 
         catch (Exception e) 
         {
-            JOptionPane.showMessageDialog(null, "Ocurrió el siguiente error al buscar la Institución: "+e.getMessage());
+            JOptionPane.showMessageDialog(null, "Ocurrió el siguiente error al buscar la Institución xd: "+e.getMessage());
         }
         finally
         {

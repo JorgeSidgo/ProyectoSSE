@@ -547,14 +547,16 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame
 
     private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditarActionPerformed
 
-
-        if (jCbxRoles.getSelectedItem().toString().equals("Coordinador"))
-        {
-            editarCoordinador();
-        } else
-        {
-            editarUsuario();
+        if(JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea actualizar el registro?")==0){
+            if (jCbxRoles.getSelectedItem().toString().equals("Coordinador"))
+            {
+                editarCoordinador();
+            } else
+            {
+                editarUsuario();
+            }
         }
+        
     }//GEN-LAST:event_jBtnEditarActionPerformed
 
     private void jBtnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLimpiarActionPerformed
@@ -563,14 +565,16 @@ public class InternalFrmUsuarios extends javax.swing.JInternalFrame
 
     private void jBtnEliminarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBtnEliminarActionPerformed
     {//GEN-HEADEREND:event_jBtnEliminarActionPerformed
-
-        if (jCbxRoles.getSelectedItem().toString().equals("Coordinador"))
-        {
-            eliminarCoordinador();
-        } else
-        {
-            eliminarUsuario();
+        if(JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea actualizar el registro?")==0){
+            if (jCbxRoles.getSelectedItem().toString().equals("Coordinador"))
+            {
+                eliminarCoordinador();
+            } else
+            {
+                eliminarUsuario();
+            }
         }
+        
     }//GEN-LAST:event_jBtnEliminarActionPerformed
 
     private void jTxtNombreKeyPressed(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jTxtNombreKeyPressed

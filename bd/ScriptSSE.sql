@@ -81,6 +81,7 @@ create table hojaServicioSocial(
     idEstudiante int,
     idInstitucion int,
     idCoordinador int,
+    encargardo varchar(50),
     fechaInicio date,
     fechaFinalizacion date,
     nHoras int
@@ -130,6 +131,7 @@ create table tipoInstitucion(
 create table solicitud(
     id int auto_increment primary key unique,
     estadoSolicitud varchar(50),
+    uso int,
     idEstudiante int not null,
     idCoordinador int not null,
     idInstitucion int not null,
@@ -200,6 +202,7 @@ create table correo(
 
 alter table grupo add constraint fk_grupo_carrera foreign key (idCarrera) references carrera(id);
 alter table carrera add constraint fk_carrera_escuela foreign key (idEscuela) references escuela(id);
+alter table carrera add constraint fk_carrera_tipoCarrera foreign key (idTipoCarrera) references tipoCarrera(id);
 alter table usuario add constraint fk_usuario_rol foreign key (idRol) references rol(id);
 alter table estudiante add constraint fk_estudiante_usuario foreign key (idUsuario) references usuario(id);
 alter table estudiante add constraint fk_estudiante_grupo foreign key (idGrupo) references grupo(id);
@@ -286,7 +289,7 @@ begin
 end
 $$
 
-select * from usuario
+
 
 -- Login
 delimiter $$
@@ -340,7 +343,7 @@ begin
 	select * from usuario where estado = 1;
 end $
 
-drop procedure mostrarUsuario;
+
 
 -- Buscar Usuario por Nombre
 delimiter $
@@ -356,6 +359,11 @@ delimiter $
 create procedure papeleraUsuario()
 begin
 	select u.id as N, u.nomUsuario as 'Nombre Usuario', r.descRol as Rol from usuario u inner join rol r on r.id=u.idRol where estado = 0;
+end $
+
+create procedure usuariorepo()
+begin
+	select u.id as N, u.nomUsuario as 'Nombre Usuario', r.descRol as Rol from usuario u inner join rol r on r.id=u.idRol where estado = 1;
 end $
 
 -- Buscar en papelera de Usuario por id
@@ -510,10 +518,18 @@ end $
 
 -- Insertar Hoja de Servicio Social
 delimiter $
+create procedure mostrarHojaServicioParametro(in est int)
+begin 
+	select i.nombreInstitucion as Institucion, h.encargardo as Encargado, h.fechaInicio as Inicio, h.fechaFinalizacion as Finalizacion, h.nHoras as horas from hojaServicioSocial h inner join institucion i on i.id=h.idInstitucion where idEstudiante=est;
+end $
+
+
+delimiter $
 create procedure insertarHojaServicio(	
     in idEs int, 
     in idIns int, 
-    in idCoor int, 
+    in idCoor int,
+    in enc varchar(50), 
     in inicio date, 
     in finalizacion date,
     in horas int
@@ -521,7 +537,7 @@ create procedure insertarHojaServicio(
 begin 
 	declare totHoras int;
     declare tCarrera int;
-	insert into hojaServicioSocial values (null,idEs,idIns, idCoor, inicio, finalizacion, horas);
+	insert into hojaServicioSocial values (null,idEs,idIns, idCoor,enc, inicio, finalizacion, horas);
     set totHoras = (select sum(nhoras) from hojaServicioSocial where idEstudiante = idEs);
     set tCarrera = (select c.idTipoCarrera from carrera c, grupo g, estudiante e where e.idGrupo = g.id and g.idCarrera = c.id and e.id = idEs);
     
@@ -562,14 +578,15 @@ delimiter $
 create procedure editarHojaServicio(
     in idEs int, 
     in idInst int, 
-    in idCo int, 
+    in idCo int,
+    in enc varchar(50), 
     in fechaInicio date, 
     in fechaFin date,
     in idHoja int,
     in horas int
 )
 begin
-	update hojaServicioSocial set idEstudiante = idEs, idInstitucion = idInst, idCoordinador = idCo, fechaInicio = fechaInicio, fechaFinalizacion = fechaFin, nHoras = horas
+	update hojaServicioSocial set idEstudiante = idEs, idInstitucion = idInst, idCoordinador = idCo, encargado = enc, fechaInicio = fechaInicio, fechaFinalizacion = fechaFin, nHoras = horas
     where id = idHoja;
 end $
 
@@ -650,7 +667,7 @@ create procedure insertarSolicitud(
     in come text
 )
 begin 
-	insert into solicitud values (null,esta,idEstu,idCo,idIn,fecha,come, default);
+	insert into solicitud values (null,esta, 0, idEstu,idCo,idIn,fecha,come, default);
 end $
 
 -- Editar Solicitud
@@ -937,8 +954,8 @@ begin
 	inner join grupo g on e.idGrupo = g.id
 	inner join carrera c on g.idCarrera = c.id
 	inner join estadoSS s on e.idEstadoSS = s.id
-	inner join hojaServicioSocial h on h.idEstudiante = e.id
-    where e.idEstadoEstudiante = 2 and e.idEstadoSS = 2 or e.idEstadoSS = 1;
+	inner join hojaServicioSocial h on e.id = h.idEstudiante
+    where e.idEstadoEstudiante = 2 and e.idEstadoSS = 3 group by e.id;
 end $
 
 -- buscar candidatos a solvencia por nombre --
@@ -951,7 +968,7 @@ begin
 	inner join grupo g on e.idGrupo = g.id
 	inner join carrera c on g.idCarrera = c.id
 	inner join estadoSS s on e.idEstadoSS = s.id
-	inner join hojaServicioSocial h on h.idEstudiante = e.id
+	inner join  ServicioSocial h on h.idEstudiante = e.id
     where e.nombres like concat('%',nom,'%') and e.idEstadoEstudiante = 2 and e.idEstadoSS = 2;
 end $
 
@@ -972,7 +989,7 @@ end $
 -- ==================================================================================================
 ### Estudiante
 -- ==================================================================================================
-
+call mostrarCandidatos();
 -- Insertar Estudiante --
 delimiter $
 create procedure insertarEstudiante(
@@ -1019,13 +1036,21 @@ end $
 
 delimiter $$
 create procedure solicitudesEstudiante(
-	in car varchar(50)
+	in car varchar(50),
+    in idCoor int
 )
 begin
-	select e.carnet, e.nombres, e.apellidos, s.fecha, c.nombres, c.apellidos, i.* from solicitud s, estudiante e, coordinador c, institucion i
-    where s.idEstudiante = e.id and s.idCoordinador = c.id and s.idEstudiante = i.id and s.estadoSolicitud = 'Aprobado' and e.idEstadoEstudiante = 2;
+	declare idEs int;
+    set idEs = (select id from estudiante where carnet = car);
+
+	select s.* 
+	from solicitud s, estudiante e
+	where s.idEstudiante = e.id and s.estadoSolicitud = 'Aprobado' and e.idEstadoEstudiante = 2 and e.id = idEs and s.idCoordinador = idCoor and s.uso = 0;
 end
 $$
+
+
+call solicitudesEstudiante('426017', 1);
 
 -- call solicitudesEstudiante('426017');
 -- ==================================================================================================
@@ -1122,30 +1147,40 @@ insert into tipoinstitucion values(null, 'Publica');
 insert into tipoinstitucion values(null, 'Privada');
 insert into tipoinstitucion values(null, 'ONG');
 call insertarEstudiante('DonFrancisco', '123', '426017','Francisco Javier','Montoya Díaz','javicitoCasanova@gmail.com','2018-01-01',1); 
-call insertarEstudiante('BenitínSinEneas', '123', '890617','Benito Carmelo','Guerra Solorzano','benitoKrmelo@gmail.com','2018-01-01',1); 
+call insertarEstudiante('BenitínSinEneas', '123', '890617','Benito Carlos','Guerra Solorzano','benitoKrmelo@gmail.com','2018-01-01',1); 
 call insertarEstudiante('AquilesVoy', '123', '890617','Aquiles','Baesa','benitoKrmelo@gmail.com','2018-01-01',1); 
-call insertarEstudiante('AquilesCorto', '123', '890617','Aquiles','Castro','benitoKrmelo@gmail.com','2018-01-01',1); 
-call insertarEstudiante('BrisaPrrona', '123', '890617','Brisa Marina','de Guerra','benitoKrmelo@gmail.com','2018-01-01',1); 
-call insertarEstudiante('NitalesJo', '123', '890617','Jorge','Nitales','benitoKrmelo@gmail.com','2018-01-01',1);
-call insertarEstudiante('Shipiz', '123', '890617','Chepe','Trompo','benitoKrmelo@gmail.com','2018-01-01',1); 
-call insertarEstudiante('Abdi', '123', '426017','ANtoni martinez','Montoya Díaz','javicitoCasanova@gmail.com','2018-01-01',1); 
+call insertarEstudiante('AquilesCorto', '123', '689917','Aquiles','Castro','benitoKrmelo@gmail.com','2018-01-01',1); 
+call insertarEstudiante('BrisaPrrona', '123', '111117','Brisa Marina','de Guerra','benitoKrmelo@gmail.com','2018-01-01',1); 
+call insertarEstudiante('KatiaMon', '123', '212117','Katia','Montoya','katia@gmail.com','2018-01-01',1);
+call insertarEstudiante('NitalesJo', '123', '908017','Jorge','Nitales','benitoKrmelo@gmail.com','2018-01-01',1);
+call insertarEstudiante('Shipiz', '123', '789117','Chepe','Trompo','benitoKrmelo@gmail.com','2018-01-01',1); 
+call insertarEstudiante('Abdi', '123', '222217','ANtoni martinez','Montoya Díaz','javicitoCasanova@gmail.com','2018-01-01',1); 
 call insertarInstitucion('Institucion 1','a la vuelta de la esquina','institucion1@gmail.com','2222-2222',1);
 call insertarInstitucion('Institucion 2','Santa rosa','iburgues@gmail.com','2222-2222',1);
 call insertarCoordinador('Giovanni Ariel', 'Tzec Chavez', 'giovanni.tzec@gmail.com', 'GiovanniTzec', 'tugfa', 1);
 call insertarSolicitud('Aprobado',1,1,1,'2018-06-01','Ejemplo');
+call insertarSolicitud('Aprobado',1,1,2,'2017-03-05','Ejemplo');
+call insertarSolicitud('Aprobado',3,1,1,'2018-06-01','Ejemplo');
+call insertarSolicitud('Aprobado',6,1,1,'2018-06-01','Ejemplo');
+
 
 call insertarSolicitud('Negado',2,1,1,'2018-06-01','Ejemplo');
-call insertarHojaServicio(1,1,1,'2018-01-01','2018-06-01',100);
-call insertarHojaServicio(1,1,1,'2018-01-01','2018-06-01',100);
-call insertarHojaServicio(3,1,1,'2018-01-01','2018-06-01',100);
-call insertarHojaServicio(3,1,1,'2018-01-01','2018-06-01',100);
+call insertarHojaServicio(1,1,1,'Juan Perez','2018-01-01','2018-06-01',100);
+call insertarHojaServicio(1,1,1,'Juan Perez','2018-01-01','2018-06-02',100);
+call insertarHojaServicio(3,1,1,'Juan Perez','2018-01-01','2018-06-03',100);
+call insertarHojaServicio(3,1,1,'Juan Perez','2018-01-01','2018-06-04',100);
+call insertarHojaServicio(3,1,1,'Juan Perez','2018-01-01','2018-06-05',100);
+call insertarHojaServicio(2,1,1,'Juan Perez','2018-01-01','2018-06-06',300);
+call insertarHojaServicio(3,1,1,'Juan Perez','2018-01-01','2018-06-07',300);
+call insertarHojaServicio(4,1,1,'Juan Perez','2018-01-01','2018-06-08',300);
+call insertarHojaServicio(5,1,1,'Juan Perez','2018-01-01','2018-06-09',300);
+call insertarHojaServicio(6,1,1,'Juan Perez','2018-01-01','2018-06-11',300);
+call insertarHojaServicio(7,1,1,'Juan Perez','2018-01-01','2018-06-12',300);
+call insertarHojaServicio(8,1,1,'Juan Perez','2018-01-01','2018-07-01',300);
 
 call inscribirMaterias(1, 1);
 call inscribirMaterias(1, 2);
 call inscribirMaterias(1, 3);
-
-call getEstudianteCarnet('426017');
 -- select * from estudiantesPro;
-update estudiante set idEstadoEstudiante = 2, idEstadoSS = 2 where id>2;
-select * from estudiante;
-select*from hojaserviciosocial;
+update estudiante set idEstadoEstudiante = 2 where id>2;
+-- select * from estudiante;

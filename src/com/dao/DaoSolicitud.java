@@ -3,6 +3,7 @@ package com.dao;
 
 import com.conexion.Conexion;
 import com.modelo.Estudiante;
+import com.modelo.Institucion;
 import com.modelo.Solicitud;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -264,5 +265,106 @@ public class DaoSolicitud extends Conexion{
         
         
         return registros;
+    }
+    
+    public Institucion getInstitucionSoli(int id)
+    {
+        Institucion i = new Institucion();
+        int idInst = 0;
+        try 
+        {
+            this.conectar();
+            String sql = "select idInstitucion from solicitud where id = ?";
+            PreparedStatement pre = this.getCon().prepareCall(sql);
+            pre.setInt(1, id);
+            ResultSet res = pre.executeQuery();
+            
+            while(res.next())
+            {
+                idInst = res.getInt("idInstitucion");
+            }
+
+            //JOptionPane.showMessageDialog(null, "dao " + idInst);
+            
+            sql = "select * from institucion where id = ? and estado = 1";
+            pre = this.getCon().prepareCall(sql);
+            pre.setInt(1, idInst);
+            
+            ResultSet res2 = pre.executeQuery();
+            while (res2.next()) {
+                i.setIdIns(res2.getInt("id"));
+                i.setNombreIns(res2.getString("nombreInstitucion"));
+                i.setDireccionIns(res2.getString("direccion"));
+                i.setCorreoIns(res2.getString("correo"));
+                i.setTeleIns(res2.getString("telefono"));
+                i.setIdTipo(res2.getInt("idTipoInstitucion"));
+            }
+        } 
+        catch (Exception e) 
+        {
+            JOptionPane.showMessageDialog(null, "Ocurrió el siguiente error al buscar la Institución: "+e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
+        return i;
+    }
+    
+    public Object[] solicitudesEstudiante(String carnet)
+    {
+        Object[] respuesta = new Object[2];
+        
+        
+        List<Solicitud> lista = new ArrayList();
+        
+        try
+        {
+            this.conectar();
+            String sql = "call solicitudesEstudiante(?, ?)";
+            PreparedStatement pre = this.getCon().prepareStatement(sql);
+            
+            pre.setString(1, carnet);
+            pre.setInt(2, DaoCoordinador.idCoord);
+            
+            ResultSet res = pre.executeQuery();
+            
+            res.last();
+            int filas = res.getRow();
+            res.beforeFirst();
+            if(filas > 0)
+            {
+                while(res.next())
+                {
+                    Solicitud s = new Solicitud();
+                    
+                    s.setId(res.getInt("id"));
+                    s.setIdEstudiante(res.getInt("idEstudiante"));
+                    s.setIdCoordinador(res.getInt("idCoordinador"));
+                    s.setIdInstitucion(res.getInt("idInstitucion"));
+                    s.setFecha(res.getString("fecha"));
+                    
+                    lista.add(s);
+                }
+                
+                respuesta[0] = "Datos";
+                respuesta[1] = lista;
+            }
+            else
+            {
+                respuesta[0] = "Nel";
+                respuesta[1] = lista;
+            }
+            
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Error Coordinador: " + e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
+        
+        return respuesta;
     }
 }

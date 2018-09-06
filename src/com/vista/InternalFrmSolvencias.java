@@ -119,7 +119,6 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
     
     public void llenarForm()
     {
-        limpiar();
         this.jBtnSolventar.setEnabled(true);
         int index = this.jTablaCandidatos.getSelectedRow();
         
@@ -158,19 +157,12 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
     {
         try 
         {
-            if(!this.jTxtEstadoSS.getText().equals("Completado"))
-            {
-                int idEs = Integer.parseInt(this.jTxtIDEstudiante.getText());
-            
-                daoE.solventar(idEs);
-                JOptionPane.showMessageDialog(null, "Estudiante Solventado en sus horas sociales!!");
-                actualizarCandidatos();
-                limpiarCandidato();
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(null, "El Estudiante aun no es apto para una solvencia!!");
-            }
+            int idEs = Integer.parseInt(this.jTxtIDEstudiante.getText());
+        
+            daoE.solventar(idEs);
+            JOptionPane.showMessageDialog(null, "Estudiante Solventado en sus horas sociales!!");
+            actualizarCandidatos();
+            limpiarCandidato();
         } 
         catch (Exception e) 
         {
@@ -194,7 +186,6 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
         jPanelBusqueda = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jTxtCarnetEstudiante = new javax.swing.JTextField();
-        jBtnLimpiar = new javax.swing.JButton();
         jTxtNombreEstudiante = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jRbBuscarNombre = new javax.swing.JRadioButton();
@@ -265,15 +256,6 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
             }
         });
 
-        jBtnLimpiar.setBackground(new java.awt.Color(127, 140, 141));
-        jBtnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/EraseTool_203.png"))); // NOI18N
-        jBtnLimpiar.setText("Limpiar");
-        jBtnLimpiar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jBtnLimpiarActionPerformed(evt);
-            }
-        });
-
         jTxtNombreEstudiante.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTxtNombreEstudianteKeyTyped(evt);
@@ -311,12 +293,9 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
                 .addGap(113, 113, 113)
                 .addGroup(jPanelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
-                    .addGroup(jPanelBusquedaLayout.createSequentialGroup()
-                        .addComponent(jTxtCarnetEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jBtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTxtCarnetEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jRbBuscarID))
-                .addContainerGap())
+                .addContainerGap(386, Short.MAX_VALUE))
         );
         jPanelBusquedaLayout.setVerticalGroup(
             jPanelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -328,8 +307,7 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTxtNombreEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTxtCarnetEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTxtCarnetEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelBusquedaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jRbBuscarNombre)
@@ -538,7 +516,7 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
             }
         });
         
-        //trs = new TableRowSorter(tabla);
+        trs = new TableRowSorter(tabla);
         jTablaCandidatos.setRowSorter(trs);
     }//GEN-LAST:event_jTxtNombreEstudianteKeyTyped
 
@@ -546,20 +524,18 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
         llenarForm();
     }//GEN-LAST:event_jTablaCandidatosMouseClicked
 
-    private void jBtnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLimpiarActionPerformed
-        limpiar();
-    }//GEN-LAST:event_jBtnLimpiarActionPerformed
-
     private void jBtnLimpiarCandidatoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLimpiarCandidatoActionPerformed
         limpiarCandidato();
     }//GEN-LAST:event_jBtnLimpiarCandidatoActionPerformed
 
     private void jRbBuscarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRbBuscarNombreActionPerformed
         this.jTxtNombreEstudiante.setEnabled(true);
+        this.jTxtCarnetEstudiante.setText("");
         this.jTxtCarnetEstudiante.setEnabled(false);
     }//GEN-LAST:event_jRbBuscarNombreActionPerformed
 
     private void jRbBuscarIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRbBuscarIDActionPerformed
+        this.jTxtNombreEstudiante.setText("");
         this.jTxtNombreEstudiante.setEnabled(false);
         this.jTxtCarnetEstudiante.setEnabled(true);
     }//GEN-LAST:event_jRbBuscarIDActionPerformed
@@ -572,7 +548,7 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
             }
         });
         
-        //trs = new TableRowSorter(tabla);
+        trs = new TableRowSorter(tabla);
         jTablaCandidatos.setRowSorter(trs);
     }//GEN-LAST:event_jTxtCarnetEstudianteKeyTyped
 
@@ -583,7 +559,6 @@ public class InternalFrmSolvencias extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jBtnLimpiar;
     private javax.swing.JButton jBtnLimpiarCandidato;
     private javax.swing.JButton jBtnSolventar;
     private javax.swing.JLabel jLabel1;

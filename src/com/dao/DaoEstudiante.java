@@ -1,8 +1,11 @@
 package com.dao;
 
 import com.conexion.Conexion;
+import com.modelo.Coordinador;
 import com.modelo.Estudiante;
 import com.modelo.Grupo;
+import com.modelo.Institucion;
+import com.modelo.Solicitud;
 import java.sql.*;
 import javax.swing.JOptionPane;
 
@@ -22,6 +25,58 @@ import javax.swing.JOptionPane;
 
 public class DaoEstudiante extends Conexion
 {
+    
+    public Object[] getSolicitudesEstudianet(String carnet)
+    {
+        Object [] respuesta = new Object[5];
+        
+        Estudiante e = new Estudiante();
+        Solicitud s = new Solicitud();
+       
+        
+        try
+        {
+            this.conectar();
+            String sql = "{call solicitudesEstudiante(?)}";
+            PreparedStatement pre = this.getCon().prepareStatement(sql);
+            pre.setString(1, carnet);
+            
+            ResultSet res = pre.executeQuery();
+            
+            res.last();
+            int filas = res.getRow();
+            
+            if(filas > 0)
+            {
+                e.setId(res.getInt("id"));
+                e.setCarnet(res.getString("carnet"));
+                e.setNombres(res.getString("nombres"));
+                e.setApellidos(res.getString("apellidos"));
+                e.setIdGrupo(res.getInt("idGrupo"));
+                
+                
+                
+                respuesta[0] = "Datos";
+                respuesta[1] = e;
+            }
+            else
+            {
+                respuesta[0] = "Nel";
+                respuesta[1] = e;
+            }
+            
+            
+        } catch (Exception ex)
+        {
+        }
+        finally
+        {
+            this.desconectar();
+        }
+        
+        return respuesta;
+    }
+    
     public Object[] getEstudianteCarnet(String carnet)
     {
         Object [] respuesta = new Object[2];
@@ -67,6 +122,41 @@ public class DaoEstudiante extends Conexion
         }
         
         return respuesta;
+    }
+    
+    public Estudiante getEstudianteId(int id)
+    {
+        Estudiante e = new Estudiante();
+        try
+        {
+            this.conectar();
+            String sql = "select * from estudiante where id = ? and estado = 1";
+            PreparedStatement pre = this.getCon().prepareStatement(sql);
+            pre.setInt(1, id);
+            
+            ResultSet res = pre.executeQuery();
+            
+            res.last();
+            int filas = res.getRow();
+            
+            if(filas == 1)
+            {
+                e.setId(res.getInt("id"));
+                e.setNombres(res.getString("nombres"));
+                e.setApellidos(res.getString("apellidos"));
+                e.setCarnet(res.getString("carnet"));
+                e.setIdGrupo(res.getInt("idGrupo"));
+            }
+  
+        } catch (Exception ex)
+        {
+        }
+        finally
+        {
+            this.desconectar();
+        }
+        
+        return e;
     }
     
     public String nombreEstudiante(int id)
