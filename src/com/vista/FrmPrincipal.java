@@ -603,7 +603,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements KeyListener
         menuItReporteUsuarios.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         menuItReporteUsuarios.setForeground(new java.awt.Color(255, 255, 255));
         menuItReporteUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8_User_Folder_16px.png"))); // NOI18N
-        menuItReporteUsuarios.setText("Reporte de Estudiantes");
+        menuItReporteUsuarios.setText("Reporte de Usuarios");
         menuItReporteUsuarios.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 20, 0, 0)));
         menuItReporteUsuarios.setIconTextGap(10);
         menuItReporteUsuarios.setOpaque(true);
@@ -1052,7 +1052,24 @@ public class FrmPrincipal extends javax.swing.JFrame implements KeyListener
 
     private void menuItReporteUsuariosMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_menuItReporteUsuariosMouseClicked
     {//GEN-HEADEREND:event_menuItReporteUsuariosMouseClicked
-        // TODO add your handling code here:
+         JasperReport reporte;
+        
+        try
+        {
+            estu.conectar();
+            reporte = JasperCompileManager.compileReport("src/com/reporte/ReporteUsers.jrxml");
+            JasperPrint jp = JasperFillManager.fillReport(reporte, null, estu.getCon());
+            JasperViewer.viewReport(jp, false);
+            
+        } catch (Exception e)
+        {
+            Logger.getLogger(Reportes.class.getName()).log(Level.SEVERE, null, e);
+            JOptionPane.showMessageDialog(null, "Error papu: " + e.getMessage());
+        }
+        finally
+        {
+            estu.desconectar();
+        }
     }//GEN-LAST:event_menuItReporteUsuariosMouseClicked
 
     private void borders(int a, int b, int c)
