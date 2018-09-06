@@ -623,9 +623,22 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
             h.setFechaFinalizacion(this.jTxtFin.getText());
             h.setHoras((int) this.jSHoras.getValue());
             
+            h.setIdSolicitud(Integer.parseInt(this.jTxtIdSolicitud.getText()));
+            
             daoH.insertarHoja(h);
              Console.tabla(daoH.mostrar(e.getId()), jTableHojas);
+             Object[] cosa = new Object[2];
+             cosa = daoS.solicitudesEstudiante(this.jTxtCarnet.getText());
 
+            //JOptionPane.showMessageDialog(null, cosa[0]);
+            if (cosa[0].equals("Datos"))
+            {
+
+                List lista = (List) cosa[1];
+                
+                llenarTablaSolicitudes(lista);
+                
+            }
             
         } catch (Exception e)
         {
@@ -739,6 +752,7 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
         ui.flatButton(jBtnRegistrar, "#2ECC71", "#28B463", "#58D68D");
         ui.flatButton(jBtnEditar, "#3498DB", "#2E86C1", "#5DADE2");
         ui.flatButton(jBtnLimpiar, "#7F8C8D", "#707B7C", "#99A3A4");
+        jBtnEditar.setVisible(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

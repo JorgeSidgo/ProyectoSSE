@@ -25,11 +25,12 @@ public class HojaServicioSocial
     private int idInstitucion;
     private String encargado;
     private int horas;
+    private int idSolicitud;
 
     public HojaServicioSocial() {
     }
 
-    public HojaServicioSocial(int id, String fechaInicio, String fechaFinalizacion, int idEstudiante, int idCoordinador, int idInstitucion, String encargado, int horas)
+    public HojaServicioSocial(int id, String fechaInicio, String fechaFinalizacion, int idEstudiante, int idCoordinador, int idInstitucion, String encargado, int horas, int idSolicitud)
     {
         this.id = id;
         this.fechaInicio = fechaInicio;
@@ -39,7 +40,20 @@ public class HojaServicioSocial
         this.idInstitucion = idInstitucion;
         this.encargado = encargado;
         this.horas = horas;
+        this.idSolicitud = idSolicitud;
     }
+
+    public int getIdSolicitud()
+    {
+        return idSolicitud;
+    }
+
+    public void setIdSolicitud(int idSolicitud)
+    {
+        this.idSolicitud = idSolicitud;
+    }
+
+
 
     public int getHoras()
     {

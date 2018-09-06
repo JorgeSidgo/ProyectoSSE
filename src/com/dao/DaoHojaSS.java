@@ -26,16 +26,17 @@ public class DaoHojaSS extends Conexion{
        {
            
            this.conectar();
-           String sql = "call insertarHojaServicio(?,?,?,?,?,?,?)";
+           String sql = "call insertarHojaServicio(?,?,?,?,?,?,?,?)";
            PreparedStatement pre = this.getCon().prepareStatement(sql);
            
            pre.setInt(1, h.getIdEstudiante());
-           pre.setInt(2, h.getIdInstitucion());
-           pre.setInt(3, h.getIdCoordinador());
-           pre.setString(4, h.getEncargado());
-           pre.setString(5, h.getFechaInicio());
-           pre.setString(6, h.getFechaFinalizacion());
-           pre.setInt(7, h.getHoras());
+           pre.setInt(2, h.getIdSolicitud());
+           pre.setInt(3, h.getIdInstitucion());
+           pre.setInt(4, h.getIdCoordinador());
+           pre.setString(5, h.getEncargado());
+           pre.setString(6, h.getFechaInicio());
+           pre.setString(7, h.getFechaFinalizacion());
+           pre.setInt(8, h.getHoras());
            
            pre.execute();
            pre.close();

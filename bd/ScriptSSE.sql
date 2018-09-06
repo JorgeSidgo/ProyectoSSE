@@ -529,6 +529,7 @@ end $
 delimiter $
 create procedure insertarHojaServicio(	
     in idEs int, 
+    in idSoli int,
     in idIns int, 
     in idCoor int,
     in enc varchar(50), 
@@ -537,7 +538,8 @@ create procedure insertarHojaServicio(
     in horas int
 )
 begin 
-	declare totHoras int;
+
+    declare totHoras int;
     declare tCarrera int;
 	insert into hojaServicioSocial values (null,idEs,idIns, idCoor,enc, inicio, finalizacion, horas);
     set totHoras = (select sum(nhoras) from hojaServicioSocial where idEstudiante = idEs);
@@ -569,7 +571,10 @@ begin
 			where id = idEs;
 		end if;
 	end if;
-
+    
+	update solicitud
+    set uso = 1
+    where id = idSoli;
     
 end $
 
