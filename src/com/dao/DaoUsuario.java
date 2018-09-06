@@ -27,6 +27,7 @@ public class DaoUsuario extends Conexion
     public static int codRol;
     
     Usuario u = new Usuario();
+    DaoCoordinador daoC = new DaoCoordinador();
 
     public List<Usuario> buscarUsuario(Usuario u)
     {
@@ -310,6 +311,11 @@ public class DaoUsuario extends Conexion
                 DaoUsuario.idUsuario = res.getInt("id");
                 DaoUsuario.nomUsuario = res.getString("nomUsuario");
                 DaoUsuario.codRol = res.getInt("idRol");
+                
+                if(res.getInt("idRol") == 4)
+                {
+                    DaoCoordinador.idCoord = daoC.devCoordUsuario(res.getInt("id")).getIdCoordinador();
+                }
                 respuesta = true;
             }
             else

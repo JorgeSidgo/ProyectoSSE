@@ -1021,13 +1021,21 @@ end $
 
 delimiter $$
 create procedure solicitudesEstudiante(
-	in car varchar(50)
+	in car varchar(50),
+    in idCoor int
 )
 begin
-	select e.carnet, e.nombres, e.apellidos, s.fecha, c.nombres, c.apellidos, i.* from solicitud s, estudiante e, coordinador c, institucion i
-    where s.idEstudiante = e.id and s.idCoordinador = c.id and s.idEstudiante = i.id and s.estadoSolicitud = 'Aprobado' and e.idEstadoEstudiante = 2;
+	declare idEs int;
+    set idEs = (select id from estudiante where carnet = car);
+
+	select s.* 
+	from solicitud s, estudiante e
+	where s.idEstudiante = e.id and s.estadoSolicitud = 'Aprobado' and e.idEstadoEstudiante = 2 and e.id = idEs and s.idCoordinador = idCoor;
 end
 $$
+
+
+call solicitudesEstudiante('426017', 1);
 
 -- call solicitudesEstudiante('426017');
 -- ==================================================================================================
@@ -1135,6 +1143,10 @@ call insertarInstitucion('Institucion 1','a la vuelta de la esquina','institucio
 call insertarInstitucion('Institucion 2','Santa rosa','iburgues@gmail.com','2222-2222',1);
 call insertarCoordinador('Giovanni Ariel', 'Tzec Chavez', 'giovanni.tzec@gmail.com', 'GiovanniTzec', 'tugfa', 1);
 call insertarSolicitud('Aprobado',1,1,1,'2018-06-01','Ejemplo');
+call insertarSolicitud('Aprobado',1,1,2,'2017-03-05','Ejemplo');
+call insertarSolicitud('Aprobado',3,1,1,'2018-06-01','Ejemplo');
+call insertarSolicitud('Aprobado',6,1,1,'2018-06-01','Ejemplo');
+
 
 call insertarSolicitud('Negado',2,1,1,'2018-06-01','Ejemplo');
 call insertarHojaServicio(1,1,1,'2018-01-01','2018-06-01',100);

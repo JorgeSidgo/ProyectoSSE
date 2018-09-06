@@ -6,8 +6,11 @@
 package com.vista;
 
 import com.dao.DaoEstudiante;
+import com.dao.DaoSolicitud;
 import com.modelo.Estudiante;
+import com.modelo.Solicitud;
 import com.utilidades.UITools;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -19,7 +22,9 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
 
     UITools ui = new UITools();
     Estudiante e = new Estudiante();
+    Solicitud s = new Solicitud();
     DaoEstudiante daoE = new DaoEstudiante();
+    DaoSolicitud daoS = new DaoSolicitud();
 
     public InternalFrmHoja()
     {
@@ -371,18 +376,25 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
     private void llenarDatosEstudiante()
     {
         Object[] cosa = new Object[2];
-        
+
         try
         {
             String carnet = JOptionPane.showInputDialog("Ingrese el N° de Carnet del Estudiante").trim();
 
-            
-            cosa = daoE.getEstudianteCarnet(carnet);
-            
-            JOptionPane.showMessageDialog(null, cosa[0]);
-            
-            if(cosa[0].equals("Datos"))
+            cosa = daoS.solicitudesEstudiante(carnet);
+
+            //JOptionPane.showMessageDialog(null, cosa[0]);
+            if (cosa[0].equals("Datos"))
             {
+
+                List lista = (List) cosa[1];
+                
+                s = (Solicitud) lista.get(0);
+                
+                int idEstudiante = s.getIdEstudiante();
+                
+                e = daoE.getEstudianteId(idEstudiante);
+
                 jTxtId.setText(String.valueOf(e.getId()));
                 jTxtNombre.setText(e.getNombres());
                 jTxtApellidos.setText(e.getApellidos());
@@ -391,12 +403,11 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
                 jPanelEstudiante.setVisible(true);
                 jBtnAddEstudiante.setVisible(false);
                 jBtnChangeEstudiante.setVisible(true);
-            }
-            else
+            } else
             {
                 JOptionPane.showMessageDialog(this, "No se encontró registro para este estudiante", "Error", JOptionPane.ERROR_MESSAGE);
             }
-            
+
         } catch (Exception e)
         {
             //JOptionPane.showMessageDialog(null, "tugfa");
@@ -410,6 +421,7 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
         ui.flatButton(jBtnAddEstudiante, "#2ECC71", "#28B463", "#58D68D");
         ui.flatButton(jBtnChangeEstudiante, "#3498DB", "#2E86C1", "#5DADE2");
         jBtnChangeEstudiante.setVisible(false);
+        jTxtId.setVisible(false);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

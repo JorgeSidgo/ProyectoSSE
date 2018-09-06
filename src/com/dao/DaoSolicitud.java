@@ -166,4 +166,59 @@ public class DaoSolicitud extends Conexion{
         
         return registros;
     }
+    
+    public Object[] solicitudesEstudiante(String carnet)
+    {
+        Object[] respuesta = new Object[2];
+        Solicitud s = new Solicitud();
+        
+        List<Solicitud> lista = new ArrayList();
+        
+        try
+        {
+            this.conectar();
+            String sql = "call solicitudesEstudiante(?, ?)";
+            PreparedStatement pre = this.getCon().prepareStatement(sql);
+            
+            pre.setString(1, carnet);
+            pre.setInt(2, DaoCoordinador.idCoord);
+            
+            ResultSet res = pre.executeQuery();
+            
+            res.last();
+            int filas = res.getRow();
+            res.beforeFirst();
+            if(filas > 0)
+            {
+                while(res.next())
+                {
+                    s.setId(res.getInt("id"));
+                    s.setIdEstudiante(res.getInt("idEstudiante"));
+                    s.setIdCoordinador(res.getInt("idCoordinador"));
+                    s.setIdInstitucion(res.getInt("idInstitucion"));
+                    s.setFecha(res.getString("fecha"));
+                    
+                    lista.add(s);
+                }
+                
+                respuesta[0] = "Datos";
+                respuesta[1] = lista;
+            }
+            else
+            {
+                respuesta[0] = "Nel";
+                respuesta[1] = lista;
+            }
+            
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Error Coordinador: " + e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
+        
+        return respuesta;
+    }
 }
