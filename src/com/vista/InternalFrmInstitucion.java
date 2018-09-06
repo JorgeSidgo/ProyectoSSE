@@ -7,6 +7,7 @@ import com.utilidades.UITools;
 import com.utilidades.Validacion;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -24,8 +25,15 @@ public class InternalFrmInstitucion extends javax.swing.JInternalFrame
     {
         initComponents();
         initUi();
-        //Console.tabla(inst.mostrar(),this.jTable1);
-//        jTxtId.setVisible(false);
+        
+        jTxtId.setVisible(false);
+        limpiar();
+    }
+    
+    private void habilitar(){
+        this.jBtnEditar.setEnabled(true);
+        this.jBtnEliminar.setEnabled(true);
+        this.jBtnLimpiar.setEnabled(true);
     }
 
     private Institucion capturar(){
@@ -35,10 +43,40 @@ public class InternalFrmInstitucion extends javax.swing.JInternalFrame
         in.setIdTipo(this.jCbxTipoInstitucion.getSelectedIndex()+1);
         in.setNombreIns(this.jTxtNombreInstitucion.getText());
         in.setTeleIns(this.jTxtTelefono.getText());
-        in.setIdIns(Integer.parseInt(this.jTxtId.getText()));
         
+        
+        if(!val.IsNullOrEmpty(this.jTxtId.getText())){
+            in.setIdIns(Integer.parseInt(this.jTxtId.getText()));
+        }
         return in;
     } 
+    
+    private void clicTabla(){
+        int fila = this.jTable1.getSelectedRow();
+        this.jTxtCorreo.setText(this.jTable1.getValueAt(fila, 4).toString());
+        this.jTxtDireccion.setText(this.jTable1.getValueAt(fila, 2).toString());
+        this.jCbxTipoInstitucion.setSelectedItem(this.jTable1.getValueAt(fila, 5).toString());
+        this.jTxtNombreInstitucion.setText(this.jTable1.getValueAt(fila, 1).toString());
+        this.jTxtTelefono.setText(this.jTable1.getValueAt(fila, 3).toString());
+        this.jTxtId.setText(this.jTable1.getValueAt(fila, 0).toString());
+        habilitar();
+    }
+    
+    private void limpiar(){
+        
+        this.jTxtCorreo.setText("");
+        this.jTxtDireccion.setText("");
+        this.jCbxTipoInstitucion.setSelectedIndex(0);
+        this.jTxtNombreInstitucion.setText("");
+        this.jTxtTelefono.setText("");
+                              
+        this.jTxtId.setText("");
+        
+        this.jBtnEditar.setEnabled(false);
+        this.jBtnEliminar.setEnabled(false);
+        this.jBtnLimpiar.setEnabled(false);
+        this.jBtnRegistrar.setEnabled(false);
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents()
@@ -107,6 +145,14 @@ public class InternalFrmInstitucion extends javax.swing.JInternalFrame
 
         jLabel2.setText("Nombre de la Institucion:");
 
+        jTxtNombreInstitucion.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyTyped(java.awt.event.KeyEvent evt)
+            {
+                jTxtNombreInstitucionKeyTyped(evt);
+            }
+        });
+
         jLabel3.setText("Tipo de Institución");
 
         jCbxTipoInstitucion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Publica", "Privada", "ONG" }));
@@ -124,8 +170,6 @@ public class InternalFrmInstitucion extends javax.swing.JInternalFrame
         {
             ex.printStackTrace();
         }
-
-        jTxtId.setText("no borrar");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -248,6 +292,13 @@ public class InternalFrmInstitucion extends javax.swing.JInternalFrame
         jBtnLimpiar.setText("Limpiar");
         jBtnLimpiar.setIconTextGap(5);
         jBtnLimpiar.setPreferredSize(new java.awt.Dimension(73, 20));
+        jBtnLimpiar.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                jBtnLimpiarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -291,6 +342,13 @@ public class InternalFrmInstitucion extends javax.swing.JInternalFrame
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter()
+        {
+            public void mouseClicked(java.awt.event.MouseEvent evt)
+            {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -343,22 +401,50 @@ public class InternalFrmInstitucion extends javax.swing.JInternalFrame
     {//GEN-HEADEREND:event_jBtnRegistrarActionPerformed
         inst.insertar(capturar());
         llenarTabla();
-        //Console.tabla(inst.mostrar(),this.jTable1);
+        limpiar();
+        this.jBtnRegistrar.setEnabled(false);
     }//GEN-LAST:event_jBtnRegistrarActionPerformed
 
     private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBtnEditarActionPerformed
     {//GEN-HEADEREND:event_jBtnEditarActionPerformed
-        inst.actualizar(capturar());
-        llenarTabla();
+        if(JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea actualizar el registro?")==0){
+            inst.actualizar(capturar());
+            llenarTabla();
+            limpiar();
+        }
+        
         //Console.tabla(inst.mostrar(),this.jTable1);
     }//GEN-LAST:event_jBtnEditarActionPerformed
 
     private void jBtnEliminarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBtnEliminarActionPerformed
     {//GEN-HEADEREND:event_jBtnEliminarActionPerformed
-        inst.eliminar(Integer.parseInt(this.jTxtId.getText()));
-        llenarTabla();
+        if(JOptionPane.showConfirmDialog(null, "¿Esta seguro que desea elilminar el registro?")==0){
+            inst.eliminar(Integer.parseInt(this.jTxtId.getText()));
+            llenarTabla();
+            limpiar();
+        }
+        
         //Console.tabla(inst.mostrar(),this.jTable1);
     }//GEN-LAST:event_jBtnEliminarActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jTable1MouseClicked
+    {//GEN-HEADEREND:event_jTable1MouseClicked
+        clicTabla();
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jBtnLimpiarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBtnLimpiarActionPerformed
+    {//GEN-HEADEREND:event_jBtnLimpiarActionPerformed
+        limpiar();
+    }//GEN-LAST:event_jBtnLimpiarActionPerformed
+
+    private void jTxtNombreInstitucionKeyTyped(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jTxtNombreInstitucionKeyTyped
+    {//GEN-HEADEREND:event_jTxtNombreInstitucionKeyTyped
+       if(!val.IsNullOrEmpty(this.jTxtNombreInstitucion.getText())){
+           this.jBtnRegistrar.setEnabled(true);
+       }else{
+           this.jBtnRegistrar.setEnabled(false);
+       }
+    }//GEN-LAST:event_jTxtNombreInstitucionKeyTyped
 
 
     private void llenarTabla()

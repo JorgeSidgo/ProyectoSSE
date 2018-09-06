@@ -362,6 +362,11 @@ begin
 	select u.id as N, u.nomUsuario as 'Nombre Usuario', r.descRol as Rol from usuario u inner join rol r on r.id=u.idRol where estado = 0;
 end $
 
+create procedure usuariorepo()
+begin
+	select u.id as N, u.nomUsuario as 'Nombre Usuario', r.descRol as Rol from usuario u inner join rol r on r.id=u.idRol where estado = 1;
+end $
+
 -- Buscar en papelera de Usuario por id
 delimiter $
 create procedure buscarPapeleraIDUsuario(
@@ -934,15 +939,9 @@ begin
 	inner join carrera c on g.idCarrera = c.id
 	inner join estadoSS s on e.idEstadoSS = s.id
 	inner join hojaServicioSocial h on e.id = h.idEstudiante
-    where e.idEstadoEstudiante = 2 and e.idEstadoSS = 2 or e.idEstadoSS = 1 group by e.id;
+    where e.idEstadoEstudiante = 2 and e.idEstadoSS = 3 group by e.id;
 end $
 
--- select e.id, e.carnet, e.nombres, e.apellidos, sum(h.nHoras) as numHoras from estudiante e
--- inner join hojaServicioSocial h on e.id = h.idEstudiante
--- group by e.id;
-
--- select * from estudiante;
--- select * from hojaserviciosocial;
 -- buscar candidatos a solvencia por nombre --
 delimiter $
 create procedure buscarNombreCandidatos(
@@ -1153,6 +1152,14 @@ call insertarHojaServicio(1,1,1,'2018-01-01','2018-06-01',100);
 call insertarHojaServicio(1,1,1,'2018-01-01','2018-06-01',100);
 call insertarHojaServicio(3,1,1,'2018-01-01','2018-06-01',100);
 call insertarHojaServicio(3,1,1,'2018-01-01','2018-06-01',100);
+call insertarHojaServicio(3,1,1,'2018-01-01','2018-06-01',100);
+call insertarHojaServicio(2,1,1,'2018-01-01','2018-06-01',300);
+call insertarHojaServicio(3,1,1,'2018-01-01','2018-06-01',300);
+call insertarHojaServicio(4,1,1,'2018-01-01','2018-06-01',300);
+call insertarHojaServicio(5,1,1,'2018-01-01','2018-06-01',300);
+call insertarHojaServicio(6,1,1,'2018-01-01','2018-06-01',300);
+call insertarHojaServicio(7,1,1,'2018-01-01','2018-06-01',300);
+call insertarHojaServicio(8,1,1,'2018-01-01','2018-06-01',300);
 
 call inscribirMaterias(1, 1);
 call inscribirMaterias(1, 2);
@@ -1160,4 +1167,5 @@ call inscribirMaterias(1, 3);
 
 call getEstudianteCarnet('426017');
 -- select * from estudiantesPro;
-update estudiante set idEstadoEstudiante = 2, idEstadoSS = 2 where id>2;
+update estudiante set idEstadoEstudiante = 2 where id>2;
+-- select * from estudiante;
