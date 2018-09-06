@@ -7,11 +7,13 @@ package com.vista;
 
 import com.dao.DaoCoordinador;
 import com.dao.DaoEstudiante;
+import com.dao.DaoHojaSS;
 import com.dao.DaoInstitucion;
 import com.dao.DaoSolicitud;
 import com.modelo.Estudiante;
 import com.modelo.Institucion;
 import com.modelo.Solicitud;
+import com.utilidades.Console;
 import com.utilidades.UITools;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -32,11 +34,13 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
     DaoSolicitud daoS = new DaoSolicitud();
     DaoInstitucion daoI = new DaoInstitucion();
     DaoCoordinador daoC = new DaoCoordinador();
+    DaoHojaSS daoH = new DaoHojaSS();
 
     public InternalFrmHoja()
     {
         initComponents();
         initUi();
+        jTableHojas.setVisible(false);
     }
 
     /**
@@ -91,6 +95,8 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
         jTxtTipoInst = new javax.swing.JTextField();
         jTxtIdSolicitud = new javax.swing.JTextField();
         jTxtIdInst = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTableHojas = new javax.swing.JTable();
 
         setBorder(null);
         setClosable(true);
@@ -456,6 +462,21 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
                 .addContainerGap())
         );
 
+        jTableHojas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][]
+            {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String []
+            {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(jTableHojas);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -465,6 +486,10 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
             .addComponent(jPanelTabla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 1246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -478,7 +503,9 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(295, 295, 295))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(137, Short.MAX_VALUE))
         );
 
         pack();
@@ -532,6 +559,9 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
                 jBtnAddEstudiante.setVisible(false);
                 jBtnChangeEstudiante.setVisible(true);
                 jPanelTabla.setVisible(true);
+                
+                jTableHojas.setVisible(true);
+                Console.tabla(daoH.mostrar(e.getId()), jTableHojas);
             } else
             {
                 JOptionPane.showMessageDialog(this, "No se encontró registro para este estudiante", "Error", JOptionPane.ERROR_MESSAGE);
@@ -609,7 +639,9 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
     private javax.swing.JPanel jPanelEstudiante;
     private javax.swing.JPanel jPanelTabla;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTablaSolicitudes;
+    private javax.swing.JTable jTableHojas;
     private javax.swing.JTextField jTextField9;
     private javax.swing.JTextField jTxtApellidos;
     private javax.swing.JTextField jTxtCarnet;
