@@ -2,6 +2,7 @@
 package com.dao;
 
 import com.conexion.Conexion;
+import com.modelo.Estudiante;
 import com.modelo.Solicitud;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -126,6 +127,41 @@ public class DaoSolicitud extends Conexion{
         }
         
         return listaS;
+    }
+    
+    public List<Solicitud> buscarSolicitud(Estudiante es)
+    {
+        List<Solicitud> listaB = new ArrayList();
+        
+        try 
+        {
+            this.conectar();
+            String sql = "call buscarSolicitud(?)";
+            PreparedStatement pre = this.getCon().prepareCall(sql);
+            pre.setString(1, es.getNombres());
+            ResultSet res = pre.executeQuery();
+            
+            while(res.next())
+            {
+                Solicitud s = new Solicitud();
+                s.setId(res.getInt("id"));
+                s.setEstadoSolicitud(res.getString("estadoSolicitud"));
+                s.setIdEstudiante(res.getInt("idEstudiante"));
+                s.setIdCoordinador(res.getInt("idCoordinador"));
+                s.setIdInstitucion(res.getInt("idInstitucion"));
+                s.setFecha(res.getString("fecha"));
+                s.setComentarios(res.getString("comentarios"));
+                listaB.add(s);
+            }
+            res.close();
+            pre.close();
+        } 
+        catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Hay un problema con mostrar la busqueda de Solicitud "+ e.getMessage());
+        }
+        
+        return listaB;
     }
     
     public int idEstudiante(String carnet)
