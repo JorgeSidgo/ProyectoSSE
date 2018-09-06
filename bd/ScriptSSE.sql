@@ -452,7 +452,7 @@ end $
 -- Mostrar Instituciones
 delimiter $
 create procedure mostrarInstitucion()
-begin 
+begin  
 	select * from institucion where estado = 1;
 end $
 
