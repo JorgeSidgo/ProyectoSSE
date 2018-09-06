@@ -25,7 +25,7 @@ public class Console
     }
     
     public static void sms(Object x){
-        JOptionPane.showMessageDialog(null, x );
+        JOptionPane.showMessageDialog(null, x);
     }
     
     public static String cifrar(String sinCifrar) {
