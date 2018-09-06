@@ -934,15 +934,9 @@ begin
 	inner join carrera c on g.idCarrera = c.id
 	inner join estadoSS s on e.idEstadoSS = s.id
 	inner join hojaServicioSocial h on e.id = h.idEstudiante
-    where e.idEstadoEstudiante = 2 and e.idEstadoSS = 2 or e.idEstadoSS = 1 group by e.id;
+    where e.idEstadoEstudiante = 2 and e.idEstadoSS = 3 group by e.id;
 end $
 
--- select e.id, e.carnet, e.nombres, e.apellidos, sum(h.nHoras) as numHoras from estudiante e
--- inner join hojaServicioSocial h on e.id = h.idEstudiante
--- group by e.id;
-
--- select * from estudiante;
--- select * from hojaserviciosocial;
 -- buscar candidatos a solvencia por nombre --
 delimiter $
 create procedure buscarNombreCandidatos(
