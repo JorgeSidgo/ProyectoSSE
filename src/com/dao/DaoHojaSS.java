@@ -20,7 +20,36 @@ import javax.swing.JOptionPane;
 
 public class DaoHojaSS extends Conexion{
     
-   
+   public void insertarHoja (HojaServicioSocial h)
+   {
+       try
+       {
+           
+           this.conectar();
+           String sql = "call insertarHojaServicio(?,?,?,?,?,?,?)";
+           PreparedStatement pre = this.getCon().prepareStatement(sql);
+           
+           pre.setInt(1, h.getIdEstudiante());
+           pre.setInt(2, h.getIdInstitucion());
+           pre.setInt(3, h.getIdCoordinador());
+           pre.setString(4, h.getEncargado());
+           pre.setString(5, h.getFechaInicio());
+           pre.setString(6, h.getFechaFinalizacion());
+           pre.setInt(7, h.getHoras());
+           
+           pre.execute();
+           pre.close();
+           
+       } catch (Exception e)
+       {
+           JOptionPane.showMessageDialog(null, e.getMessage());
+       }
+       finally
+       {
+           this.desconectar();
+       }
+   }
+    
     
     public List mostrar(int id){
         List registros =new ArrayList();
