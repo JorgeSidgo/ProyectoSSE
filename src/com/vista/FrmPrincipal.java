@@ -1174,15 +1174,15 @@ public class FrmPrincipal extends javax.swing.JFrame implements KeyListener
         ui.menusitos(menuItReporteSoliDenegadas, 2, 20, true);
         ui.flatLabel(menuItReporteUsuarios, "#363839", "#111111", "#2c3e50");
         ui.menusitos(menuItReporteUsuarios, 2, 20, true);
-        /*if((DaoUsuario.codRol != 1) || (DaoUsuario.codRol != 2))
+        if((DaoUsuario.codRol != 1) && (DaoUsuario.codRol != 2))
         {
-        menuUsuarios.setVisible(false);
-        }*/
+            menuUsuarios.setVisible(false);
+        }
         
-        /* if((DaoUsuario.codRol != 4))
+        if((DaoUsuario.codRol != 4))
         {
-        menuSS.setVisible(false);
-        }*/
+            menuSS.setVisible(false);
+        }
 
     }
 

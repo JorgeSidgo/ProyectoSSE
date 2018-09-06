@@ -83,7 +83,7 @@ create table hojaServicioSocial(
     idEstudiante int,
     idInstitucion int,
     idCoordinador int,
-    encargardo varchar(50),
+    encargado varchar(50),
     fechaInicio date,
     fechaFinalizacion date,
     nHoras int
@@ -520,12 +520,18 @@ end $
 
 -- Insertar Hoja de Servicio Social
 delimiter $
-create procedure mostrarHojaServicioParametro(in est int)
+create procedure mostrarHojaServicioParametro(
+	in car varchar(20)
+)
 begin 
-	select i.nombreInstitucion as Institucion, h.encargardo as Encargado, h.fechaInicio as Inicio, h.fechaFinalizacion as Finalizacion, h.nHoras as horas from hojaServicioSocial h inner join institucion i on i.id=h.idInstitucion where idEstudiante=est;
+	declare idUs int;
+    set idUs = (select id from estudiante where carnet = car and estado = 1);
+    
+    select * from hojaServicioSocial where idEstudiante = idUs;
+    
 end $
 
-
+call mostrarHojaServicioParametro('212117');
 delimiter $
 create procedure insertarHojaServicio(	
     in idEs int, 
@@ -1049,7 +1055,7 @@ end
 $$
 
 
-call solicitudesEstudiante('426017', 1);
+call solicitudesEstudiante('897017', 1);
 
 -- call solicitudesEstudiante('426017');
 -- ==================================================================================================
@@ -1146,7 +1152,7 @@ insert into tipoinstitucion values(null, 'Publica');
 insert into tipoinstitucion values(null, 'Privada');
 insert into tipoinstitucion values(null, 'ONG');
 call insertarEstudiante('DonFrancisco', '123', '426017','Francisco Javier','Montoya Díaz','javicitoCasanova@gmail.com','2018-01-01',1); 
-call insertarEstudiante('BenitínSinEneas', '123', '890617','Benito Carlos','Guerra Solorzano','benitoKrmelo@gmail.com','2018-01-01',1); 
+call insertarEstudiante('BenitínSinEneas', '123', '897017','Benito Carlos','Guerra Solorzano','benitoKrmelo@gmail.com','2018-01-01',1); 
 call insertarEstudiante('AquilesVoy', '123', '890617','Aquiles','Baesa','benitoKrmelo@gmail.com','2018-01-01',1); 
 call insertarEstudiante('AquilesCorto', '123', '689917','Aquiles','Castro','benitoKrmelo@gmail.com','2018-01-01',1); 
 call insertarEstudiante('BrisaPrrona', '123', '111117','Brisa Marina','de Guerra','benitoKrmelo@gmail.com','2018-01-01',1); 
@@ -1156,26 +1162,31 @@ call insertarEstudiante('Shipiz', '123', '789117','Chepe','Trompo','benitoKrmelo
 call insertarEstudiante('Abdi', '123', '222217','ANtoni martinez','Montoya Díaz','javicitoCasanova@gmail.com','2018-01-01',1); 
 call insertarInstitucion('Institucion 1','a la vuelta de la esquina','institucion1@gmail.com','2222-2222',1);
 call insertarInstitucion('Institucion 2','Santa rosa','iburgues@gmail.com','2222-2222',1);
-call insertarCoordinador('Giovanni Ariel', 'Tzec Chavez', 'giovanni.tzec@gmail.com', 'GiovanniTzec', 'tugfa', 1);
+call insertarCoordinador('Giovanni Ariel', 'Tzec Chavez', 'giovanni.tzec@gmail.com', 'GiovanniTzec', 'simonxd', 1);
+
 call insertarSolicitud('Aprobado',1,1,1,'2018-06-01','Ejemplo');
 call insertarSolicitud('Aprobado',1,1,2,'2017-03-05','Ejemplo');
 call insertarSolicitud('Aprobado',3,1,1,'2018-06-01','Ejemplo');
-call insertarSolicitud('Aprobado',6,1,1,'2018-06-01','Ejemplo');
-
+call insertarSolicitud('Aprobado',6,1,1,'2016-06-01','Ejemplo');
+call insertarSolicitud('Aprobado',6,1,2,'2018-09-02','Ejemplo');
 
 call insertarSolicitud('Negado',2,1,1,'2018-06-01','Ejemplo');
-call insertarHojaServicio(1,1,1,'Juan Perez','2018-01-01','2018-06-01',100);
-call insertarHojaServicio(1,1,1,'Juan Perez','2018-01-01','2018-06-02',100);
-call insertarHojaServicio(3,1,1,'Juan Perez','2018-01-01','2018-06-03',100);
-call insertarHojaServicio(3,1,1,'Juan Perez','2018-01-01','2018-06-04',100);
+
+call insertarHojaServicio(1,1,1,1,'Juan Perez','2018-01-01','2018-06-01',100);
+-- call insertarHojaServicio(1,2,1,1,'Juan Perez','2018-01-01','2018-06-02',100);
+call insertarHojaServicio(6,4, 1,1,'Juan Perez','2018-01-01','2018-06-03',100);
+call insertarHojaServicio(3, 3,1,1,'Juan Perez','2018-01-01','2018-06-04',100);
+
+/*
 call insertarHojaServicio(3,1,1,'Juan Perez','2018-01-01','2018-06-05',100);
 call insertarHojaServicio(2,1,1,'Juan Perez','2018-01-01','2018-06-06',300);
 call insertarHojaServicio(3,1,1,'Juan Perez','2018-01-01','2018-06-07',300);
 call insertarHojaServicio(4,1,1,'Juan Perez','2018-01-01','2018-06-08',300);
+
 call insertarHojaServicio(5,1,1,'Juan Perez','2018-01-01','2018-06-09',300);
 call insertarHojaServicio(6,1,1,'Juan Perez','2018-01-01','2018-06-11',300);
 call insertarHojaServicio(7,1,1,'Juan Perez','2018-01-01','2018-06-12',300);
-call insertarHojaServicio(8,1,1,'Juan Perez','2018-01-01','2018-07-01',300);
+call insertarHojaServicio(8,1,1,'Juan Perez','2018-01-01','2018-07-01',300);*/
 
 call inscribirMaterias(1, 1);
 call inscribirMaterias(1, 2);

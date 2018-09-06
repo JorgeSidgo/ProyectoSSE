@@ -51,7 +51,48 @@ public class DaoHojaSS extends Conexion{
        }
    }
     
-    
+    public List<HojaServicioSocial> mostrarHojasCarnet(String carnet)
+    {
+        List<HojaServicioSocial> lista = new ArrayList();
+        
+        try
+        {
+            this.conectar();
+            String sql="call mostrarHojaServicioParametro(?)";
+            PreparedStatement query= this.getCon().prepareCall(sql);
+            query.setString(1, carnet);
+            ResultSet res= query.executeQuery();
+            
+            while(res.next())
+            {
+                HojaServicioSocial h = new HojaServicioSocial();
+                
+                h.setId(res.getInt("id"));
+                h.setIdEstudiante(res.getInt("idEstudiante"));
+                h.setIdInstitucion(res.getInt("idInstitucion"));
+                h.setIdCoordinador(res.getInt("idCoordinador"));
+                h.setEncargado(res.getString("encargado"));
+                h.setFechaInicio(res.getString("fechaInicio"));
+                h.setFechaFinalizacion(res.getString("fechaFinalizacion"));
+                h.setHoras(res.getInt("nHoras"));
+                
+                lista.add(h);
+                        
+            }
+            
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
+        
+        return lista;
+    }
+   
+   
     public List mostrar(int id){
         List registros =new ArrayList();
         ResultSet res;

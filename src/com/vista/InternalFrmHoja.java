@@ -16,6 +16,7 @@ import com.modelo.Institucion;
 import com.modelo.Solicitud;
 import com.utilidades.Console;
 import com.utilidades.UITools;
+import com.utilidades.Validacion;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -31,11 +32,13 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
     Estudiante e = new Estudiante();
     Solicitud s = new Solicitud();
     Institucion i = new Institucion();
+    HojaServicioSocial h = new HojaServicioSocial();
     DaoEstudiante daoE = new DaoEstudiante();
     DaoSolicitud daoS = new DaoSolicitud();
     DaoInstitucion daoI = new DaoInstitucion();
     DaoCoordinador daoC = new DaoCoordinador();
     DaoHojaSS daoH = new DaoHojaSS();
+    Validacion val = new Validacion();
 
     public InternalFrmHoja()
     {
@@ -280,6 +283,14 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
         jLabel13.setText("Total de Horas:");
 
         jLabel15.setText("Encargado:");
+
+        jTxtEncargado.addKeyListener(new java.awt.event.KeyAdapter()
+        {
+            public void keyTyped(java.awt.event.KeyEvent evt)
+            {
+                jTxtEncargadoKeyTyped(evt);
+            }
+        });
 
         jBtnLimpiar.setBackground(new java.awt.Color(127, 140, 141));
         jBtnLimpiar.setForeground(new java.awt.Color(255, 255, 255));
@@ -583,13 +594,13 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
 
     private void jBtnAddEstudianteActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBtnAddEstudianteActionPerformed
     {//GEN-HEADEREND:event_jBtnAddEstudianteActionPerformed
-        llenarDatosEstudiante();
+        datos();
         jPanelHojas.setVisible(true);
     }//GEN-LAST:event_jBtnAddEstudianteActionPerformed
 
     private void jBtnChangeEstudianteActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jBtnChangeEstudianteActionPerformed
     {//GEN-HEADEREND:event_jBtnChangeEstudianteActionPerformed
-        llenarDatosEstudiante();
+        datos();
         jPanelHojas.setVisible(true);
     }//GEN-LAST:event_jBtnChangeEstudianteActionPerformed
 
@@ -609,6 +620,11 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
         registrar();
     }//GEN-LAST:event_jBtnRegistrarActionPerformed
 
+    private void jTxtEncargadoKeyTyped(java.awt.event.KeyEvent evt)//GEN-FIRST:event_jTxtEncargadoKeyTyped
+    {//GEN-HEADEREND:event_jTxtEncargadoKeyTyped
+        val.wordsOnly(evt);
+    }//GEN-LAST:event_jTxtEncargadoKeyTyped
+
     private void registrar()
     {
         try
@@ -626,19 +642,9 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
             h.setIdSolicitud(Integer.parseInt(this.jTxtIdSolicitud.getText()));
             
             daoH.insertarHoja(h);
-             Console.tabla(daoH.mostrar(e.getId()), jTableHojas);
-             Object[] cosa = new Object[2];
-             cosa = daoS.solicitudesEstudiante(this.jTxtCarnet.getText());
-
-            //JOptionPane.showMessageDialog(null, cosa[0]);
-            if (cosa[0].equals("Datos"))
-            {
-
-                List lista = (List) cosa[1];
-                
-                llenarTablaSolicitudes(lista);
-                
-            }
+             //Console.tabla(daoH.mostrar(e.getId()), jTableHojas);
+             tablaHojas(jTxtCarnet.getText());
+             llenarDatosEstudiante(jTxtCarnet.getText());
             
         } catch (Exception e)
         {
@@ -657,13 +663,52 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
         jTxtTipoInst.setText(daoI.getTipo(i.getIdTipo()).getDescripcion());
     }
     
-    private void llenarDatosEstudiante()
+    private void datos()
+    {
+        String carnet = JOptionPane.showInputDialog("Ingrese el N° de Carnet del Estudiante").trim();
+        tablaHojas(carnet);
+        llenarDatosEstudiante(carnet);
+    }
+    
+    private void tablaHojas(String carnet)
+    {
+        String[] columnas = {"N°", "Institución", "Encargado", "Fecha de Inicio", "Fecha de Finalización", "Número de Horas"};
+        Object[] obj = new Object[6];
+        DefaultTableModel tabla = new DefaultTableModel(null, columnas);
+        List<HojaServicioSocial> lista = daoH.mostrarHojasCarnet(carnet);
+        // = (HojaServicioSocial) lista.get(1);
+        //JOptionPane.showMessageDialog(null, h.getEncargado());
+        
+        try
+        {
+            for (int j = 0; j < lista.size(); j++)
+            {
+                //HojaServicioSocial h = new HojaServicioSocial();
+                h = (HojaServicioSocial) lista.get(j);
+                
+                obj[0] = h.getId();
+                obj[1] = daoI.buscarIDInstitucion(h.getIdInstitucion()).getNombreIns();
+                obj[2] = h.getEncargado();
+                obj[3] = h.getFechaInicio();
+                obj[4] = h.getFechaFinalizacion();
+                obj[5] = h.getHoras();
+                
+                tabla.addRow(obj);
+            }
+            
+            jTableHojas.setModel(tabla);
+        } catch (Exception e)
+        {
+        }
+    }
+    
+    private void llenarDatosEstudiante(String carnet)
     {
         Object[] cosa = new Object[2];
 
         try
         {
-            String carnet = JOptionPane.showInputDialog("Ingrese el N° de Carnet del Estudiante").trim();
+            
 
             cosa = daoS.solicitudesEstudiante(carnet);
 
@@ -692,16 +737,30 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
                 jPanelTabla.setVisible(true);
                 
                 jTableHojas.setVisible(true);
-                Console.tabla(daoH.mostrar(e.getId()), jTableHojas);
+                
+                limpiarExtras();
+                //Console.tabla(daoH.mostrar(e.getId()), jTableHojas);
             } else
             {
-                JOptionPane.showMessageDialog(this, "No se encontró registro para este estudiante", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No se encontraron solicitudes para este estudiante", "Error", JOptionPane.ERROR_MESSAGE);
+            jPanelTabla.setVisible(false);
+            jPanelInstitucion.setVisible(false);
+            
+            limpiarExtras();
             }
 
         } catch (Exception e)
         {
             //JOptionPane.showMessageDialog(null, "tugfa");
         }
+    }
+    
+    private void limpiarExtras()
+    {
+        jTxtEncargado.setText("");
+        jTxtInicio.setText("");
+        jTxtFin.setText("");
+        jSHoras.setValue(300);
     }
 
     private void llenarTablaSolicitudes(List lista)    
