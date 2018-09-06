@@ -723,6 +723,14 @@ begin
 	select * from solicitud where estado = true;
 end $
 
+-- Validar Estudiante --
+delimiter $
+create procedure validarEstudiante(
+in c varchar(40))
+begin
+	select e.nombres as Nombres, e.apellidos as Apellidos from estudiantesPro e where e.carnet = c and idEstadoEstudiante = 2;
+end $
+
 delimiter $
 create procedure repoSolicitud(in val varchar(20))
 begin
@@ -733,6 +741,17 @@ delimiter $
 create procedure papeleraSolicitud()
 begin
 	select s.id, concat(e.nombres,' ',e.apellidos) as nombre, i.nombreInstitucion,s.fecha, s.comentarios from solicitud s inner join estudiante e on s.idEstudiante=e.id inner join institucion i on i.id=s.idInstitucion where s.estado = true;
+end $
+
+-- Buscar Solicitud --
+delimiter $
+create procedure buscarSolicitud(
+	in nombre varchar(50)
+)
+begin
+	declare con int;
+    set con = (select e.id as id from estudiante e where e.estado = 1 and e.idEstadoSS = 2 and e.nombres like concat('%',nombre,'%'));
+    select * from solicitud where estado = 1 and idEstudiante = con;
 end $
 -- ==================================================================================================
 ### Coordinador

@@ -2,6 +2,7 @@
 package com.dao;
 
 import com.conexion.Conexion;
+import com.modelo.Estudiante;
 import com.modelo.Institucion;
 import com.modelo.Solicitud;
 import java.sql.PreparedStatement;
@@ -26,12 +27,14 @@ public class DaoSolicitud extends Conexion{
         try 
         {
             this.conectar();
-            String sql = "call insertarSolicitud(?,?,?,?)";
+            String sql = "call insertarSolicitud(?,?,?,?,?,?)";
             PreparedStatement pre = this.getCon().prepareCall(sql);
-            pre.setInt(1, s.getIdEstudiante());
-            pre.setInt(2, s.getIdCoordinador());
-            pre.setInt(3, s.getIdInstitucion());
-            pre.setString(4, s.getFecha());
+            pre.setString(1, s.getEstadoSolicitud());
+            pre.setInt(2, s.getIdEstudiante());
+            pre.setInt(3, s.getIdCoordinador());
+            pre.setInt(4, s.getIdInstitucion());
+            pre.setString(5, s.getFecha());
+            pre.setString(6, s.getComentarios());
             pre.execute();
             pre.close();
         } 
@@ -125,6 +128,102 @@ public class DaoSolicitud extends Conexion{
         }
         
         return listaS;
+    }
+    
+    public List<Solicitud> buscarSolicitud(Estudiante es)
+    {
+        List<Solicitud> listaB = new ArrayList();
+        
+        try 
+        {
+            this.conectar();
+            String sql = "call buscarSolicitud(?)";
+            PreparedStatement pre = this.getCon().prepareCall(sql);
+            pre.setString(1, es.getNombres());
+            ResultSet res = pre.executeQuery();
+            
+            while(res.next())
+            {
+                Solicitud s = new Solicitud();
+                s.setId(res.getInt("id"));
+                s.setEstadoSolicitud(res.getString("estadoSolicitud"));
+                s.setIdEstudiante(res.getInt("idEstudiante"));
+                s.setIdCoordinador(res.getInt("idCoordinador"));
+                s.setIdInstitucion(res.getInt("idInstitucion"));
+                s.setFecha(res.getString("fecha"));
+                s.setComentarios(res.getString("comentarios"));
+                listaB.add(s);
+            }
+            res.close();
+            pre.close();
+        } 
+        catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Hay un problema con mostrar la busqueda de Solicitud "+ e.getMessage());
+        }
+        
+        return listaB;
+    }
+    
+    public int idEstudiante(String carnet)
+    {
+        int id = 0;
+        
+        try 
+        {
+            this.conectar();
+            String sql = "call getEstudianteCarnet(?)";
+            PreparedStatement pre = this.getCon().prepareCall(sql);
+            pre.setString(1, carnet);
+            ResultSet res = pre.executeQuery();
+            
+            while(res.next())
+            {
+                id = (res.getInt("id"));
+            }
+            res.close();
+            pre.close();
+        } 
+        catch (Exception e) 
+        {
+            JOptionPane.showMessageDialog(null, "No se pudo obtener el ID del estudiante");
+        }
+        finally
+        {
+            this.desconectar();
+        }
+        
+        return id;
+    }
+    
+    public String validarEst(String carnet)
+    {
+        String nombres = "";
+        
+        try 
+        {
+            this.conectar();
+            String sql = "call validarEstudiante(?)";
+            PreparedStatement pre = this.getCon().prepareCall(sql);
+            pre.setString(1, carnet);
+            ResultSet res = pre.executeQuery();
+            
+            while (res.next()) {                
+                nombres += (res.getString("Nombres")) + " ";
+                nombres += (res.getString("Apellidos"));
+            }
+            res.close();
+            pre.close();
+        } 
+        catch (Exception e) 
+        {
+            JOptionPane.showMessageDialog(null, "Hay un problema con el estudiante "+ e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
+        return nombres;
     }
     
     public List papelera(){
