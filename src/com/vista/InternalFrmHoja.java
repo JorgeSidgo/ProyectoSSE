@@ -243,7 +243,7 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(134, 134, 134)
                         .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 431, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 389, Short.MAX_VALUE)
                 .addComponent(jPanelEstudiante, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -496,9 +496,24 @@ public class InternalFrmHoja extends javax.swing.JInternalFrame
 
     private void jTablaSolicitudesMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_jTablaSolicitudesMouseClicked
     {//GEN-HEADEREND:event_jTablaSolicitudesMouseClicked
-        // TODO add your handling code here:
+        int fila = jTablaSolicitudes.getSelectedRow();
+        int idSoli = Integer.parseInt(jTablaSolicitudes.getValueAt(fila, 0).toString());
+        //JOptionPane.showMessageDialog(this, idSoli);
+        jTxtIdSolicitud.setText(String.valueOf(idSoli));
+        llenarDatosInstituciones(idSoli);
     }//GEN-LAST:event_jTablaSolicitudesMouseClicked
 
+    private void llenarDatosInstituciones(int idSoli)
+    {
+        i = daoS.getInstitucionSoli(idSoli);
+        
+        jTxtIdInst.setText(String.valueOf(i.getIdIns()));
+        jTxtNombreInst.setText(i.getNombreIns());
+        jTxtCorreoInst.setText(i.getCorreoIns());
+        jTxtTelefonoInst.setText(i.getTeleIns());
+        jTxtTipoInst.setText(daoI.getTipo(i.getIdTipo()).getDescripcion());
+    }
+    
     private void llenarDatosEstudiante()
     {
         Object[] cosa = new Object[2];

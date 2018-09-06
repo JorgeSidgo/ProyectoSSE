@@ -2,6 +2,7 @@
 package com.dao;
 
 import com.conexion.Conexion;
+import com.modelo.Institucion;
 import com.modelo.Solicitud;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -165,6 +166,50 @@ public class DaoSolicitud extends Conexion{
         
         
         return registros;
+    }
+    
+    public Institucion getInstitucionSoli(int id)
+    {
+        Institucion i = new Institucion();
+        int idInst = 0;
+        try 
+        {
+            this.conectar();
+            String sql = "select idInstitucion from solicitud where id = ?";
+            PreparedStatement pre = this.getCon().prepareCall(sql);
+            pre.setInt(1, id);
+            ResultSet res = pre.executeQuery();
+            
+            while(res.next())
+            {
+                idInst = res.getInt("idInstitucion");
+            }
+
+            //JOptionPane.showMessageDialog(null, "dao " + idInst);
+            
+            sql = "select * from institucion where id = ? and estado = 1";
+            pre = this.getCon().prepareCall(sql);
+            pre.setInt(1, idInst);
+            
+            ResultSet res2 = pre.executeQuery();
+            while (res2.next()) {
+                i.setIdIns(res2.getInt("id"));
+                i.setNombreIns(res2.getString("nombreInstitucion"));
+                i.setDireccionIns(res2.getString("direccion"));
+                i.setCorreoIns(res2.getString("correo"));
+                i.setTeleIns(res2.getString("telefono"));
+                i.setIdTipo(res2.getInt("idTipoInstitucion"));
+            }
+        } 
+        catch (Exception e) 
+        {
+            JOptionPane.showMessageDialog(null, "Ocurrió el siguiente error al buscar la Institución: "+e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
+        return i;
     }
     
     public Object[] solicitudesEstudiante(String carnet)

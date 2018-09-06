@@ -120,7 +120,7 @@
                           <Component id="filler1" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace pref="431" max="32767" attributes="0"/>
+                  <EmptySpace pref="389" max="32767" attributes="0"/>
                   <Component id="jPanelEstudiante" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
