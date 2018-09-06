@@ -43,7 +43,43 @@ public class DaoCoordinador extends Conexion
         try
         {
             this.conectar();
-            String sql = "select * from coordinador where idUsuario = ?";
+            String sql = "select * from coordinador where idUsuario = ? and estado = 1";
+            PreparedStatement pre = this.getCon().prepareStatement(sql);
+            pre.setInt(1, id);
+            
+            ResultSet res = pre.executeQuery();
+            
+            while(res.next())
+            {
+               
+                
+                c.setIdCoordinador(res.getInt("id"));
+                c.setNombres(res.getString("nombres"));
+                c.setApellidos(res.getString("apellidos"));
+                c.setCorreo(res.getString("correo"));
+                c.setIdUsuario(res.getInt("idUsuario"));
+                c.setIdCarrera(res.getInt("idCarrera"));
+            }
+            
+        } catch (Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Error Coordinador: " + e.getMessage());
+        }
+        finally
+        {
+            this.desconectar();
+        }
+        
+        return c;
+    }
+    
+    public Coordinador getCoordinador(int id)
+    {
+         Coordinador c = new Coordinador();
+        try
+        {
+            this.conectar();
+            String sql = "select * from coordinador where id = ? and estado = 1";
             PreparedStatement pre = this.getCon().prepareStatement(sql);
             pre.setInt(1, id);
             

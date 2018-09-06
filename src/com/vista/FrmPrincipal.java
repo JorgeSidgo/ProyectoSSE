@@ -428,7 +428,7 @@ public class FrmPrincipal extends javax.swing.JFrame implements KeyListener
         menuItServicio.setDisplayedMnemonic('n');
         menuItServicio.setFont(new java.awt.Font("Montserrat", 0, 12)); // NOI18N
         menuItServicio.setForeground(new java.awt.Color(255, 255, 255));
-        menuItServicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8-document-16.png"))); // NOI18N
+        menuItServicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/iconos/icons8_Add_File_16px.png"))); // NOI18N
         menuItServicio.setText("Registrar SS");
         menuItServicio.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 20, 0, 0)));
         menuItServicio.setIconTextGap(10);

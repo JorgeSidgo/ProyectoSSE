@@ -667,7 +667,7 @@
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                 </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/com/iconos/icons8-document-16.png"/>
+                  <Image iconType="3" name="/com/iconos/icons8_Add_File_16px.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Registrar SS"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">

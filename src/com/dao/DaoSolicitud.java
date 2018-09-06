@@ -170,7 +170,7 @@ public class DaoSolicitud extends Conexion{
     public Object[] solicitudesEstudiante(String carnet)
     {
         Object[] respuesta = new Object[2];
-        Solicitud s = new Solicitud();
+        
         
         List<Solicitud> lista = new ArrayList();
         
@@ -192,6 +192,8 @@ public class DaoSolicitud extends Conexion{
             {
                 while(res.next())
                 {
+                    Solicitud s = new Solicitud();
+                    
                     s.setId(res.getInt("id"));
                     s.setIdEstudiante(res.getInt("idEstudiante"));
                     s.setIdCoordinador(res.getInt("idCoordinador"));
