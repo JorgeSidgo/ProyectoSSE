@@ -132,6 +132,7 @@ create table tipoInstitucion(
 create table solicitud(
     id int auto_increment primary key unique,
     estadoSolicitud varchar(50),
+    uso int,
     idEstudiante int not null,
     idCoordinador int not null,
     idInstitucion int not null,
@@ -202,6 +203,7 @@ create table correo(
 
 alter table grupo add constraint fk_grupo_carrera foreign key (idCarrera) references carrera(id);
 alter table carrera add constraint fk_carrera_escuela foreign key (idEscuela) references escuela(id);
+alter table carrera add constraint fk_carrera_tipoCarrera foreign key (idTipoCarrera) references tipoCarrera(id);
 alter table usuario add constraint fk_usuario_rol foreign key (idRol) references rol(id);
 alter table estudiante add constraint fk_estudiante_usuario foreign key (idUsuario) references usuario(id);
 alter table estudiante add constraint fk_estudiante_grupo foreign key (idGrupo) references grupo(id);
@@ -659,7 +661,7 @@ create procedure insertarSolicitud(
     in come text
 )
 begin 
-	insert into solicitud values (null,esta,idEstu,idCo,idIn,fecha,come, default);
+	insert into solicitud values (null,esta, 0, idEstu,idCo,idIn,fecha,come, default);
 end $
 
 -- Editar Solicitud
@@ -1029,7 +1031,7 @@ begin
 
 	select s.* 
 	from solicitud s, estudiante e
-	where s.idEstudiante = e.id and s.estadoSolicitud = 'Aprobado' and e.idEstadoEstudiante = 2 and e.id = idEs and s.idCoordinador = idCoor;
+	where s.idEstudiante = e.id and s.estadoSolicitud = 'Aprobado' and e.idEstadoEstudiante = 2 and e.id = idEs and s.idCoordinador = idCoor and s.uso = 0;
 end
 $$
 
