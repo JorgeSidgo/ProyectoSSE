@@ -1,4 +1,4 @@
-
+// simona
 package com.vista;
 
 import com.dao.DaoCoordinador;
@@ -434,3 +434,4 @@ public class FrmIngresarSolicitud extends javax.swing.JFrame {
     private javax.swing.JLabel jlabelCom;
     // End of variables declaration//GEN-END:variables
 }
+//lamona
