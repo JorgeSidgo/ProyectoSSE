@@ -1135,6 +1135,14 @@ call insertarHojaServicio(1,1,1,'2018-01-01','2018-06-01',100);
 call insertarHojaServicio(1,1,1,'2018-01-01','2018-06-01',100);
 call insertarHojaServicio(3,1,1,'2018-01-01','2018-06-01',100);
 call insertarHojaServicio(3,1,1,'2018-01-01','2018-06-01',100);
+call insertarHojaServicio(3,1,1,'2018-01-01','2018-06-01',100);
+call insertarHojaServicio(2,1,1,'2018-01-01','2018-06-01',300);
+call insertarHojaServicio(3,1,1,'2018-01-01','2018-06-01',300);
+call insertarHojaServicio(4,1,1,'2018-01-01','2018-06-01',300);
+call insertarHojaServicio(5,1,1,'2018-01-01','2018-06-01',300);
+call insertarHojaServicio(6,1,1,'2018-01-01','2018-06-01',300);
+call insertarHojaServicio(7,1,1,'2018-01-01','2018-06-01',300);
+call insertarHojaServicio(8,1,1,'2018-01-01','2018-06-01',300);
 
 call inscribirMaterias(1, 1);
 call inscribirMaterias(1, 2);
@@ -1142,4 +1150,5 @@ call inscribirMaterias(1, 3);
 
 call getEstudianteCarnet('426017');
 -- select * from estudiantesPro;
-update estudiante set idEstadoEstudiante = 2, idEstadoSS = 2 where id>2;
+update estudiante set idEstadoEstudiante = 2 where id>2;
+-- select * from estudiante;
