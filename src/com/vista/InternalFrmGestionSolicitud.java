@@ -5,6 +5,7 @@ import com.dao.DaoCoordinador;
 import com.dao.DaoEstudiante;
 import com.dao.DaoInstitucion;
 import com.dao.DaoSolicitud;
+import com.modelo.Estudiante;
 import com.modelo.Solicitud;
 import java.util.List;
 import javax.swing.JDesktopPane;
@@ -25,6 +26,7 @@ public class InternalFrmGestionSolicitud extends javax.swing.JInternalFrame {
     DaoInstitucion daoI = new DaoInstitucion();
     DaoEstudiante daoE = new DaoEstudiante();
     DaoCoordinador daoC = new DaoCoordinador();
+    Estudiante es = new Estudiante();
     
     public InternalFrmGestionSolicitud() {
         initComponents();
@@ -33,6 +35,7 @@ public class InternalFrmGestionSolicitud extends javax.swing.JInternalFrame {
         this.idSolicitud.hide();
         this.jPanelSolicitud.hide();
         this.disabledC();
+        jTxtBuscar.setText("Buscar por Nombre de Estudiante");
     }
     
     private void disabledC()
@@ -65,6 +68,49 @@ public class InternalFrmGestionSolicitud extends javax.swing.JInternalFrame {
         this.jChkAprobada.setSelected(false);
         this.jChkDenegada.setSelected(false);
         this.jChkObser.setSelected(false);
+    }
+    private void buscarSolicitud(String buscar)
+    {
+        int longitud = buscar.length();
+        if((buscar != "Buscar por Nombre de Usuario") && (longitud > 1))
+        {
+            llenarBusqueda();
+        }
+        else if((buscar != "Buscar por Nombre de Usuario") && (longitud == 0))
+        {
+            llenarTabla();
+        }
+    }
+    
+    private void llenarBusqueda()
+    {
+        String[] col = {"ID Solicitud","Estado de Solicitud","Estudiante","Coordinador","Institución","Fecha","Comentarios"};
+        Object[] obj = new Object[7];
+        DefaultTableModel df = new DefaultTableModel(null, col);
+        List ls;
+        es.setNombres(this.jTxtBuscar.getText());
+        
+        try 
+        {
+            ls = daoS.buscarSolicitud(es);
+            
+            for (int i = 0; i < ls.size(); i++) {
+                so = (Solicitud)ls.get(i);
+                obj[0] = so.getId();
+                obj[1] = so.getEstadoSolicitud();
+                obj[2] = daoE.nombreEstudiante(so.getIdEstudiante());
+                obj[3] = daoC.nombreCoordinador(so.getIdCoordinador());
+                obj[4] = daoI.nombreInstitucion(so.getIdInstitucion());
+                obj[5] = so.getFecha();
+                obj[6] = so.getComentarios();
+                df.addRow(obj);
+            }
+            this.jTablaSolicitud.setModel(df);
+        }
+        catch (Exception e) 
+        {
+            JOptionPane.showMessageDialog(null, "No se puede comenzar a llenar la tabla "+e.getMessage());
+        }
     }
     
     private void llenarTabla()
@@ -173,8 +219,7 @@ public class InternalFrmGestionSolicitud extends javax.swing.JInternalFrame {
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents()
-    {
+    private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel2 = new javax.swing.JLabel();
@@ -205,6 +250,7 @@ public class InternalFrmGestionSolicitud extends javax.swing.JInternalFrame {
         jButton3 = new javax.swing.JButton();
         jBtnUpd = new javax.swing.JButton();
         jBtnDlt = new javax.swing.JButton();
+        jTxtBuscar = new javax.swing.JTextField();
 
         setBorder(null);
         setClosable(true);
@@ -242,10 +288,8 @@ public class InternalFrmGestionSolicitud extends javax.swing.JInternalFrame {
         buttonGroup1.add(jChkDenegada);
         jChkDenegada.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jChkDenegada.setText("Denegada");
-        jChkDenegada.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jChkDenegada.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jChkDenegadaActionPerformed(evt);
             }
         });
@@ -253,10 +297,8 @@ public class InternalFrmGestionSolicitud extends javax.swing.JInternalFrame {
         buttonGroup1.add(jChkObser);
         jChkObser.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jChkObser.setText("Observaciones");
-        jChkObser.addChangeListener(new javax.swing.event.ChangeListener()
-        {
-            public void stateChanged(javax.swing.event.ChangeEvent evt)
-            {
+        jChkObser.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jChkObserStateChanged(evt);
             }
         });
@@ -327,22 +369,18 @@ public class InternalFrmGestionSolicitud extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(250, 250, 250));
 
         jTablaSolicitud.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][]
-            {
+            new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null}
             },
-            new String []
-            {
+            new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTablaSolicitud.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        jTablaSolicitud.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTablaSolicitudMouseClicked(evt);
             }
         });
@@ -368,36 +406,34 @@ public class InternalFrmGestionSolicitud extends javax.swing.JInternalFrame {
         jPanel3.setBackground(new java.awt.Color(250, 250, 250));
 
         jButton3.setText("Agregar Solicitud ");
-        jButton3.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton3MouseClicked(evt);
             }
         });
-        jButton3.addActionListener(new java.awt.event.ActionListener()
-        {
-            public void actionPerformed(java.awt.event.ActionEvent evt)
-            {
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
 
         jBtnUpd.setText("Actualizar");
-        jBtnUpd.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        jBtnUpd.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jBtnUpdMouseClicked(evt);
             }
         });
 
         jBtnDlt.setText("Eliminar");
-        jBtnDlt.addMouseListener(new java.awt.event.MouseAdapter()
-        {
-            public void mouseClicked(java.awt.event.MouseEvent evt)
-            {
+        jBtnDlt.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jBtnDltMouseClicked(evt);
+            }
+        });
+
+        jTxtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTxtBuscarKeyTyped(evt);
             }
         });
 
@@ -412,17 +448,24 @@ public class InternalFrmGestionSolicitud extends javax.swing.JInternalFrame {
                 .addComponent(jBtnUpd)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jBtnDlt, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTxtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jBtnUpd)
-                    .addComponent(jBtnDlt))
-                .addContainerGap())
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(jTxtBuscar))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton3)
+                            .addComponent(jBtnUpd)
+                            .addComponent(jBtnDlt))
+                        .addContainerGap())))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -566,6 +609,11 @@ public class InternalFrmGestionSolicitud extends javax.swing.JInternalFrame {
         frm.setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jTxtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtBuscarKeyTyped
+        String buscar = this.jTxtBuscar.getText();
+        this.buscarSolicitud(buscar);
+    }//GEN-LAST:event_jTxtBuscarKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
@@ -592,6 +640,7 @@ public class InternalFrmGestionSolicitud extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTablaSolicitud;
     private javax.swing.JTextArea jTxAObservaciones;
+    private javax.swing.JTextField jTxtBuscar;
     private javax.swing.JTextField jTxtEstado;
     private javax.swing.JTextField jTxtFecha;
     private javax.swing.JTextField jTxtIdCo;

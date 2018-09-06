@@ -18,57 +18,24 @@ import java.util.Date;
 public class HojaServicioSocial 
 {
     private int id;
-    private String fechaInicio;
-    private String fechaFinalizacion;
-    private int idEstudiante;
-    private int idCoordinador;
-    private int idInstitucion;
-    private String encargado;
-    private int horas;
-    private int idSolicitud;
+    private Date fechaInicio;
+    private Date fechaFinalizacion;
+    Estudiante idEstudiante;
+    Coordinador idCoordinador;
+    Institucion idInstitucion;
 
     public HojaServicioSocial() {
     }
 
-    public HojaServicioSocial(int id, String fechaInicio, String fechaFinalizacion, int idEstudiante, int idCoordinador, int idInstitucion, String encargado, int horas, int idSolicitud)
-    {
+    public HojaServicioSocial(int id, Date fechaInicio, Date fechaFinalizacion, Estudiante idEstudiante, Coordinador idCoordinador, Institucion idInstitucion) {
         this.id = id;
         this.fechaInicio = fechaInicio;
         this.fechaFinalizacion = fechaFinalizacion;
         this.idEstudiante = idEstudiante;
         this.idCoordinador = idCoordinador;
         this.idInstitucion = idInstitucion;
-        this.encargado = encargado;
-        this.horas = horas;
-        this.idSolicitud = idSolicitud;
     }
 
-    public int getIdSolicitud()
-    {
-        return idSolicitud;
-    }
-
-    public void setIdSolicitud(int idSolicitud)
-    {
-        this.idSolicitud = idSolicitud;
-    }
-
-
-
-    public int getHoras()
-    {
-        return horas;
-    }
-
-    public void setHoras(int horas)
-    {
-        this.horas = horas;
-    }
-
-
-    
-
-   
     public int getId() {
         return id;
     }
@@ -77,68 +44,44 @@ public class HojaServicioSocial
         this.id = id;
     }
 
-    public String getFechaInicio()
-    {
+    public Date getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(String fechaInicio)
-    {
+    public void setFechaInicio(Date fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
-    public String getFechaFinalizacion()
-    {
+    public Date getFechaFinalizacion() {
         return fechaFinalizacion;
     }
 
-    public void setFechaFinalizacion(String fechaFinalizacion)
-    {
+    public void setFechaFinalizacion(Date fechaFinalizacion) {
         this.fechaFinalizacion = fechaFinalizacion;
     }
 
-    
-
-    public int getIdEstudiante()
-    {
+    public Estudiante getIdEstudiante() {
         return idEstudiante;
     }
 
-    public void setIdEstudiante(int idEstudiante)
-    {
+    public void setIdEstudiante(Estudiante idEstudiante) {
         this.idEstudiante = idEstudiante;
     }
 
-    public int getIdCoordinador()
-    {
+    public Coordinador getIdCoordinador() {
         return idCoordinador;
     }
 
-    public void setIdCoordinador(int idCoordinador)
-    {
+    public void setIdCoordinador(Coordinador idCoordinador) {
         this.idCoordinador = idCoordinador;
     }
 
-    public int getIdInstitucion()
-    {
+    public Institucion getIdInstitucion() {
         return idInstitucion;
     }
 
-    public void setIdInstitucion(int idInstitucion)
-    {
+    public void setIdInstitucion(Institucion idInstitucion) {
         this.idInstitucion = idInstitucion;
     }
-
-    public String getEncargado()
-    {
-        return encargado;
-    }
-
-    public void setEncargado(String encargado)
-    {
-        this.encargado = encargado;
-    }
-
-    
     
 }
