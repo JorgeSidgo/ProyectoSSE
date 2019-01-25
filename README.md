@@ -1,12 +1,19 @@
 # ProyectoSSE
 
-_El proyecto de los papus_
+_Sistema de gestion de servicio social para ITCA-FEPADE_
 
 ## Integrantes ##
-* Benjamin Parker (Liderovsky)
-* Jorge Cifco
-* Abdul Jabbar
-* Don Francisco
+* Benjamin Ramírez
+* Jorge Sidgo
+* Abdul Martínez
+* Javier Montoya
 
 
-`#JAVAlimos()`
+## Tecnologías utilizadas ##
+### Backend ###
+* JSP
+
+### Frontend ###
+* JQuery
+* Vue.js
+* Semantic UI
